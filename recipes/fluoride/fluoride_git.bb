@@ -14,10 +14,12 @@ SRC_URI = "file://system/bt/ \
            file://vendor/qcom/opensource/bluetooth/"
 
 S = "${WORKDIR}/system/bt/"
+S_EXT = "${WORKDIR}/vendor/qcom/opensource/bluetooth/system_bt_ext/"
 
 FILES_SOLIBSDEV = ""
 FILES_${PN} += "${libdir}"
 FILES_${PN} += "${sysconfdir}/bluetooth/*"
+FILES_${PN} += "${userfsdatadir}/misc/bluetooth/*"
 INSANE_SKIP_${PN} = "dev-so"
 
 CFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
@@ -36,6 +38,7 @@ EXTRA_OECONF = " \
 do_install_append() {
 
 	install -d ${D}${sysconfdir}/bluetooth/
+	install -d ${D}${userfsdatadir}/misc/bluetooth/
 
 	cd  ${D}/${libdir}/ && ln -s libbluetoothdefault.so.0 bluetooth.default.so
 	cd  ${D}/${libdir}/ && ln -s libaudioa2dpdefault.so.0 audio.a2dp.default.so
@@ -43,6 +46,10 @@ do_install_append() {
 	if [ -f ${S}conf/auto_pair_devlist.conf ]; then
 	   install -m 0660 ${S}conf/auto_pair_devlist.conf ${D}${sysconfdir}/bluetooth/
 	fi
+
+#	if [ -f ${S_EXT}conf/interop_database.conf ]; then
+#	   install -m 0660 ${S_EXT}conf/interop_database.conf ${D}${userfsdatadir}/misc/bluetooth/
+#	fi
 
 	if [ -f ${S}conf/bt_did.conf ]; then
 	   install -m 0660 ${S}conf/bt_did.conf ${D}${sysconfdir}/bluetooth/
@@ -54,5 +61,6 @@ do_install_append() {
 
 	if [ -f ${S}conf/iot_devlist.conf ]; then
 	   install -m 0660 ${S}conf/iot_devlist.conf ${D}${sysconfdir}/bluetooth/
+	   install -m 0660 ${S}conf/iot_devlist.conf ${D}${userfsdatadir}/misc/bluetooth/
 	fi
 }
