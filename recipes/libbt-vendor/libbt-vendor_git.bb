@@ -28,9 +28,9 @@ EXTRA_OECONF = "--with-common-includes="${WORKSPACE}/vendor/qcom/opensource/blue
                 --with-glib \
                "
 
-FILES_${PN} += "${userfsdatadir}/misc/bluetooth/*"
+FILES_${PN} += "${sysconfdir}/bluetooth/*"
 
 do_install_append () {
-    install -d ${D}${userfsdatadir}/misc/bluetooth
-    install -m 755 ${S}init.msm.bt.sh ${D}${userfsdatadir}/misc/bluetooth/
+    install -d ${D}${sysconfdir}/bluetooth
+    install -m 755 ${S}init.msm.bt.sh ${D}${sysconfdir}/bluetooth/
 }
