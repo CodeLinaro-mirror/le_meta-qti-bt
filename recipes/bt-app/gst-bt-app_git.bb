@@ -10,7 +10,7 @@ SRC_URI = "file://qcom-opensource/bt/bt-app/"
 
 S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
-DEPENDS += "btvendorhal gen-gatt glib-2.0 btobex audiohal"
+DEPENDS += "btvendorhal gen-gatt glib-2.0 btobex audiohal libchrome"
 DEPENDS += "gstreamer1.0 gstreamer1.0-plugins-base orc qsthw-api gst-plugins"
 DEPENDS_remove_mdm9607 = "audiohal"
 
@@ -24,19 +24,20 @@ EXTRA_OECONF = " \
             --with-lib-path=${STAGING_LIBDIR} \
             --with-btobex \
             --with-gstreamer \
+            --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                "
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
-FILES_${PN} += "${sysconfdir}/bluetooth/*"
+FILES_${PN} += "${userfsdatadir}/misc/bluetooth/*"
 
 do_install_append() {
-        install -d ${D}${sysconfdir}/bluetooth/
+        install -d ${D}${userfsdatadir}/misc/bluetooth/
 
         if [ -f ${S}conf/bt_app.conf ]; then
-           install -m 0660 ${S}conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
+           install -m 0660 ${S}conf/bt_app.conf ${D}${userfsdatadir}/misc/bluetooth/
         fi
 
         if [ -f ${S}conf/ext_to_mimetype.conf ]; then
-           install -m 0660 ${S}conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/
+           install -m 0660 ${S}conf/ext_to_mimetype.conf ${D}${userfsdatadir}/misc/bluetooth/
         fi
 }

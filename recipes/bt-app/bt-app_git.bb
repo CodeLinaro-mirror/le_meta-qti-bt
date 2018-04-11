@@ -13,9 +13,9 @@ S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
 def get_depends():
     if "$(BASEMACHINE)" == "mdm9607":
-        return  "btvendorhal gen-gatt glib-2.0 btobex"
+        return  "btvendorhal gen-gatt glib-2.0 btobex libchrome fluoride"
     else:
-        return   "btvendorhal gen-gatt glib-2.0 btobex audiohal"
+        return   "btvendorhal gen-gatt glib-2.0 btobex libchrome fluoride"
 
 DEPENDS  += "${@get_depends()}"
 
@@ -27,20 +27,21 @@ EXTRA_OECONF = " \
                 --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
                 --with-glib \
                 --with-lib-path=${STAGING_LIBDIR} \
+                --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                 --with-btobex \
                "
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
-FILES_${PN} += "${sysconfdir}/bluetooth/*"
+FILES_${PN} += "${userfsdatadir}/misc/bluetooth/*"
 
 do_install_append() {
-        install -d ${D}${sysconfdir}/bluetooth/
+        install -d ${D}${userfsdatadir}/misc/bluetooth/
 
         if [ -f ${S}conf/bt_app.conf ]; then
-           install -m 0660 ${S}conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
+           install -m 0660 ${S}conf/bt_app.conf ${D}${userfsdatadir}/misc/bluetooth/
         fi
 
         if [ -f ${S}conf/ext_to_mimetype.conf ]; then
-           install -m 0660 ${S}conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/
+           install -m 0660 ${S}conf/ext_to_mimetype.conf ${D}${userfsdatadir}/misc/bluetooth/
         fi
 }

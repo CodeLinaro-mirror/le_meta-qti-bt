@@ -1,0 +1,199 @@
+From 0bc2653a4c14c1196a31df8dd072a5be7ad4b288 Mon Sep 17 00:00:00 2001
+From: Lakshmi Pola <ppriyank@codeaurora.org>
+Date: Tue, 19 Jun 2018 09:44:26 +0530
+Subject: [PATCH] Add GNU Autotool Build files
+
+---
+ Makefile.am    | 99 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ configure.ac   | 45 ++++++++++++++++++++++++++
+ event.h        |  2 +-
+ libevent.pc.in |  4 +--
+ 4 files changed, 147 insertions(+), 3 deletions(-)
+ create mode 100644 Makefile.am
+ create mode 100644 configure.ac
+
+diff --git a/Makefile.am b/Makefile.am
+new file mode 100644
+index 0000000..c5a37f0
+--- /dev/null
++++ b/Makefile.am
+@@ -0,0 +1,99 @@
++common_sources := buffer.c
++common_sources += bufferevent.c
++common_sources += bufferevent_filter.c
++common_sources += bufferevent_pair.c
++common_sources += bufferevent_ratelim.c
++common_sources += bufferevent_sock.c
++common_sources += event.c
++common_sources += evmap.c
++common_sources += evthread.c
++common_sources += evutil.c
++common_sources += evutil_rand.c
++common_sources += listener.c
++common_sources += log.c
++common_sources += signal.c
++common_sources += strlcpy.c
++common_sources += epoll.c
++common_sources += evdns.c
++common_sources += event_tagging.c
++common_sources += evrpc.c
++common_sources += http.c
++common_sources += poll.c
++common_sources += select.c
++
++requiredlibs = -lpthread -lbase -lrt
++
++# Build libevent.so
++lib_LTLIBRARIES := libevent.la
++
++libevent_la_SOURCES  := $(common_sources)
++libevent_la_CPPFLAGS := -DHAVE_PTHREADS
++libevent_la_CPPFLAGS += -DLINUX_ENABLED
++libevent_la_CPPFLAGS += -D__linux__
++libevent_la_CPPFLAGS += -D_GNU_SOURCE
++libevent_la_CPPFLAGS += -std=c++11
++libevent_la_CPPFLAGS += -I.. -I../ -Iinclude
++libevent_la_CPPFLAGS += -D_BSD_SOURCE
++libevent_la_LDFLAGS  := -lpthread
++
++# Export headers
++event_includedir=$(includedir)/event
++event_include_event2_includedir=$(includedir)/event2/
++#event_include_HEADERS := event.h
++event_include_HEADERS := event-internal.h
++event_include_HEADERS += evhttp.h
++event_include_HEADERS += ht-internal.h
++event_include_HEADERS += util-internal.h
++event_include_HEADERS += strlcpy-internal.h
++event_include_HEADERS += evthread-internal.h
++event_include_HEADERS += evrpc.h
++event_include_HEADERS += evutil.h
++event_include_HEADERS += http-internal.h
++event_include_HEADERS += iocp-internal.h
++event_include_HEADERS += defer-internal.h
++event_include_HEADERS += evbuffer-internal.h
++event_include_HEADERS += minheap-internal.h
++event_include_HEADERS += evrpc-internal.h
++event_include_HEADERS += evmap-internal.h
++event_include_HEADERS += mm-internal.h
++event_include_event2_include_HEADERS := include/event2/http_compat.h
++event_include_event2_include_HEADERS += include/event2/event_struct.h
++event_include_event2_include_HEADERS += include/event2/tag.h
++event_include_event2_include_HEADERS += include/event2/util.h
++event_include_event2_include_HEADERS += include/event2/dns_struct.h
++event_include_event2_include_HEADERS += include/event2/event-config-linux.h
++event_include_event2_include_HEADERS += include/event2/keyvalq_struct.h
++event_include_event2_include_HEADERS += include/event2/event-config-bionic.h
++event_include_event2_include_HEADERS += include/event2/rpc_compat.h
++event_include_event2_include_HEADERS += include/event2/rpc_struct.h
++event_include_event2_include_HEADERS += include/event2/buffer.h
++event_include_event2_include_HEADERS += include/event2/tag_compat.h
++event_include_event2_include_HEADERS += include/event2/dns_compat.h
++event_include_event2_include_HEADERS += include/event2/event_compat.h
++event_include_event2_include_HEADERS += include/event2/bufferevent_compat.h
++event_include_event2_include_HEADERS += include/event2/rpc.h
++event_include_event2_include_HEADERS += include/event2/http.h
++event_include_event2_include_HEADERS += include/event2/bufferevent.h
++event_include_event2_include_HEADERS += include/event2/event-config.h
++event_include_event2_include_HEADERS += include/event2/listener.h
++event_include_event2_include_HEADERS += include/event2/bufferevent_ssl.h
++event_include_event2_include_HEADERS += include/event2/buffer_compat.h
++event_include_event2_include_HEADERS += include/event2/http_struct.h
++event_include_event2_include_HEADERS += include/event2/thread.h
++event_include_event2_include_HEADERS += include/event2/dns.h
++event_include_event2_include_HEADERS += include/event2/event-config-darwin.h
++event_include_event2_include_HEADERS += include/event2/event.h
++event_include_event2_include_HEADERS += include/event2/bufferevent_struct.h
++event_include_HEADERS += evsignal-internal.h
++event_include_HEADERS += bufferevent-internal.h
++event_include_HEADERS += evdns.h
++event_include_HEADERS += ipv6-internal.h
++event_include_HEADERS += ratelim-internal.h
++event_include_HEADERS += changelist-internal.h
++event_include_HEADERS += event.h
++event_include_HEADERS += log-internal.h
++
++
++pkgconfigdir = $(libdir)/pkgconfig
++pkgconfig_DATA = libevent.pc
++EXTRA_DIST = $(pkgconfig_DATA)
+diff --git a/configure.ac b/configure.ac
+new file mode 100644
+index 0000000..e592723
+--- /dev/null
++++ b/configure.ac
+@@ -0,0 +1,45 @@
++AC_PREREQ(2.61)
++AC_INIT([libevent],1.0.0)
++AM_INIT_AUTOMAKE([-Wall gnu foreign])
++AC_CONFIG_SRCDIR([Makefile.am])
++AC_CONFIG_HEADERS([config.h])
++AC_CONFIG_MACRO_DIR([m4])
++
++# Check for programs
++AM_PROG_AS
++AC_PROG_CC
++AM_PROG_CC_C_O
++AC_PROG_LIBTOOL
++AC_PROG_AWK
++AC_PROG_CPP
++AC_PROG_CXX
++AC_PROG_INSTALL
++AC_PROG_LN_S
++AC_PROG_MAKE_SET
++PKG_PROG_PKG_CONFIG
++
++AC_ARG_WITH([extra_includes],
++    AC_HELP_STRING([--with-extra-includes=@<:@dir@:>@],
++       [Specify the location of the common headers]),
++    [extra_incdir=$withval],
++    with_extra_includes=no)
++
++AC_ARG_WITH([host-os],
++        [AS_HELP_STRING([--with-host-os=HOST_OS],[Host OS to build adb host.(default: linux)])],
++        [HOST_OS="$withval"],
++        [HOST_OS='linux'])
++
++if test "x$HOST_OS" = "xlinux-gnueabi"; then
++  HOST_OS=linux
++else
++  AC_MSG_NOTICE([Unknown host OS $HOST_OS detected.])
++fi
++
++AM_CONDITIONAL([HOST_OS_LINUX], [test "x$HOST_OS" = "xlinux"])
++
++AC_CONFIG_FILES([ \
++    Makefile \
++    libevent.pc
++])
++AC_OUTPUT
++
+diff --git a/event.h b/event.h
+index a3785b9..845781b 100644
+--- a/event.h
++++ b/event.h
+@@ -54,7 +54,7 @@ extern "C" {
+ #include <stdarg.h>
+
+ /* For int types. */
+-#include <evutil.h>
++#include <event/evutil.h>
+
+ #ifdef WIN32
+ #ifndef WIN32_LEAN_AND_MEAN
+diff --git a/libevent.pc.in b/libevent.pc.in
+index 7030884..7ab88dd 100644
+--- a/libevent.pc.in
++++ b/libevent.pc.in
+@@ -11,6 +11,6 @@ Version: @VERSION@
+ Requires:
+ Conflicts:
+ Libs: -L${libdir} -levent
+-Libs.private: @LIBS@
+-Cflags: -I${includedir}
++Libs.private: @LIBS@:
++Cflags: -I${includedir}/event -I${includedir}/event2/
+
+--
+1.9.1
+
