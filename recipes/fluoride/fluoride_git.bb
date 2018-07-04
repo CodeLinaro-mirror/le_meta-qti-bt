@@ -39,6 +39,7 @@ do_install_append() {
 
 	install -d ${D}${sysconfdir}/bluetooth/
 	install -d ${D}${userfsdatadir}/misc/bluetooth/
+	install -d ${D}/persist/bluetooth/
 
 	cd  ${D}/${libdir}/ && ln -s libbluetoothdefault.so.0 bluetooth.default.so
 	cd  ${D}/${libdir}/ && ln -s libaudioa2dpdefault.so.0 audio.a2dp.default.so
