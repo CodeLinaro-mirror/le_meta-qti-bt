@@ -32,16 +32,16 @@ EXTRA_OECONF = " \
                "
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
-FILES_${PN} += "${userfsdatadir}/misc/bluetooth/*"
+FILES_${PN} += "${sysconfdir}/bluetooth/*"
 
 do_install_append() {
-        install -d ${D}${userfsdatadir}/misc/bluetooth/
+        install -d ${D}${sysconfdir}/bluetooth/
 
         if [ -f ${S}conf/bt_app.conf ]; then
-           install -m 0660 ${S}conf/bt_app.conf ${D}${userfsdatadir}/misc/bluetooth/
+           install -m 0660 ${S}conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
         fi
 
         if [ -f ${S}conf/ext_to_mimetype.conf ]; then
-           install -m 0660 ${S}conf/ext_to_mimetype.conf ${D}${userfsdatadir}/misc/bluetooth/
+           install -m 0660 ${S}conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/
         fi
 }
