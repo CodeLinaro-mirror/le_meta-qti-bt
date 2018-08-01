@@ -14,11 +14,11 @@ SRC_URI = "file://vendor/qcom/opensource/system/bt/ \
            file://vendor/qcom/opensource/bluetooth_ext/"
 
 S = "${WORKDIR}/vendor/qcom/opensource/system/bt/"
-S_EXT = "${WORKDIR}/vendor/qcom/opensource/bluetooth/system_bt_ext/"
+S_EXT = "${WORKDIR}/vendor/qcom/opensource/bluetooth_ext/system_bt_ext/"
 
 FILES_SOLIBSDEV = ""
 FILES_${PN} += "${libdir}"
-FILES_${PN} += "${userfsdatadir}/misc/bluetooth/*"
+FILES_${PN} += "${sysconfdir}/bluetooth/*"
 INSANE_SKIP_${PN} = "dev-so"
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
@@ -37,24 +37,32 @@ EXTRA_OECONF = " \
 
 do_install_append() {
 
-	install -d ${D}${userfsdatadir}/misc/bluetooth/
+	install -d ${D}${sysconfdir}/bluetooth/
 
-        cd  ${D}/${libdir}/ && ln -s libbluetoothdefault.so.0 bluetooth.default.so
-        cd  ${D}/${libdir}/ && ln -s libaudioa2dpdefault.so.0 audio.a2dp.default.so
+	cd  ${D}/${libdir}/ && ln -s libbluetoothdefault.so.0 bluetooth.default.so
+	cd  ${D}/${libdir}/ && ln -s libaudioa2dpdefault.so.0 audio.a2dp.default.so
 
 	if [ -f ${S}conf/auto_pair_devlist.conf ]; then
-	   install -m 0660 ${S}conf/auto_pair_devlist.conf ${D}${userfsdatadir}/misc/bluetooth/
+	   install -m 0660 ${S}conf/auto_pair_devlist.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
 	if [ -f ${S}conf/bt_did.conf ]; then
-	   install -m 0660 ${S}conf/bt_did.conf ${D}${userfsdatadir}/misc/bluetooth/
+	   install -m 0660 ${S}conf/bt_did.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
 	if [ -f ${S}conf/bt_stack.conf ]; then
-	   install -m 0660 ${S}conf/bt_stack.conf ${D}${userfsdatadir}/misc/bluetooth/
+	   install -m 0660 ${S}conf/bt_stack.conf ${D}${sysconfdir}/bluetooth/
+	fi
+
+	if [ -f ${S_EXT}conf/interop_database.conf ]; then
+		install -m 0660 ${S_EXT}conf/interop_database.conf ${D}${sysconfdir}/bluetooth/
+	fi
+
+	if [ -f ${S_EXT}conf/bt_profile.conf ]; then
+		install -m 0660 ${S_EXT}conf/bt_profile.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
 	if [ -f ${S}conf/iot_devlist.conf ]; then
-	   install -m 0660 ${S}conf/iot_devlist.conf ${D}${userfsdatadir}/misc/bluetooth/
+	   install -m 0660 ${S}conf/iot_devlist.conf ${D}${sysconfdir}/bluetooth/
 	fi
 }
