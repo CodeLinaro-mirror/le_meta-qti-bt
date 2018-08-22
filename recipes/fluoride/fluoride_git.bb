@@ -37,6 +37,10 @@ EXTRA_OECONF = " \
                 --enable-rome=${BASEPRODUCT} \
                "
 
+EXTRA_OECONF_append_robot-som += "--enable-som=yes"
+EXTRA_OECONF_remove_robot-pronto += "--enable-som=yes"
+EXTRA_OECONF_append_robot-pronto += "--enable-pronto=yes"
+
 do_install_append() {
 
 	install -d ${D}${sysconfdir}/bluetooth/
