@@ -9,6 +9,10 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "common system-core hci-qcomm-init glib-2.0"
 
+INSANE_SKIP_${PN} = "dev-so"
+SOLIBS=".so"
+FILES_SOLIBSDEV = ""
+
 RDEPENDS_${PN} = "libcutils"
 
 FILESPATH =+ "${WORKSPACE}:"
@@ -29,6 +33,7 @@ EXTRA_OECONF = "--with-common-includes="${WORKSPACE}/vendor/qcom/opensource/blue
                "
 
 FILES_${PN} += "${sysconfdir}/bluetooth/*"
+FILES_${PN} += "${libdir}/*"
 
 do_install_append () {
     install -d ${D}${sysconfdir}/bluetooth
