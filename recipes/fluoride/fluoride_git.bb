@@ -16,14 +16,14 @@ SRC_URI = "file://system/bt/ \
 S = "${WORKDIR}/system/bt/"
 S_EXT = "${WORKDIR}/vendor/qcom/opensource/bluetooth/system_bt_ext/"
 
+
 FILES_SOLIBSDEV = ""
 FILES_${PN} += "${libdir}"
 FILES_${PN} += "${sysconfdir}/bluetooth/*"
 FILES_${PN} += "${userfsdatadir}/misc/bluetooth/*"
+FILES_${PN} += "/persist/bluetooth/"
 INSANE_SKIP_${PN} = "dev-so"
 
-PERSIST_D="${TMPDIR}/rootfs/${MACHINE}-persist"
-PERSIST_BT_D="${PERSIST_D}/bluetooth"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
 LDFLAGS_append = " -llog "
 
@@ -45,7 +45,7 @@ do_install_append() {
 
 	install -d ${D}${sysconfdir}/bluetooth/
 	install -d ${D}${userfsdatadir}/misc/bluetooth/
-	install -d ${PERSIST_BT_D}
+	install -d ${D}/persist/bluetooth
 
 	cd  ${D}/${libdir}/ && ln -s libbluetoothdefault.so.0 bluetooth.default.so
 	cd  ${D}/${libdir}/ && ln -s libaudioa2dpdefault.so.0 audio.a2dp.default.so
@@ -71,3 +71,4 @@ do_install_append() {
 	   install -m 0660 ${S}conf/iot_devlist.conf ${D}${userfsdatadir}/misc/bluetooth/
 	fi
 }
+INHIBIT_PACKAGE_DEBUG_SPLIT="1"
