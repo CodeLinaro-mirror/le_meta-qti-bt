@@ -27,6 +27,9 @@ EXTRA_OECONF = "--with-common-includes="${WORKSPACE}/vendor/qcom/opensource/blue
                 --enable-rome=${BASEPRODUCT} \
                 --with-glib \
                "
+EXTRA_OECONF_append_robot-som += "--enable-som=yes"
+EXTRA_OECONF_remove_robot-pronto += "--enable-som=yes"
+EXTRA_OECONF_append_robot-pronto += "--enable-pronto=yes"
 
 FILES_${PN} += "${sysconfdir}/bluetooth/*"
 
