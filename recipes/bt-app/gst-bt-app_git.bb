@@ -10,11 +10,11 @@ SRC_URI = "file://qcom-opensource/bt/bt-app/"
 
 S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
-DEPENDS += "btvendorhal gen-gatt glib-2.0 btobex audiohal libchrome"
+DEPENDS += "btvendorhal glib-2.0 btobex audiohal libchrome"
 DEPENDS += "gstreamer1.0 gstreamer1.0-plugins-base orc qsthw-api gst-plugins"
 DEPENDS_remove_mdm9607 = "audiohal"
 
-CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP"
+CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
 
@@ -25,6 +25,7 @@ EXTRA_OECONF = " \
             --with-btobex \
             --with-gstreamer \
             --with-chrome-includes="${STAGING_INCDIR}/chrome" \
+            --with-gengatt \
                "
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
