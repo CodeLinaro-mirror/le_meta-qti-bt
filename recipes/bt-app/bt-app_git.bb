@@ -13,13 +13,13 @@ S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
 def get_depends():
     if "$(BASEMACHINE)" == "mdm9607":
-        return  "btvendorhal gen-gatt glib-2.0 btobex libchrome fluoride"
+        return  "btvendorhal glib-2.0 btobex libchrome fluoride"
     else:
-        return   "btvendorhal gen-gatt glib-2.0 btobex libchrome fluoride audiohal"
+        return   "btvendorhal glib-2.0 btobex libchrome fluoride audiohal"
 
 DEPENDS  += "${@get_depends()}"
 
-CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP"
+CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
 
@@ -29,6 +29,7 @@ EXTRA_OECONF = " \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                 --with-btobex \
+                --with-gengatt \
                "
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
