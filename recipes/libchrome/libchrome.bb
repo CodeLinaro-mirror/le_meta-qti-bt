@@ -9,7 +9,7 @@ SRC_URI = "git://source.codeaurora.org/quic/la/platform/external/libchrome;proto
 SRC_URI += "file://0001-Add-Support-to-build-libchrome.patch"
 
 S = "${WORKDIR}/libchrome"
-
+CPPFLAGS_append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 #PARALLEL_MAKE = ""
 
 #do_compile[noexec]="1"
