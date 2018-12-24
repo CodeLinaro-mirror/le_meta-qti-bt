@@ -22,7 +22,7 @@ FILES_${PN} += "${sysconfdir}/bluetooth/*"
 INSANE_SKIP_${PN} = "dev-so"
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
-
+CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
 EXTRA_OECONF = " \
