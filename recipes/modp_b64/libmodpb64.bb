@@ -8,5 +8,5 @@ SRC_URI = "git://source.codeaurora.org/quic/la/platform/external/modp_b64;protoc
 SRC_URI += "file://0001-Add-Support-to-build-libmodpb64.patch"
 
 S = "${WORKDIR}/modp_b64"
-
+CPPFLAGS_append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 #PARALLEL_MAKE = ""
