@@ -9,13 +9,14 @@ Change-Id: Icd8e74ad5848d05e772d0e232f66fffcf9caa7f0
 ---
  Makefile.am                       | 372 ++++++++++++++++++++++++++++++++++++++
  base/allocator/allocator_shim.cc  |  14 +-
+ base/cancelable_callback.h        |   1 -
  base/files/file_util_posix.cc     |   2 +-
  base/message_loop/message_loop.cc |  14 +-
  base/third_party/libevent/event.h |   2 +-
  build/build_config.h              |   8 +-
  configure.ac                      |  45 +++++
  libchrome.pc.in                   |  15 ++
- 8 files changed, 452 insertions(+), 20 deletions(-)
+ 9 files changed, 452 insertions(+), 21 deletions(-)
  create mode 100644 Makefile.am
  create mode 100644 configure.ac
  create mode 100644 libchrome.pc.in
@@ -428,6 +429,18 @@ index 09ed45f..bbe8170 100644
 +//   (defined(_HAS_EXCEPTIONS) && _HAS_EXCEPTIONS)
 +//#error This code cannot be used when exceptions are turned on.
 +//#endif
+diff --git a/base/cancelable_callback.h b/base/cancelable_callback.h
+index 0034fdd..f2e1414 100644
+--- a/base/cancelable_callback.h
++++ b/base/cancelable_callback.h
+@@ -74,7 +74,6 @@ class CancelableCallback<void(A...)> {
+ 
+   // Cancels and drops the reference to the wrapped callback.
+   void Cancel() {
+-    weak_factory_.InvalidateWeakPtrs();
+     forwarder_.Reset();
+     callback_.Reset();
+   }
 diff --git a/base/files/file_util_posix.cc b/base/files/file_util_posix.cc
 index 85a1b41..fa02f55 100644
 --- a/base/files/file_util_posix.cc
