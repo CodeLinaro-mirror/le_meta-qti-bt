@@ -18,6 +18,7 @@ def get_depends():
         return   "btvendorhal gen-gatt glib-2.0 btobex audiohal"
 
 DEPENDS  += "${@get_depends()}"
+DEPENDS_remove_sdxprairie = "audiohal"
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
