@@ -47,6 +47,7 @@ do_install_append() {
 	install -d ${D}${sysconfdir}/bluetooth/
 	install -d ${D}${userfsdatadir}/misc/bluetooth/
 	install -d ${D}/persist/bluetooth
+	install -d ${D}${includedir}
 
 	cd  ${D}/${libdir}/ && ln -s libbluetoothdefault.so.0 bluetooth.default.so
 	cd  ${D}/${libdir}/ && ln -s libaudioa2dpdefault.so.0 audio.a2dp.default.so
@@ -71,5 +72,10 @@ do_install_append() {
 	   install -m 0660 ${S}conf/iot_devlist.conf ${D}${sysconfdir}/bluetooth/
 	   install -m 0660 ${S}conf/iot_devlist.conf ${D}${userfsdatadir}/misc/bluetooth/
 	fi
+
+	if [ -f ${S}/hci/include/bt_vendor_lib.h ]; then
+	   install -m 0660 ${S}/hci/include/bt_vendor_lib.h ${D}${includedir}
+	fi
+
 }
 INHIBIT_PACKAGE_DEBUG_SPLIT="1"
