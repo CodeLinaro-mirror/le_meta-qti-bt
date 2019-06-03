@@ -7,19 +7,16 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://qcom-opensource/bt/bt-app-ipc/"
+SRC_URI = " \
+        file://qcom-opensource/bt/bt-app-ipc/ \
+        file://btapp-ipc.conf \
+        "
 
 S = "${WORKDIR}/qcom-opensource/bt/bt-app-ipc/"
 
-def get_depends():
-    if "$(BASEMACHINE)" == "mdm9607":
-        return  "btvendorhal glib-2.0 btobex libchrome fluoride"
-    else:
-        return   "btvendorhal glib-2.0 btobex libchrome fluoride audiohal"
+DEPENDS  = "btvendorhal glib-2.0 btobex libchrome fluoride audiohal libsystemdq"
 
-DEPENDS  += "${@get_depends()}"
-
-CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
+CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
@@ -38,4 +35,7 @@ FILES_${PN} += "${sysconfdir}/bluetooth/*"
 
 do_install_append() {
         install -d ${D}${sysconfdir}/bluetooth/
+
+        install -d ${D}/${sysconfdir}/dbus-1/system.d/
+        install -m 0644 ${WORKDIR}/btapp-ipc.conf ${D}${sysconfdir}/dbus-1/system.d/
 }
