@@ -7,15 +7,18 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://qcom-opensource/bt/bt-app-ipc/"
+SRC_URI = " \
+        file://qcom-opensource/bt/bt-app-ipc/ \
+        file://btapp-ipc.conf \
+        "
 
 S = "${WORKDIR}/qcom-opensource/bt/bt-app-ipc/"
 
 def get_depends():
     if "$(BASEMACHINE)" == "mdm9607":
-        return  "btvendorhal glib-2.0 btobex libchrome fluoride"
+        return  "btvendorhal glib-2.0 btobex libchrome fluoride systemd"
     else:
-        return   "btvendorhal glib-2.0 btobex libchrome fluoride audiohal"
+        return   "btvendorhal glib-2.0 btobex libchrome fluoride audiohal systemd"
 
 DEPENDS  += "${@get_depends()}"
 
@@ -38,4 +41,7 @@ FILES_${PN} += "${sysconfdir}/bluetooth/*"
 
 do_install_append() {
         install -d ${D}${sysconfdir}/bluetooth/
+
+        install -d ${D}/${sysconfdir}/dbus-1/system.d/
+        install -m 0644 ${WORKDIR}/btapp-ipc.conf ${D}${sysconfdir}/dbus-1/system.d/
 }
