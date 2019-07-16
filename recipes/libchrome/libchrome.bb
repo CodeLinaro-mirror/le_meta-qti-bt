@@ -16,5 +16,8 @@ S = "${WORKDIR}/libchrome"
 CPPFLAGS_append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 #PARALLEL_MAKE = ""
 
+do_install_append() {
+  install -D ${WORKDIR}/build/libchrome.pc ${D}${libdir}/pkgconfig/libchrome.pc
+}
 #do_compile[noexec]="1"
 #do_install[noexec]="1"
