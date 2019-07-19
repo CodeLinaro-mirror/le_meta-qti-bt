@@ -1,6 +1,6 @@
 From a53483bf9b003db5a3357a3c9079f14f71f8912b Mon Sep 17 00:00:00 2001
 From: Lakshmi Pola <ppriyank@codeaurora.org>
-Date: Fri, 13 Apr 2018 11:45:20 +0530
+Date: Thu, 27 Jun 2019 11:25:36 +0530
 Subject: [PATCH] meta-qti-bt
 
 Support of libchrome for bt.lnx.le.1.0
@@ -11,12 +11,13 @@ Change-Id: Icd8e74ad5848d05e772d0e232f66fffcf9caa7f0
  base/allocator/allocator_shim.cc  |  14 +-
  base/cancelable_callback.h        |   1 -
  base/files/file_util_posix.cc     |   2 +-
+ base/logging.cc                   |   8 +-
  base/message_loop/message_loop.cc |  14 +-
  base/third_party/libevent/event.h |   2 +-
  build/build_config.h              |   8 +-
  configure.ac                      |  45 +++++
  libchrome.pc.in                   |  15 ++
- 9 files changed, 452 insertions(+), 21 deletions(-)
+ 10 files changed, 456 insertions(+), 25 deletions(-)
  create mode 100644 Makefile.am
  create mode 100644 configure.ac
  create mode 100644 libchrome.pc.in
@@ -454,6 +455,39 @@ index 85a1b41..fa02f55 100644
      // On Chrome OS chrome::DIR_USER_DATA is overridden with a primary user
      // homedir once it becomes available. Return / as the safe option.
      return FilePath("/");
+diff --git a/base/logging.cc b/base/logging.cc
+index 381e9ee..21cb0b9 100644
+--- a/base/logging.cc
++++ b/base/logging.cc
+@@ -75,7 +75,7 @@ typedef pthread_mutex_t* MutexHandle;
+ #include "base/files/file_path.h"
+ #endif
+
+-#if defined(OS_ANDROID) || defined(__ANDROID__)
++#if defined(OS_ANDROID) || defined(__ANDROID__) || defined(OS_LINUX)
+ #include <android/log.h>
+ #endif
+
+@@ -669,7 +669,7 @@ LogMessage::~LogMessage() {
+
+       asl_send(asl_client.get(), asl_message.get());
+     }
+-#elif defined(OS_ANDROID) || defined(__ANDROID__)
++#elif defined(OS_ANDROID) || defined(__ANDROID__) || defined(OS_LINUX)
+     android_LogPriority priority =
+         (severity_ < 0) ? ANDROID_LOG_VERBOSE : ANDROID_LOG_UNKNOWN;
+     switch (severity_) {
+@@ -697,8 +697,8 @@ LogMessage::~LogMessage() {
+         str_newline.c_str());
+ #endif  // defined(OS_ANDROID)
+ #endif
+-    ignore_result(fwrite(str_newline.data(), str_newline.size(), 1, stderr));
+-    fflush(stderr);
++//    ignore_result(fwrite(str_newline.data(), str_newline.size(), 1, stderr));
++//    fflush(stderr);
+   } else if (severity_ >= kAlwaysPrintErrorLevel) {
+     // When we're only outputting to a log file, above a certain log level, we
+     // should still output to stderr so that we can better detect and diagnose
 diff --git a/base/message_loop/message_loop.cc b/base/message_loop/message_loop.cc
 index 54369a9..00bf7a8 100644
 --- a/base/message_loop/message_loop.cc
