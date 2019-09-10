@@ -19,6 +19,8 @@ S = "${WORKDIR}/hardware/qcom/bt/libbt-vendor/"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
 
+CPPFLAGS_append = "${@bb.utils.contains_any('PREFERRED_VERSION_linux-msm', '4.14', ' -DTIOCPMGET_544D ', '', d)}"
+
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
 EXTRA_OECONF = "--with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
