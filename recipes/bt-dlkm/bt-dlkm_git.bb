@@ -38,15 +38,16 @@ EXTRA_OEMAKE += "V=1 KBDIR=${STAGING_KERNEL_BUILDDIR}"
 do_install_append() {
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
        install -d ${D}${systemd_unitdir}/system
-       install -d ${D}${sysconfdir}/system/multi-user.target.wants/
-       install -m 0644 ${WORKDIR}/bluetooth_power.service ${D}/${systemd_unitdir}/system
-       ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/system/multi-user.target.wants/
+       install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants/
+       install -m 0644 ${WORKDIR}/bluetooth_power.service ${D}${systemd_unitdir}/system
+       ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/bluetooth_power.service
        install -d ${D}${sysconfdir}/initscripts
        install -m 0755 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
     fi
 }
 
 FILES_${PN} += "${systemd_unitdir}/system/"
+FILES_${PN} += "${sysconfdir}/systemd/system/"
 FILES_${PN} += "${sysconfdir}/initscripts/"
 FILES_${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/"
 
