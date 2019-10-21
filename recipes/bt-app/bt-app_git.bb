@@ -6,19 +6,17 @@ HOMEPAGE = "https://www.codeaurora.org/"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
+PACKAGE_ARCH="${MACHINE_ARCH}"
+
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://qcom-opensource/bt/bt-app/"
 
 S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
-def get_depends():
-    if "$(BASEMACHINE)" == "mdm9607":
-        return  "btvendorhal gen-gatt glib-2.0 btobex"
-    else:
-        return   "btvendorhal gen-gatt glib-2.0 btobex audiohal"
+DEPENDS = "btvendorhal gen-gatt glib-2.0 btobex liblog"
 
-DEPENDS  += "${@get_depends()}"
-DEPENDS_remove_sdxprairie = "audiohal"
+PACKAGECONFIG = "${@bb.utils.contains('COMBINED_FEATURES', 'qti-audio', 'audiohal', '', d)}"
+PACKAGECONFIG[audiohal] = "--enable-audiohal, --disable-audiohal, audiohal"
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
@@ -30,7 +28,6 @@ EXTRA_OECONF = " \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-btobex \
                "
-EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
 FILES_${PN} += "${sysconfdir}/bluetooth/*"
 

@@ -7,7 +7,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "common system-core hci-qcomm-init glib-2.0"
+DEPENDS = "hci-qcomm-init glib-2.0 libutils liblog"
 
 RDEPENDS_${PN} = "libcutils"
 
@@ -21,17 +21,15 @@ LDFLAGS_append = " -llog "
 
 CPPFLAGS_append = "${@bb.utils.contains_any('PREFERRED_VERSION_linux-msm', '4.14', ' -DTIOCPMGET_544D ', '', d)}"
 
-BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
-
 EXTRA_OECONF = "--with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
                 --with-lib-path=${STAGING_LIBDIR} \
-                --enable-target=${BASEMACHINE} \
-                --enable-rome=${BASEPRODUCT} \
                 --with-glib \
                "
-EXTRA_OECONF_append_robot-som += "--enable-som=yes"
-EXTRA_OECONF_remove_robot-pronto += "--enable-som=yes"
-EXTRA_OECONF_append_robot-pronto += "--enable-pronto=yes"
+
+EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'naples', '--enable-som=yes', '', d)}"
+EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'rome', '--enable-rome=yes', '', d)}"
+EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'pronto', '--enable-pronto=yes', '', d)}"
+EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'cherokee', '--enable-cherokee=yes', '', d)}"
 
 FILES_${PN} += "${sysconfdir}/bluetooth/*"
 
