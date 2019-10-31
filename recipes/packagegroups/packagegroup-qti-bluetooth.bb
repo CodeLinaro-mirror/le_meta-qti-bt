@@ -1,7 +1,7 @@
 SUMMARY = "QTI Bluetooth opensource package groups"
+LICENSE = "BSD-3-Clause"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit packagegroup
-PROVIDES = "${PACKAGES}"
 
 PACKAGES = ' \
     packagegroup-qti-bluetooth \
