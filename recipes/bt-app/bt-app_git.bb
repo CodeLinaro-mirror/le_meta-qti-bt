@@ -9,21 +9,22 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 PACKAGE_ARCH="${MACHINE_ARCH}"
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://qcom-opensource/bt/bt-app/"
+SRC_URI = "file://qcom-opensource/bt/bt-app/ \
+           file://qcom-opensource/bt/obex_profiles"
 
 S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
 DEPENDS = "btvendorhal gen-gatt glib-2.0 btobex liblog"
 
 PACKAGECONFIG = "${@bb.utils.contains('COMBINED_FEATURES', 'qti-audio', 'audiohal', '', d)}"
-PACKAGECONFIG[audiohal] = "--enable-audiohal, --disable-audiohal, audiohal"
+PACKAGECONFIG[audiohal] = "--enable-audiohal --with-common-includes="${STAGING_INCDIR}/mm-audio/qahw_api/inc", \
+                           --disable-audiohal, audiohal qahw"
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
 
 EXTRA_OECONF = " \
-                --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
                 --with-glib \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-btobex \

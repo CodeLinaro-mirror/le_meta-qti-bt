@@ -6,13 +6,14 @@ HOMEPAGE = "https://www.codeaurora.org/"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=3775480a712fc46a69647678acb234cb"
 
-DEPENDS += "glib-2.0 btvendorhal"
+DEPENDS += "glib-2.0 libhardware btvendorhal system-core-headers"
 
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://qcom-opensource/bt/obex_profiles/"
+SRC_URI = "file://qcom-opensource/bt/obex_profiles/ \
+           file://qcom-opensource/bt/bt-app/"
 
 S = "${WORKDIR}/qcom-opensource/bt/obex_profiles/"
 
