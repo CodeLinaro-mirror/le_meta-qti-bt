@@ -7,8 +7,12 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "common zlib btvendorhal libbt-vendor system-media"
-DEPENDS_sdxprairie = "common zlib btvendorhal libbt-vendor"
+PACKAGE_ARCH="${MACHINE_ARCH}"
+
+DEPENDS = "zlib btvendorhal libbt-vendor media-headers liblog system-core-headers"
+
+PACKAGECONFIG = "${@bb.utils.contains('COMBINED_FEATURES', 'qti-audio', 'audiohal', '', d)}"
+PACKAGECONFIG[audiohal] = "--enable-audiohal, --disable-audiohal, audio-utils libhardware"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://system/bt/ \
@@ -28,19 +32,16 @@ INSANE_SKIP_${PN} = "dev-so"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
 LDFLAGS_append = " -llog "
 
-BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
-
 EXTRA_OECONF = " \
                 --with-zlib \
                 --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
                 --with-lib-path=${STAGING_LIBDIR} \
-                --enable-target=${BASEMACHINE} \
-                --enable-rome=${BASEPRODUCT} \
                "
 
-EXTRA_OECONF_append_robot-som += "--enable-som=yes"
-EXTRA_OECONF_remove_robot-pronto += "--enable-som=yes"
-EXTRA_OECONF_append_robot-pronto += "--enable-pronto=yes"
+EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'naples', '--enable-som=yes', '', d)}"
+EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'rome', '--enable-rome=yes', '', d)}"
+EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'pronto', '--enable-pronto=yes', '', d)}"
+EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'cherokee', '--enable-cherokee=yes', '', d)}"
 
 do_install_append() {
 
