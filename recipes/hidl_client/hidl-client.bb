@@ -7,6 +7,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 PR = "r0"
 DEPENDS = "common glib-2.0 system-core-headers liblog bttransport"
+DEPENDS_append_qrb5165 += " zlib"
 
 RDEPENDS_${PN} = "libcutils"
 
@@ -29,5 +30,6 @@ EXTRA_OECONF = "--with-lib-path=${STAGING_LIBDIR} \
                "
 
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
+CFLAGS_remove_qrb5165 += "-DUSE_ANDROID_LOGGING"
 LDFLAGS_append = " -llog "
 

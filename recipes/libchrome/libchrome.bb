@@ -14,6 +14,7 @@ SRC_URI += "file://0001-Add-Support-to-build-libchrome.patch"
 
 S = "${WORKDIR}/libchrome"
 CPPFLAGS_append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
+LDFLAGS_append_qrb5165 += " -llog"
 #PARALLEL_MAKE = ""
 
 do_install_append() {
