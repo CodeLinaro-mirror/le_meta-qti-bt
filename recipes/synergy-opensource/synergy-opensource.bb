@@ -6,7 +6,7 @@ LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=550794465ba0ec5312d6919e203a55f9"
 
-DEPENDS = "cmake cmake-native dbus synergy"
+DEPENDS = "cmake cmake-native dbus"
 
 FILESEXTRAPATHS_prepend := "${WORKSPACE}/:"
 SRC_URI = "file://synergy"
