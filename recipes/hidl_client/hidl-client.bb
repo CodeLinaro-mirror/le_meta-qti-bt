@@ -30,6 +30,5 @@ EXTRA_OECONF = "--with-lib-path=${STAGING_LIBDIR} \
                "
 
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
-CFLAGS_remove_qrb5165 += "-DUSE_ANDROID_LOGGING"
 LDFLAGS_append = " -llog "
 

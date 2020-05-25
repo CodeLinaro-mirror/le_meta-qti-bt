@@ -16,8 +16,6 @@ DEPENDS  += "glib-2.0 fluoride"
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
-CPPFLAGS_remove_qrb5165 = "-DUSE_ANDROID_LOGGING"
-CFLAGS_remove_qrb5165 = "-DUSE_ANDROID_LOGGING"
 
 
 EXTRA_OECONF = " \
