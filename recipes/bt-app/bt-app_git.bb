@@ -17,7 +17,7 @@ def get_depends():
     else:
         return   "btvendorhal glib-2.0 btobex libchrome fluoride audiohal"
 
-DEPENDS  += "${@get_depends()}"
+DEPENDS  += "${@get_depends()} libhardware"
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
