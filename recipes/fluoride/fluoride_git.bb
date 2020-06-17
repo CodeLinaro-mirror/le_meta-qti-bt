@@ -23,6 +23,10 @@ INSANE_SKIP_${PN} = "dev-so"
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
 CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
+CPPFLAGS_remove_qrb5165 = "-DUSE_ANDROID_LOGING"
+LDFLAGS_append_qrb5165 += " -lpthread -llog -lcutils"
+LDFLAGS_append_qrb5165 += " -Wl,--unresolved-symbols=ignore-in-shared-libs"
+CXX_append_qrb5165 += " -Wl,--no-as-needed"
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
 EXTRA_OECONF = " \

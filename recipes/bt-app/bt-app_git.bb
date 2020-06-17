@@ -23,6 +23,8 @@ CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_G
 CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
+CPPFLAGS_remove_qrb5165 += "-DUSE_ANDROID_LOGGING"
+CFLAGS_remove_qrb5165 += "-DUSE_ANDROID_LOGGING"
 
 EXTRA_OECONF = " \
                 --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
