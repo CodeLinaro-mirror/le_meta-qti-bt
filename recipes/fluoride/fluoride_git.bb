@@ -7,8 +7,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS += " common zlib btvendorhal libchrome bttransport audio-route audio-utils libutils libhardware"
-DEPENDS_append_qrb5165 += " libcutils"
+DEPENDS += " common zlib btvendorhal libchrome bttransport audio-route audio-utils libutils"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/system/bt/ \
@@ -24,9 +23,6 @@ INSANE_SKIP_${PN} = "dev-so"
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
 CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
-LDFLAGS_append_qrb5165 += " -lpthread -llog -lcutils"
-LDFLAGS_append_qrb5165 += " -Wl,--unresolved-symbols=ignore-in-shared-libs"
-CXX_append_qrb5165 += " -Wl,--no-as-needed"
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
 EXTRA_OECONF = " \
