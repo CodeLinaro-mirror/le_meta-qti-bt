@@ -18,4 +18,3 @@ S = "${WORKDIR}/qcom-opensource/bt/property-ops/"
 
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
-CFLAGS_remove_qrb5165 = "-DUSE_ANDROID_LOGGING"
