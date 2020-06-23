@@ -11,6 +11,7 @@ DEPENDS += "glib-2.0 btvendorhal"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 CFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 LDFLAGS_append = " -llog "
+CFLAGS_remove_qrb5165 = "-DUSE_ANDROID_LOGGING"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://qcom-opensource/bt/obex_profiles/"
