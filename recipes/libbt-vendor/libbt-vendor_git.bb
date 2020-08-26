@@ -8,6 +8,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "common system-core hci-qcomm-init glib-2.0"
+DEPENDS_sdxlemur = "common libutils liblog hci-qcomm-init glib-2.0"
 
 RDEPENDS_${PN} = "libcutils"
 
@@ -20,6 +21,7 @@ CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
 
 CPPFLAGS_append = "${@bb.utils.contains_any('PREFERRED_VERSION_linux-msm', '4.14', ' -DTIOCPMGET_544D ', '', d)}"
+CPPFLAGS_append = "${@bb.utils.contains_any('PREFERRED_VERSION_linux-msm', '5.4', ' -DTIOCPMGET_544D ', '', d)}"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
