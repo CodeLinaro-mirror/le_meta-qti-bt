@@ -20,6 +20,7 @@ CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
 
 CPPFLAGS_append = "${@bb.utils.contains_any('PREFERRED_VERSION_linux-msm', '4.14', ' -DTIOCPMGET_544D ', '', d)}"
+CPPFLAGS_append = "${@bb.utils.contains_any('PREFERRED_VERSION_linux-msm', '5.4', ' -DTIOCPMGET_544D ', '', d)}"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
