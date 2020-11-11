@@ -30,6 +30,9 @@ B = "${S}/drivers/bluetooth"
 
 do_patch_btdrv() {
     cp -f ${S}/Makefile.cc ${B}/Makefile
+    if [ -e ${B}/btpower.c ]; then
+        cp -f ${B}/btpower.c ${B}/bluetooth-power.c
+    fi
 }
 do_patch[postfuncs] += "do_patch_btdrv"
 
