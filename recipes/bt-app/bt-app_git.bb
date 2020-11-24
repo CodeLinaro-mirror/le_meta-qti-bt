@@ -19,6 +19,8 @@ def get_depends():
 
 DEPENDS  += "${@get_depends()}"
 DEPENDS_remove_sdxprairie = "audiohal"
+DEPENDS_remove_mdm9650 = "audiohal"
+DEPENDS_remove_sdxnightjar = "audiohal"
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
