@@ -19,6 +19,8 @@ def get_depends():
 
 DEPENDS  += "${@get_depends()}"
 DEPENDS_append_qrb5165 += " libhardware"
+DEPENDS_remove_sxr2130-mtp = "audiohal"
+
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
@@ -34,7 +36,7 @@ EXTRA_OECONF = " \
                 --with-btobex \
                 --with-gengatt \
                "
-EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
+EXTRA_OECONF += "${@bb.utils.contains('MACHINE', 'sxr2130-mtp', '--enable-target=${MACHINE}', '--enable-target=${BASEMACHINE}',  d)}"
 
 FILES_${PN} += "${sysconfdir}/bluetooth/*"
 
