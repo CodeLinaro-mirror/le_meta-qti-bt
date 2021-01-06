@@ -7,7 +7,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 
 DEPENDS += " liblog glib-2.0 media-headers"
-DEPENDS_append_qrb5165 += " libhardware"
+DEPENDS_append_kona += " libhardware"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth/bthost_ipc/"

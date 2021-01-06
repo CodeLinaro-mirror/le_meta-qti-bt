@@ -11,16 +11,10 @@ SRC_URI = "file://qcom-opensource/bt/bt-app/"
 
 S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
-def get_depends():
-    if "$(BASEMACHINE)" == "mdm9607":
-        return  "btvendorhal glib-2.0 btobex libchrome fluoride"
-    else:
-        return   "btvendorhal glib-2.0 btobex libchrome fluoride audiohal"
-
-DEPENDS  += "${@get_depends()}"
-DEPENDS_append_qrb5165 += " libhardware"
-DEPENDS_remove_sxr2130-mtp = "audiohal"
-
+DEPENDS += "btvendorhal glib-2.0 btobex libchrome fluoride audiohal"
+DEPENDS_remove_mdm9607  = "audiohal"
+DEPENDS_append_kona = " libhardware"
+DEPENDS_remove_sxr2130-mtp  = "audiohal"
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
