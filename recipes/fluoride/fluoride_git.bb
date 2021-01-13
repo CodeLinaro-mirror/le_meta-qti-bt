@@ -27,6 +27,7 @@ FILES_${PN} += "/persist/bluetooth/"
 INSANE_SKIP_${PN} = "dev-so"
 
 CFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
+CFLAGS_append_sdxnightjar = " -DKERNEL_MISSING_CLOCK_BOOTTIME_ALARM=TRUE"
 LDFLAGS_append = " -llog "
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
