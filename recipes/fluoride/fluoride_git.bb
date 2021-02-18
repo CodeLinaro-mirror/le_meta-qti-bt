@@ -9,7 +9,6 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "common zlib btvendorhal libbt-vendor system-media"
 DEPENDS_sdxprairie = "common zlib btvendorhal libbt-vendor"
-DEPENDS_mdm9650 = "common zlib btvendorhal libbt-vendor"
 DEPENDS_sdxnightjar = "common zlib btvendorhal libbt-vendor"
 
 FILESPATH =+ "${WORKSPACE}:"
@@ -28,6 +27,7 @@ FILES_${PN} += "/persist/bluetooth/"
 INSANE_SKIP_${PN} = "dev-so"
 
 CFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
+CFLAGS_append_sdxnightjar = " -DKERNEL_MISSING_CLOCK_BOOTTIME_ALARM=TRUE"
 LDFLAGS_append = " -llog "
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
