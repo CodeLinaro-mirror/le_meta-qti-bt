@@ -19,6 +19,6 @@ CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 LDFLAGS_append = " -llog "
 
 EXTRA_OECONF = "--with-glib"
-EXTRA_OECONF_append = " --enable-target=${BASEMACHINE}"
+EXTRA_OECONF_append_kona = " --enable-target=qrb5165"
 SOLIBS = ".so"
 FILES_SOLIBSDEV = ""
