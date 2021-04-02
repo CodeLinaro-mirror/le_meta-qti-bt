@@ -18,6 +18,12 @@ def get_depends():
         return   "btvendorhal gen-gatt glib-2.0 btobex audiohal"
 
 DEPENDS  += "${@get_depends()}"
+
+def get_depends_gaia(d):
+    if d.getVar('BASEMACHINE', True) == 'sdm845':
+        return "btvendorgaia"
+DEPENDS += "${@get_depends_gaia(d)}"
+
 DEPENDS_remove_sdxprairie = "audiohal"
 
 CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP"
