@@ -30,7 +30,7 @@ EXTRA_OECONF = " \
                 --with-btobex \
                 --with-gengatt \
                "
-EXTRA_OECONF += "${@bb.utils.contains('MACHINE', 'sxr2130-mtp', '--enable-target=${MACHINE}', '--enable-target=${BASEMACHINE}',  d)}"
+EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
 FILES_${PN} += "${sysconfdir}/bluetooth/*"
 
