@@ -29,8 +29,8 @@
 
 set -e
 
-BLUETOOTH_POWER_KERNEL_MODULE_PATH=/usr/lib/modules/$(uname -r)/kernel/drivers/bluetooth/bluetooth-power.ko
-BLUETOOTH_POWER_EXTRA_MODULE_PATH=/usr/lib/modules/$(uname -r)/extra/bluetooth-power.ko
+BLUETOOTH_POWER_KERNEL_MODULE_PATH=/lib/modules/$(uname -r)/kernel/drivers/bluetooth/bluetooth-power.ko
+BLUETOOTH_POWER_EXTRA_MODULE_PATH=/lib/modules/$(uname -r)/extra/bluetooth-power.ko
 case "$1" in
   start)
   if [ -e /sys/bus/platform/drivers/bt_power ]; then
