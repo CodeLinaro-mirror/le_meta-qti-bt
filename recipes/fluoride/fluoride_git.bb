@@ -7,7 +7,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS += " common zlib btvendorhal libchrome bttransport audio-route audio-utils libutils"
+DEPENDS += "zlib btvendorhal libchrome bttransport audio-utils libutils"
 DEPENDS_append_kona += " libcutils libhardware"
 DEPENDS_append_qrbx210-rbx += " libcutils libhardware"
 
