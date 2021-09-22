@@ -16,21 +16,14 @@ SRC_URI = "file://hardware/qcom/bt/libbt-vendor/"
 
 S = "${WORKDIR}/hardware/qcom/bt/libbt-vendor/"
 
-CFLAGS_append = " -DUSE_ANDROID_LOGGING "
-LDFLAGS_append = " -llog "
+#CFLAGS_append = " -DUSE_ANDROID_LOGGING "
+#LDFLAGS_append = " -llog "
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
-EXTRA_OECONF = "--with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
-                --with-lib-path=${STAGING_LIBDIR} \
-                --enable-target=${BASEMACHINE} \
+EXTRA_OECONF = "--enable-target=${BASEMACHINE} \
                 --enable-rome=${BASEPRODUCT} \
                 --with-glib \
                "
 
 FILES_${PN} += "${userfsdatadir}/misc/bluetooth/*"
-
-do_install_append () {
-    install -d ${D}${userfsdatadir}/misc/bluetooth
-    install -m 755 ${S}init.msm.bt.sh ${D}${userfsdatadir}/misc/bluetooth/
-}

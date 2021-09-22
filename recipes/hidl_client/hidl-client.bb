@@ -17,8 +17,7 @@ S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/tools/"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
-EXTRA_OECONF = "--with-lib-path=${STAGING_LIBDIR} \
-                --with-zlib \
+EXTRA_OECONF = "--with-zlib \
                 --with-glib \
                 --enable-static=yes \
                 --enable-wlan=yes \
@@ -28,6 +27,6 @@ EXTRA_OECONF = "--with-lib-path=${STAGING_LIBDIR} \
                 --enable-rome=${BASEPRODUCT} \
                "
 
-CFLAGS_append = " -DUSE_ANDROID_LOGGING "
-LDFLAGS_append = " -llog "
+#CFLAGS_append = " -DUSE_ANDROID_LOGGING "
+#LDFLAGS_append = " -llog "
 

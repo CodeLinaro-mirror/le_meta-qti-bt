@@ -13,14 +13,11 @@ S = "${WORKDIR}/vendor/qcom/opensource/bluetooth_ext/certification_tools/"
 
 DEPENDS  += "glib-2.0 fluoride btvendorhal"
 
-CPPFLAGS_append = " -DUSE_ANDROID_LOGGING"
-CFLAGS_append = " -DUSE_ANDROID_LOGGING "
-LDFLAGS_append = " -llog "
+#CPPFLAGS_append = " -DUSE_ANDROID_LOGGING"
+#CFLAGS_append = " -DUSE_ANDROID_LOGGING "
+#LDFLAGS_append = " -llog "
 
 
 EXTRA_OECONF = " \
-                --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
                 --with-glib \
-                --with-lib-path=${STAGING_LIBDIR} \
-                --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                "
