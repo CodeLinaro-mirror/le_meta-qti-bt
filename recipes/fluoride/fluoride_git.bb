@@ -40,6 +40,7 @@ EXTRA_OECONF = " \
                 --enable-static=yes \
                "
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 do_install_append() {
 
         cd  ${D}/${libdir}/ && ln -s libbluetoothdefault.so.0 bluetooth.default.so

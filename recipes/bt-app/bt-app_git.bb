@@ -31,4 +31,5 @@ EXTRA_OECONF = " \
                "
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES_${PN} += "${sysconfdir}/bluetooth/*"

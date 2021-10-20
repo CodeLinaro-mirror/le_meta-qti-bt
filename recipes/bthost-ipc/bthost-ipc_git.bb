@@ -23,4 +23,6 @@ EXTRA_OECONF = "--with-glib"
 EXTRA_OECONF_append_kona = " --enable-target=qrb5165"
 EXTRA_OECONF_append_qrbx210-rbx = " --enable-target=qrbx210-rbx"
 SOLIBS = ".so"
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES_SOLIBSDEV = ""
