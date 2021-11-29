@@ -20,4 +20,5 @@ RDEPENDS_${PN} = "\
     bt-cert \
     bt-property \
     fluoride \
+    bt-ext \
 "
