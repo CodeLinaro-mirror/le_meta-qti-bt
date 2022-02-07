@@ -15,7 +15,6 @@ DEPENDS += "btvendorhal glib-2.0 btobex libchrome fluoride audiohal bt-ext"
 DEPENDS_remove_mdm9607  = "audiohal"
 DEPENDS_append_kona = " libhardware"
 DEPENDS_remove_sxr2130-mtp  = "audiohal"
-DEPENDS_remove_qrbx210-rbx  = "audiohal"
 DEPENDS_append_qrbx210-rbx  = " libhardware media-headers"
 
 #CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
