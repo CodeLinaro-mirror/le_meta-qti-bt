@@ -8,7 +8,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 PR = "r0"
 
 FILESPATH =+ "${WORKSPACE}/:"
-SRC_URI = "git://source.codeaurora.org/quic/la/platform/external/libevent;protocol=https;nobranch=1;rev=6b11d747012c72746e485a24b68e65e28b8e015f;destsuffix=libevent"
+SRC_URI = "${CLO_LA_GIT}/platform/external/libevent;protocol=https;nobranch=1;rev=6b11d747012c72746e485a24b68e65e28b8e015f;destsuffix=libevent"
 SRC_URI += "file://0001-Delete-default-Makefile.patch"
 SRC_URI += "file://0001-Add-GNU-Autotool-Build.patch"
 
