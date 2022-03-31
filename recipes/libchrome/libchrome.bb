@@ -15,6 +15,7 @@ SRC_URI += "file://0001-Add-Support-to-build-libchrome.patch"
 S = "${WORKDIR}/libchrome"
 CPPFLAGS_append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 LDFLAGS_append_kona += " -llog"
+LDFLAGS_append_neo += " -llog"
 
 do_install_append() {
   install -D ${WORKDIR}/build/libchrome.pc ${D}${libdir}/pkgconfig/libchrome.pc
