@@ -16,6 +16,7 @@ DEPENDS_remove_mdm9607  = "audiohal"
 DEPENDS_append_kona = " libhardware"
 DEPENDS_remove_sxr2130-mtp  = "audiohal"
 DEPENDS_append_qrbx210-rbx  = " libhardware media-headers"
+DEPENDS_append_qcs610  = " libhardware media-headers"
 
 #CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 #CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
