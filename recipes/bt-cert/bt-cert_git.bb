@@ -2,7 +2,7 @@ inherit autotools pkgconfig
 
 DESCRIPTION = "Bluetooth certification tool"
 LICENSE = "Apache-2.0"
-HOMEPAGE = "https://www.codeaurora.org/"
+HOMEPAGE = "https://www.codelinaro.org/"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
