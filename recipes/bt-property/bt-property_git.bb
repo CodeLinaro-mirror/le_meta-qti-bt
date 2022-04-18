@@ -1,7 +1,7 @@
 inherit autotools-brokensep pkgconfig
 
 DESCRIPTION = "Bluetooth Property Daemon"
-HOMEPAGE = "http://codeaurora.org/"
+HOMEPAGE = "http://git.codelinaro.org/"
 LICENSE = "Apache-2.0"
 
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\

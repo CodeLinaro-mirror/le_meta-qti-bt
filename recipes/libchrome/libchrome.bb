@@ -9,7 +9,7 @@ PR = "r0"
 DEPENDS = "libevent libmodpb64 gtest liblog"
 
 FILESPATH =+ "${WORKSPACE}/:"
-SRC_URI = "git://source.codeaurora.org/quic/la/platform/external/libchrome;protocol=git;nobranch=1;rev=b4b96cdfd447daac679b067c3b969cc5ed22a798;destsuffix=libchrome"
+SRC_URI = "git://git.codelinaro.org/clo/la/platform/external/libchrome;protocol=git;nobranch=1;rev=b4b96cdfd447daac679b067c3b969cc5ed22a798;destsuffix=libchrome"
 SRC_URI += "file://0001-Add-Support-to-build-libchrome.patch"
 
 S = "${WORKDIR}/libchrome"
