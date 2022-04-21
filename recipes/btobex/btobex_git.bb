@@ -2,7 +2,7 @@ inherit autotools pkgconfig
 
 DESCRIPTION = "Bluetooth OBEX"
 LICENSE = "BSD"
-HOMEPAGE = "https://www.codeaurora.org/"
+HOMEPAGE = "https://git.codelinaro.org/"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=3775480a712fc46a69647678acb234cb"
 

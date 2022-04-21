@@ -1,7 +1,7 @@
 inherit autotools-brokensep pkgconfig
 
 DESCRIPTION = "Bluetooth Vendor Library"
-HOMEPAGE = "http://codeaurora.org/"
+HOMEPAGE = "https://git.codelinaro.org/"
 LICENSE = "Apache-2.0"
 
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
