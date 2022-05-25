@@ -9,12 +9,13 @@ PR = "r0"
 DEPENDS = "libevent libmodpb64 gtest liblog"
 
 FILESPATH =+ "${WORKSPACE}/:"
-SRC_URI = "git://source.codeaurora.org/quic/la/platform/external/libchrome;protocol=https;nobranch=1;rev=b4b96cdfd447daac679b067c3b969cc5ed22a798;destsuffix=libchrome"
+SRC_URI = "${CLO_LA_GIT}/platform/external/libchrome;protocol=https;nobranch=1;rev=b4b96cdfd447daac679b067c3b969cc5ed22a798;destsuffix=libchrome"
 SRC_URI += "file://0001-Add-Support-to-build-libchrome.patch"
 
 S = "${WORKDIR}/libchrome"
 CPPFLAGS_append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 LDFLAGS_append_kona += " -llog"
+LDFLAGS_append_neo += " -llog"
 
 do_install_append() {
   install -D ${WORKDIR}/build/libchrome.pc ${D}${libdir}/pkgconfig/libchrome.pc
