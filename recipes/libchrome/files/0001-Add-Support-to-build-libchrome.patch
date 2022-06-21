@@ -400,6 +400,11 @@ index 0000000..37c3331
 +base_include_HEADERS += base/sequence_checker_impl.h
 +base_include_HEADERS += base/single_thread_task_runner.h
 +base_include_HEADERS += base/tracking_info.h
++
++pkgconfigdir = $(libdir)/pkgconfig
++pkgconfig_DATA = libchrome.pc
++EXTRA_DIST = $(pkgconfig_DATA)
++
 \ No newline at end of file
 diff --git a/base/allocator/allocator_shim.cc b/base/allocator/allocator_shim.cc
 index 09ed45f..bbe8170 100644
