@@ -1,4 +1,4 @@
-inherit autotools-brokensep
+inherit autotools-brokensep pkgconfig
 
 DESCRIPTION = "hardware btvendorhal headers"
 HOMEPAGE = "http://codeaurora.org/"
@@ -12,4 +12,4 @@ S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/"
 
 PR = "r1"
 
-DEPENDS += " libcutils libutils"
+DEPENDS += " libcutils libutils libhardware"
