@@ -29,20 +29,21 @@
 
 set -e
 
-BLUETOOTH_POWER_KERNEL_MODULE_PATH=/usr/lib/modules/$(uname -r)/kernel/drivers/bluetooth/bluetooth-power.ko
-BLUETOOTH_POWER_EXTRA_MODULE_PATH=/usr/lib/modules/$(uname -r)/extra/bluetooth-power.ko
+DR_NAME=btpower.ko
+BT_POWER_KERNEL_MODULE_PATH=/usr/lib/modules/$(uname -r)/kernel/drivers/bluetooth/$DR_NAME
+BT_POWER_EXTRA_MODULE_PATH=/usr/lib/modules/$(uname -r)/extra/$DR_NAME
 case "$1" in
   start)
   if [ -e /sys/bus/platform/drivers/bt_power ]; then
-	echo "bluetooth-power has already resided in kernel."
-  elif [ -e ${BLUETOOTH_POWER_EXTRA_MODULE_PATH} ]; then
-	insmod ${BLUETOOTH_POWER_EXTRA_MODULE_PATH}
-	echo "insmod extra bluetooth-power.ko Done"
-  elif [ -e ${BLUETOOTH_POWER_KERNEL_MODULE_PATH} ]; then
-	insmod ${BLUETOOTH_POWER_KERNEL_MODULE_PATH}
-	echo "insmod kernel bluetooth-power.ko Done"
+	echo "btpower has already resided in kernel."
+  elif [ -e ${BT_POWER_EXTRA_MODULE_PATH} ]; then
+	insmod ${BT_POWER_EXTRA_MODULE_PATH}
+	echo "insmod extra $DR_NAME Done"
+  elif [ -e ${BT_POWER_KERNEL_MODULE_PATH} ]; then
+	insmod ${BT_POWER_KERNEL_MODULE_PATH}
+	echo "insmod kernel $DR_NAME Done"
   else
-    echo "exit due to no bluetooth-power.ko"
+    echo "exit due to no $DR_NAME"
   fi
   exit 0
   ;;

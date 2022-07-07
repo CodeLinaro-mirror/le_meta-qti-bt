@@ -4,3 +4,7 @@ LICENSE = "BSD-3-Clause-Clear"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit packagegroup
+
+RDEPENDS_${PN} += " \
+    ${@bb.utils.contains("MACHINE_FEATURES", "qti-bluetooth", "bt-dlkm", "", d)} \
+    "
