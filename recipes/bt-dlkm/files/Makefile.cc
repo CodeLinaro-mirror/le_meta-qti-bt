@@ -1,7 +1,7 @@
 KBDIR ?= /lib/modules/$(shell uname -r)/build
 $(info KBDIR=${KBDIR})
 
-obj-m += bluetooth-power.o
+obj-m += btpower.o
 
 SRC := $(shell pwd)
 
