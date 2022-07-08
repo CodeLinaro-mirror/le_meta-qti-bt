@@ -33,8 +33,6 @@ do_patch_btdrv() {
 }
 do_patch[postfuncs] += "do_patch_btdrv"
 
-EXTRA_OEMAKE += "V=1 KBDIR=${STAGING_KERNEL_BUILDDIR}"
-
 do_install_append() {
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
        install -d ${D}${systemd_unitdir}/system
