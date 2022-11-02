@@ -34,3 +34,17 @@ EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES_${PN} += "${sysconfdir}/bluetooth/*"
+FILES_${PN} += "${userfsdatadir}/misc/bluetooth/*"
+
+do_install_append() {
+        #create /data/misc/bluetooth/ folder
+        install -d ${D}${userfsdatadir}/misc/bluetooth/
+
+        if [ -f ${S}conf/AdvertiserConfigFile.txt ]; then
+           install -m 0660 ${S}conf/AdvertiserConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
+        fi
+
+        if [ -f ${S}conf/ServerConfigFile.txt ]; then
+           install -m 0660 ${S}conf/ServerConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
+        fi
+}
