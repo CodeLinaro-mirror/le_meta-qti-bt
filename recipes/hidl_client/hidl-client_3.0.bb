@@ -8,12 +8,12 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 PR = "r0"
 DEPENDS = "glib-2.0 liblog bttransport"
 
-RDEPENDS_${PN} = "libcutils"
+RDEPENDS:${PN} = "libcutils"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth/tools/"
 SRC_DIR = "${WORKSPACE}/vendor/qcom/opensource/bluetooth/tools/"
-S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/tools/"
+S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/tools"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 

@@ -14,7 +14,7 @@ SRC_URI = "file://qcom-opensource/bt/property-ops/"
 EXTRA_OECONF = " \
                 --with-glib \
                "
-S = "${WORKDIR}/qcom-opensource/bt/property-ops/"
+S = "${WORKDIR}/qcom-opensource/bt/property-ops"
 
 #CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 #LDFLAGS_append = " -llog "
