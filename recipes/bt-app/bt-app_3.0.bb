@@ -12,18 +12,20 @@ SRC_URI = "file://qcom-opensource/bt/bt-app/"
 S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
 DEPENDS += "btvendorhal glib-2.0 btobex libchrome fluoride audiohal bt-ext"
-DEPENDS_remove_mdm9607  = "audiohal"
-DEPENDS_append_kona = " libhardware"
-DEPENDS_append_neo = " libhardware "
-DEPENDS_remove_sxr2130-mtp  = "audiohal"
-DEPENDS_remove_neo  = "audiohal"
-DEPENDS_append_qrbx210-rbx  = " libhardware media-headers"
+DEPENDS:remove:mdm9607  = "audiohal"
+DEPENDS:append:kona = " libhardware"
+DEPENDS:append:neo = " libhardware "
+DEPENDS:remove:sxr2130-mtp  = "audiohal"
+DEPENDS:remove:neo  = "audiohal"
+DEPENDS:append:qrbx210-rbx  = " libhardware media-headers"
+DEPENDS:append:kalama  = " media-headers"
+DEPENDS:remove:kalama  = " audiohal"
 
 #CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 #CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 #CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 #LDFLAGS_append = " -llog "
-
+SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 
 EXTRA_OECONF = " \
                 --with-glib \
@@ -33,4 +35,4 @@ EXTRA_OECONF = " \
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-FILES_${PN} += "${sysconfdir}/bluetooth/*"
+FILES:${PN} += "${sysconfdir}/bluetooth/*"

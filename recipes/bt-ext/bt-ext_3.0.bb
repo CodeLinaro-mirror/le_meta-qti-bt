@@ -15,5 +15,5 @@ S = "${WORKDIR}/vendor/qcom/opensource/bluetooth_ext/"
 
 DEPENDS += "libchrome"
 
-ALLOW_EMPTY_${PN} = "1"
-FILES_${PN} += "${libdir}/pkgconfig/"
+ALLOW_EMPTY:${PN} = "1"
+FILES:${PN} += "${libdir}/pkgconfig/"

@@ -9,7 +9,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = " hci-qcomm-init glib-2.0"
 
-RDEPENDS_${PN} = "libcutils"
+RDEPENDS:${PN} = "libcutils"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://hardware/qcom/bt/libbt-vendor/"
@@ -26,4 +26,4 @@ EXTRA_OECONF = "--enable-target=${BASEMACHINE} \
                 --with-glib \
                "
 
-FILES_${PN} += "${userfsdatadir}/misc/bluetooth/*"
+FILES:${PN} += "${userfsdatadir}/misc/bluetooth/*"
