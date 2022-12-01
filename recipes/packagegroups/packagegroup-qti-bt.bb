@@ -6,5 +6,5 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit packagegroup
 
 RDEPENDS_${PN} += " \
-    ${@bb.utils.contains("MACHINE_FEATURES", "qti-bluetooth", "bt-dlkm", "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "qti-bluetooth", bb.utils.contains('PREFERRED_VERSION_linux-msm', '5.15', 'btpower-dlkm', 'bt-dlkm', d), "", d)} \
     "
