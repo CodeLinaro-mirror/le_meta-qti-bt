@@ -29,10 +29,8 @@ PKG_EXTRA_KCONFIG:= \
     CONFIG_MSM_BT_POWER=m \
 
 define Build/Compile
-	$(KERNEL_MAKE) M="$(PKG_BUILD_DIR)" \
-	CC=$(KERNEL_CC) \
+	$(MAKE) -C ${LINUX_DIR} M="$(PKG_BUILD_DIR)" \
 	$(PKG_EXTRA_KCONFIG) \
-	KERNEL_SRC=$(LINUX_DIR) \
 	modules
 endef
 
