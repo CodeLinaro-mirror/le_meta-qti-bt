@@ -17,6 +17,8 @@ FILESPATH   =+ "${WORKSPACE}:"
 SRC_URI     =  "file://vendor/qcom/opensource/bt-kernel/"
 SRC_URI    +=  "file://bt_dlkm"
 SRC_URI    +=  "file://bt_dlkm.service"
+SRC_URI += "file://kernel-5.15/kernel_platform"
+SRC_URI += "file://kernel-5.15/out/${KERNEL_DEFCONFIG}"
 
 S = "${WORKDIR}/vendor/qcom/opensource/bt-kernel"
 
@@ -34,16 +36,16 @@ do_configure() {
 
 do_compile() {
 
-    cd ${TOPDIR}/../src/kernel-${PREFERRED_VERSION_linux-msm}/kernel_platform  && \
+    cd ${WORKDIR}/kernel-5.15/kernel_platform && \
 
     KBUILD_OPTIONS+="CONFIG_BTFM_SLIM=m" \
-    KBUILD_EXTRA_SYMBOLS=${TOPDIR}/../src/kernel-${PREFERRED_VERSION_linux-msm}/out/msm-kernel-kalama-${KERNEL_VARIANT}/msm-kernel/wlan-platform/Module.symvers \
+    KBUILD_EXTRA_SYMBOLS=${D}${base_libdir}/modules/${KERNEL_VERSION}/cnsswlan-kernel/Module.symvers \
     BUILD_CONFIG=msm-kernel/${KERNEL_CONFIG} \
     EXT_MODULES=../../vendor/qcom/opensource/bt-kernel \
-    ROOTDIR=${WORKSPACE}/ \
+    ROOTDIR=${WORKDIR}/ \
     MODULE_MSM_BT_POWER=m \
     MODULE_OUT=${S} \
-    OUT_DIR=../out/msm-kernel-kalama-${KERNEL_VARIANT}/ \
+    OUT_DIR=${WORKDIR}/kernel-5.15/out/${KERNEL_DEFCONFIG} \
     KERNEL_UAPI_HEADERS_DIR=${STAGING_KERNEL_BUILDDIR} \
     ./build/build_module.sh
 }
@@ -55,9 +57,9 @@ do_install() {
     install -m 755 ${WORKDIR}/bt_dlkm ${D}${sysconfdir}/initscripts
     install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}
 
-        # strip debug symbols and sign the module
-        ${STAGING_DIR_NATIVE}/usr/libexec/aarch64-oe-linux/gcc/aarch64-oe-linux/11.3.0/strip \
-              --strip-debug ${WORKDIR}/vendor/qcom/opensource/bt-kernel/pwr/btpower.ko
+#        # strip debug symbols and sign the module
+#        ${STAGING_DIR_NATIVE}/usr/libexec/aarch64-oe-linux/gcc/aarch64-oe-linux/11.3.0/strip \
+#              --strip-debug ${WORKDIR}/vendor/qcom/opensource/bt-kernel/pwr/btpower.ko
 
     install -m 0755 ${WORKDIR}/vendor/qcom/opensource/bt-kernel/pwr/btpower.ko -D ${D}/${nonarch_base_libdir}/modules/${KERNEL_VERSION}
     install -m 0755 ${WORKDIR}/vendor/qcom/opensource/bt-kernel/slimbus/bt_fm_slim.ko -D ${D}/${nonarch_base_libdir}/modules/${KERNEL_VERSION}
@@ -71,8 +73,7 @@ do_install:append() {
 do_deploy() {
 # Deploy unstripped kernel modules into ${DEPLOYDIR}/kernel_modules for debugging purposes
     install -d ${DEPLOYDIR}/kernel_modules
-    install -m 0644 ${WORKDIR}/vendor/qcom/opensource/bt-kernel/pwr/btpower.ko ${DEPLOYDIR}/kernel_modules
-    install -m 0644 ${WORKDIR}/vendor/qcom/opensource/bt-kernel/slimbus/bt_fm_slim.ko ${DEPLOYDIR}/kernel_modules
+    cp -rp ${WORKDIR}/vendor/qcom/opensource/bt-kernel/*/*.ko ${DEPLOYDIR}/kernel_modules
 }
 
 addtask deploy after do_install before do_package
