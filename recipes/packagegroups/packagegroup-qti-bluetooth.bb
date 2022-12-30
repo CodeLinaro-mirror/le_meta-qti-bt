@@ -23,4 +23,5 @@ RDEPENDS:${PN} = "\
     fluoride \
     bt-ext \
     bt-dlkm-kernel \
+    hidl-client \
 "
