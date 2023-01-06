@@ -6,47 +6,35 @@ ${LICENSE};md5=801f80980d171dd6425610833a22dbe6"
 
 inherit linux-kernel-base deploy
 
-PR = "r0"
-
-DEPENDS = "rsync-native wlan-platform btdevicetree"
-# DEPENDS += "bc-native bison-native"
-
-do_configure[depends] += "virtual/kernel:do_shared_workdir"
-
-FILESPATH   =+ "${WORKSPACE}:"
+FILESEXTRAPATHS:prepend := "${WORKSPACE}:"
 SRC_URI     =  "file://vendor/qcom/opensource/bt-kernel/"
 SRC_URI    +=  "file://bt_dlkm"
 SRC_URI    +=  "file://bt_dlkm.service"
-SRC_URI += "file://kernel-5.15/kernel_platform"
-SRC_URI += "file://kernel-5.15/out/${KERNEL_DEFCONFIG}"
-
 S = "${WORKDIR}/vendor/qcom/opensource/bt-kernel"
+DEPENDS += "virtual/kernel wlan-platform btdevicetree"
 
-EXTRA_OEMAKE += "TARGET_SUPPORT=${BASEMACHINE}"
-KERNEL_VERSION = "${@get_kernelversion_headers('${STAGING_KERNEL_BUILDDIR}')}"
-
-# Disable parallel make
-PARALLEL_MAKE = ""
-
-# Disable parallel make
-PARALLEL_MAKE = "-j1"
+KERNEL_VERSION = "${@get_kernelversion_file("${STAGING_KERNEL_BUILDDIR}")}"
+EXT_MODULES = "${@os.path.relpath("${S}", "${KERNEL_PLATFORM_PATH}")}"
 
 do_configure() {
+  :
 }
+
+do_compile[depends] += "virtual/kernel:do_shared_workdir"
 
 do_compile() {
 
-    cd ${WORKDIR}/kernel-5.15/kernel_platform && \
+    cd ${KERNEL_PLATFORM_PATH}
 
     KBUILD_OPTIONS+="CONFIG_BTFM_SLIM=m" \
-    KBUILD_EXTRA_SYMBOLS=${D}${base_libdir}/modules/${KERNEL_VERSION}/cnsswlan-kernel/Module.symvers \
-    BUILD_CONFIG=msm-kernel/${KERNEL_CONFIG} \
-    EXT_MODULES=../../vendor/qcom/opensource/bt-kernel \
-    ROOTDIR=${WORKDIR}/ \
     MODULE_MSM_BT_POWER=m \
-    MODULE_OUT=${S} \
-    OUT_DIR=${WORKDIR}/kernel-5.15/out/${KERNEL_DEFCONFIG} \
-    KERNEL_UAPI_HEADERS_DIR=${STAGING_KERNEL_BUILDDIR} \
+    KBUILD_EXTRA_SYMBOLS=${STAGING_DIR_HOST}/lib/modules/${KERNEL_VERSION}/cnsswlan-kernel/Module.symvers \
+    BUILD_CONFIG=msm-kernel/${KERNEL_CONFIG} \
+    EXT_MODULES=${EXT_MODULES} \
+    ROOTDIR=${WORKDIR}/ \
+    KERNEL_KIT=${KERNEL_PREBUILT_PATH} \
+    OUT_DIR=${WORKDIR}/out/${KERNEL_DEFCONFIG} \
+    INPLACE_COMPILE=y \
     ./build/build_module.sh
 }
 
