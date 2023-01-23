@@ -29,10 +29,8 @@ PKG_EXTRA_KCONFIG:= \
     CONFIG_MSM_BT_POWER=m \
 
 define Build/Compile
-	$(KERNEL_MAKE) M="$(PKG_BUILD_DIR)" \
-	CC=$(KERNEL_CC) \
+	$(MAKE) -C ${LINUX_DIR} M="$(PKG_BUILD_DIR)" \
 	$(PKG_EXTRA_KCONFIG) \
-	KERNEL_SRC=$(LINUX_DIR) \
 	modules
 endef
 
@@ -56,6 +54,8 @@ define KernelPackage/${PKG_NAME}/install
 		$(INSTALL_DIR) $$$$$$$${MY_MOD_INSTALL_DIR}; \
 		$(INSTALL_BIN) $(PKG_BUILD_DIR)/pwr/btpower.ko $$$$$$$${MY_MOD_INSTALL_DIR}/; \
 	}
+	$(INSTALL_DIR) $(1)/lib/modules/bt
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/pwr/btpower.ko $(1)/lib/modules/bt/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_DIR) $(1)/etc/initscripts
 	$(INSTALL_BIN) ./files/bt-dlkm.init $(1)/etc/init.d
