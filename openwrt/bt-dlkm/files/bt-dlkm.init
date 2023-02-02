@@ -3,8 +3,8 @@
 #Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
 #SPDX-License-Identifier: BSD-3-Clause-Clear
 
-START=02
-STOP=97
+START=10
+STOP=89
 
 start() {
 	/etc/initscripts/start_bt_le.sh start
