@@ -6,9 +6,9 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 PR = "r0"
-DEPENDS = "common glib-2.0 system-core liblog bttransport"
+DEPENDS = "common glib-2.0 liblog bttransport"
 
-RDEPENDS_${PN} = "libcutils"
+RDEPENDS:${PN} = "libcutils"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth/tools/"
@@ -18,8 +18,6 @@ S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/tools/"
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
 EXTRA_OECONF = "--with-lib-path=${STAGING_LIBDIR} \
-                --with-zlib \
-                --with-glib \
                 --enable-static=yes \
                 --enable-wlan=yes \
                 --enable-bt=yes \
@@ -28,6 +26,6 @@ EXTRA_OECONF = "--with-lib-path=${STAGING_LIBDIR} \
                 --enable-rome=${BASEPRODUCT} \
                "
 
-CFLAGS_append = " -DUSE_ANDROID_LOGGING "
-LDFLAGS_append = " -llog "
+#CFLAGS:append = " -DUSE_ANDROID_LOGGING "
+#LDFLAGS:append = " -llog "
 
