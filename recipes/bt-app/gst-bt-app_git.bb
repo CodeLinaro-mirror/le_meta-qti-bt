@@ -12,11 +12,11 @@ S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
 DEPENDS += "btvendorhal glib-2.0 btobex audiohal libchrome"
 DEPENDS += "gstreamer1.0 gstreamer1.0-plugins-base orc qsthw-api gst-plugins"
-DEPENDS_remove_mdm9607 = "audiohal"
+DEPENDS:remove:mdm9607 = "audiohal"
 
-CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
-CFLAGS_append = " -DUSE_ANDROID_LOGGING "
-LDFLAGS_append = " -llog "
+CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
+CFLAGS:append = " -DUSE_ANDROID_LOGGING "
+LDFLAGS:append = " -llog "
 
 EXTRA_OECONF = " \
             --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
@@ -29,9 +29,9 @@ EXTRA_OECONF = " \
                "
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
-FILES_${PN} += "${sysconfdir}/bluetooth/*"
+FILES:${PN} += "${sysconfdir}/bluetooth/*"
 
-do_install_append() {
+do_install:append() {
         install -d ${D}${sysconfdir}/bluetooth/
 
         if [ -f ${S}conf/bt_app.conf ]; then

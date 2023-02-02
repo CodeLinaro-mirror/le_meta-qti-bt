@@ -12,4 +12,5 @@ S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/"
 
 PR = "r1"
 
-DEPENDS = "system-core"
+#DEPENDS = "system-core"
+DEPENDS += " libcutils libutils libhardware"

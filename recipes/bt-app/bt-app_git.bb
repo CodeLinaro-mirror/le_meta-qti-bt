@@ -18,11 +18,13 @@ def get_depends():
         return   "btvendorhal glib-2.0 btobex libchrome fluoride audiohal"
 
 DEPENDS  += "${@get_depends()}"
+DEPENDS:remove:kalama  = " audiohal"
 
-CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
-CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
-CFLAGS_append = " -DUSE_ANDROID_LOGGING "
-LDFLAGS_append = " -llog "
+CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
+CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
+CFLAGS:append = " -DUSE_ANDROID_LOGGING "
+LDFLAGS:append = " -llog "
+SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 
 EXTRA_OECONF = " \
                 --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
@@ -33,10 +35,10 @@ EXTRA_OECONF = " \
                "
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
-FILES_${PN} += "${sysconfdir}/bluetooth/*"
-FILES_${PN} += "${userfsdatadir}/misc/bluetooth/*"
+FILES:${PN} += "${sysconfdir}/bluetooth/*"
+FILES:${PN} += "${userfsdatadir}/misc/bluetooth/*"
 
-do_install_append() {
+do_install:append() {
         install -d ${D}${sysconfdir}/bluetooth/
 
         #create /data/misc/bluetooth/ folder

@@ -14,5 +14,5 @@ SRC_URI += "file://0001-Add-Support-to-build-libmodpb64.patch"
 CXXFLAGS += "-I${S}/modp_64"
 
 S = "${WORKDIR}/modp_b64"
-CPPFLAGS_append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
+CPPFLAGS:append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 #PARALLEL_MAKE = ""

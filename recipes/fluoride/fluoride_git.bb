@@ -7,7 +7,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "common zlib btvendorhal system-media libchrome bttransport"
+DEPENDS = "common zlib btvendorhal libchrome bttransport libutils libcutils audio-utils"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/system/bt/ \
@@ -17,12 +17,12 @@ S = "${WORKDIR}/vendor/qcom/opensource/system/bt/"
 S_EXT = "${WORKDIR}/vendor/qcom/opensource/bluetooth_ext/system_bt_ext/"
 
 FILES_SOLIBSDEV = ""
-FILES_${PN} += "${libdir}"
-FILES_${PN} += "${sysconfdir}/bluetooth/*"
-INSANE_SKIP_${PN} = "dev-so"
+FILES:${PN} += "${libdir}"
+FILES:${PN} += "${sysconfdir}/bluetooth/*"
+INSANE_SKIP:${PN} = "dev-so"
 
-CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
-CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
+CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
+CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
 EXTRA_OECONF = " \
@@ -35,7 +35,8 @@ EXTRA_OECONF = " \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                "
 
-do_install_append() {
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+do_install:append() {
 
 	install -d ${D}${sysconfdir}/bluetooth/
 
