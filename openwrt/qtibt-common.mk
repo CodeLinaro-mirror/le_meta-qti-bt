@@ -12,9 +12,9 @@ endif
 
 ifeq ($(TARGET_MACHINE),sdx65)
     BASEMACHINE :=sdxlemur
-else ifeq ($(TARGET_MACHINE),sdx35)
-    BASEMACHINE :=
-else ifeq ($(TARGET_MACHINE),sdx75)
+else ifeq ($(BOARD),sdx35)
+    BASEMACHINE :=sdxbaagha
+else ifeq ($(BOARD),sdx75)
     BASEMACHINE :=sdx75
 else
     $(warning Unknow TARGET_MACHINE "$(TARGET_MACHINE)", Use sdx75 by default.)
