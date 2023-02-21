@@ -18,7 +18,7 @@ DEPENDS:append:neo = " libhardware "
 DEPENDS:remove:sxr2130-mtp  = "audiohal"
 DEPENDS:remove:neo  = "audiohal"
 DEPENDS:append:qrbx210-rbx  = " libhardware media-headers"
-DEPENDS:append:kalama  = " media-headers"
+DEPENDS:append:kalama  = " libhardware media-headers"
 DEPENDS:remove:kalama  = " audiohal"
 
 #CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"

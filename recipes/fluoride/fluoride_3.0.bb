@@ -11,6 +11,7 @@ DEPENDS += "zlib btvendorhal libchrome bttransport audio-utils libutils bt-ext"
 DEPENDS:append:kona += " libcutils libhardware"
 DEPENDS:append:neo += " libcutils libhardware"
 DEPENDS:append:qrbx210-rbx += " libcutils libhardware"
+DEPENDS:append:kalama += " libhardware"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/system/bt/ \
