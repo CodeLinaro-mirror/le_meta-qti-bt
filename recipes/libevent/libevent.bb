@@ -14,7 +14,7 @@ SRC_URI += "file://0001-Add-GNU-Autotool-Build.patch"
 
 S = "${WORKDIR}/libevent"
 
-CPPFLAGS_append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
+CPPFLAGS:append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 
 #EXTRA_OECONF += "--with-extra-includes"
 #PARALLEL_MAKE = ""
