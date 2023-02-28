@@ -14,9 +14,9 @@ INITSCRIPT_PARAMS = "start 8 2 3 4 5 . stop 20 0 1 6 ."
 
 inherit update-rc.d systemd pkgconfig
 
-FILES_${PN} += "${systemd_unitdir}/system/"
+FILES:${PN} += "${systemd_unitdir}/system/"
 
-do_install_append() {
+do_install:append() {
        if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
         install -m 0755 ${WORKDIR}/start_btproperty -D ${D}${sysconfdir}/initscripts/${INITSCRIPT_NAME}
         install -d ${D}/etc/systemd/system/

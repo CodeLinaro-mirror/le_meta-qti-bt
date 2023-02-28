@@ -8,7 +8,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 PR = "r0"
 DEPENDS = "glib-2.0 liblog bttransport"
 
-RDEPENDS_${PN} = "libcutils"
+RDEPENDS:${PN} = "libcutils"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth/tools/"
@@ -27,6 +27,6 @@ EXTRA_OECONF = "--with-zlib \
                 --enable-rome=${BASEPRODUCT} \
                "
 
-#CFLAGS_append = " -DUSE_ANDROID_LOGGING "
-#LDFLAGS_append = " -llog "
+#CFLAGS:append = " -DUSE_ANDROID_LOGGING "
+#LDFLAGS:append = " -llog "
 
