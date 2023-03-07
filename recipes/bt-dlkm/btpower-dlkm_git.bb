@@ -1,39 +1,38 @@
-DESCRIPTION = "Bluetooth Kernel Modules"
-HOMEPAGE = "https://source.codeaurora.org/quic/le/meta-qti-bt"
-
+DESCRIPTION = "QTI Bluetooth Power Driver"
 LICENSE = "BSD-3-Clause & GPLv2"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/BSD-3-Clause;md5=550794465ba0ec5312d6919e203a55f9 \
                     file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
 
-SECTION = "qti-bt"
-
-inherit systemd
-inherit module
+inherit systemd module linux-kernel-base
 
 DEPENDS = "virtual/kernel"
+DEPENDS += "${@bb.utils.contains_any('MACHINE', 'sa525m', 'bt-devicetree', '', d)}"
 
-kernel_dir := "${WORKSPACE}/kernel/msm-${PREFERRED_VERSION_linux-msm}"
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
-FILESEXTRAPATHS_prepend := "${kernel_dir}:"
-
-SRC_URI = " \
-            file://drivers/bluetooth/ \
-            file://Makefile.cc \
-           "
+FILESPATH =+ "${WORKSPACE}:"
+SRC_URI = "file://vendor/qcom/opensource/bt-kernel/"
 SRC_URI += " \
             file://bluetooth_power.sh \
             file://bluetooth_power.service \
            "
 
-S = "${WORKDIR}"
-B = "${S}/drivers/bluetooth"
+RM_WORK_EXCLUDE += "${PN}"
 
-do_patch_btdrv() {
-    cp -f ${S}/Makefile.cc ${B}/Makefile
+do_configure[depends] += "virtual/kernel:do_shared_workdir"
+
+BT_BUILD_OUT="${WORKDIR}/vendor/qcom/opensource/bt-kernel-out"
+
+do_compile() {
+
+    cd ${WORKSPACE}/kernel-${PREFERRED_VERSION_linux-msm}/kernel_platform  && \
+    BUILD_CONFIG=${KERNEL_BUILD_CONFIG} \
+    EXT_MODULES=../../vendor/qcom/opensource/bt-kernel/ \
+    ROOTDIR=${WORKSPACE}/ \
+    MODULE_OUT=${BT_BUILD_OUT}/ \
+    OUT_DIR=${KERNEL_OUT_PATH}/ \
+    ./build/build_module.sh "CONFIG_MSM_BT_POWER=m"
 }
-do_patch[postfuncs] += "do_patch_btdrv"
 
-do_install_append() {
+do_install() {
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
        install -d ${D}${systemd_unitdir}/system
        install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants/
@@ -41,6 +40,7 @@ do_install_append() {
        ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/bluetooth_power.service
        install -d ${D}${sysconfdir}/initscripts
        install -m 0755 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
+       install -m 0755 ${BT_BUILD_OUT}/pwr/btpower.ko -D ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
     fi
 }
 
