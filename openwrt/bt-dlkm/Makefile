@@ -35,25 +35,8 @@ define Build/Compile
 endef
 
 define KernelPackage/${PKG_NAME}/install
-	{ \
-		if [ ! -e ${PKG_BUILD_DIR}/pwr/btpower.ko ]; then \
-			echo btpower.ko fails to be built; \
-			exit 1; \
-		fi; \
-		if which modinfo &>/dev/null; then \
-			MY_KERNEL_RELEASE=$$$$$$$$(modinfo -F vermagic ${PKG_BUILD_DIR}/pwr/btpower.ko | awk '{print $$$$$$$$1}'); \
-			MY_MOD_INSTALL_DIR=$(1)/lib/modules/$$$$$$$${MY_KERNEL_RELEASE}/extra; \
-		elif which grep &>/dev/null; then \
-			MY_KERNEL_RELEASE=$$$$$$$$(grep -a -o 'vermagic=[^[:space:]]\+' $(PKG_BUILD_DIR)/pwr/btpower.ko 2>/dev/null | \
-					awk -F= '{print $$$$$$$$2}'); \
-			MY_MOD_INSTALL_DIR=$(1)/lib/modules/$$$$$$$${MY_KERNEL_RELEASE}/extra; \
-		else \
-			MY_MOD_INSTALL_DIR=$(1)/lib/modules/bt; \
-		fi; \
-		echo MY_MOD_INSTALL_DIR=$$$$$$$${MY_MOD_INSTALL_DIR}; \
-		$(INSTALL_DIR) $$$$$$$${MY_MOD_INSTALL_DIR}; \
-		$(INSTALL_BIN) $(PKG_BUILD_DIR)/pwr/btpower.ko $$$$$$$${MY_MOD_INSTALL_DIR}/; \
-	}
+	$(INSTALL_DIR) $(1)/lib/modules/$(UNAME_VERSION)/extra
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/pwr/btpower.ko $(1)/lib/modules/$(UNAME_VERSION)/extra/
 	$(INSTALL_DIR) $(1)/lib/modules/bt
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/pwr/btpower.ko $(1)/lib/modules/bt/
 	$(INSTALL_DIR) $(1)/etc/init.d
