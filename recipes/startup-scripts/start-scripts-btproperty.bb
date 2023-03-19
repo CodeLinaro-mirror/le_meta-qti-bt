@@ -15,6 +15,8 @@ INITSCRIPT_PARAMS = "start 8 2 3 4 5 . stop 20 0 1 6 ."
 inherit update-rc.d systemd pkgconfig
 
 FILES:${PN} += "${systemd_unitdir}/system/"
+FILES:${PN} += "${WORKDIR}/start_btproperty"
+FILES:${PN} += "${WORKDIR}/btproperty.service"
 
 do_install:append() {
        if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
