@@ -12,12 +12,12 @@ SRC_URI = "file://qcom-opensource/bt/bt-app/"
 S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
 DEPENDS += "btvendorhal glib-2.0 btobex libchrome fluoride audiohal bt-ext"
-DEPENDS:remove_mdm9607  = "audiohal"
-DEPENDS:append_kona = " libhardware"
-DEPENDS:append_qrb5165 += " libhardware"
-DEPENDS:remove_sxr2130-mtp  = "audiohal"
-DEPENDS:append_qrbx210-rbx  = " libhardware media-headers"
-DEPENDS:append_qcs610  = " libhardware media-headers"
+DEPENDS:remove:mdm9607  = "audiohal"
+DEPENDS:append:kona = " libhardware"
+DEPENDS:append:qrb5165 += " libhardware"
+DEPENDS:remove:sxr2130-mtp  = "audiohal"
+DEPENDS:append:qrbx210-rbx  = " libhardware media-headers"
+DEPENDS:append:qcs610  = " libhardware media-headers"
 
 #CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 #CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
@@ -36,7 +36,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES:${PN} += "${sysconfdir}/bluetooth/*"
 FILES:${PN} += "${userfsdatadir}/misc/bluetooth/*"
 
-do_install:append() {
+do_install:append () {
         #create /data/misc/bluetooth/ folder
         install -d ${D}${userfsdatadir}/misc/bluetooth/
 
