@@ -11,7 +11,7 @@ SRC_URI = "file://qcom-opensource/bt/bt-app/"
 
 S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
-DEPENDS += "btvendorhal glib-2.0 btobex libchrome fluoride audiohal bt-ext"
+DEPENDS += "btvendorhal glib-2.0 btobex libchrome fluoride bt-ext"
 DEPENDS:remove:mdm9607  = "audiohal"
 DEPENDS:append:kona = " libhardware"
 DEPENDS:append:qrb5165 += " libhardware"
