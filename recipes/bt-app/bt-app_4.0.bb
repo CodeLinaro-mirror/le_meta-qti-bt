@@ -18,7 +18,7 @@ DEPENDS:append:neo = " libhardware "
 DEPENDS:remove:sxr2130-mtp  = "audiohal"
 DEPENDS:remove:neo  = "audiohal"
 DEPENDS:append:qrbx210-rbx  = " libhardware media-headers"
-DEPENDS:append:kalama  = " media-headers"
+DEPENDS:append:kalama  = " libhardware media-headers"
 DEPENDS:remove:kalama  = " audiohal"
 
 #CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
@@ -36,3 +36,17 @@ EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES:${PN} += "${sysconfdir}/bluetooth/*"
+FILES:${PN} += "${userfsdatadir}/misc/bluetooth/*"
+
+do_install:append() {
+    #create /data/misc/bluetooth/ folder
+    install -d ${D}${userfsdatadir}/misc/bluetooth/
+
+    if [ -f ${S}conf/AdvertiserConfigFile.txt ]; then
+      install -m 0660 ${S}conf/AdvertiserConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
+    fi
+
+    if [ -f ${S}conf/ServerConfigFile.txt ]; then
+      install -m 0660 ${S}conf/ServerConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
+    fi
+}

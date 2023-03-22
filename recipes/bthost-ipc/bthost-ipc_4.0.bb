@@ -10,6 +10,7 @@ DEPENDS += " liblog glib-2.0 media-headers fluoride"
 DEPENDS:append:kona += " libhardware"
 DEPENDS:append:qrbx210-rbx += " libhardware"
 DEPENDS:append:neo += " libhardware"
+DEPENDS:append:kalama += " libhardware"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth/bthost_ipc/"
