@@ -1,0 +1,26 @@
+From 9a6cbedaf85db3fa3029cbb767962b8ce29fd756 Mon Sep 17 00:00:00 2001
+From: Xin Wang <quic_xwangw@quicinc.com>
+Date: Wed, 29 Mar 2023 18:38:34 +0800
+Subject: [PATCH] libevnet: Correct Header File of sysctl
+
+Signed-off-by: Xin Wang <quic_xwangw@quicinc.com>
+---
+ arc4random.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arc4random.c b/arc4random.c
+index 3977339..5a4ca15 100644
+--- a/arc4random.c
++++ b/arc4random.c
+@@ -59,7 +59,7 @@
+ #include <sys/param.h>
+ #include <sys/time.h>
+ #ifdef _EVENT_HAVE_SYS_SYSCTL_H
+-#include <sys/sysctl.h>
++#include <linux/sysctl.h>
+ #endif
+ #endif
+ #include <limits.h>
+-- 
+2.39.2
+
