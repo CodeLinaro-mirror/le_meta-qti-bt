@@ -2,6 +2,7 @@ SUMMARY = "Package group to bring in BT releated packages for LE system"
 
 LICENSE = "BSD-3-Clause"
 
+PACKAGE_ARCH = "${TUNE_PKGARCH}"
 inherit packagegroup
 
 PROVIDES = "${PACKAGES}"
