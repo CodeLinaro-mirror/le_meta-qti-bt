@@ -11,6 +11,7 @@ FILESPATH =+ "${WORKSPACE}/:"
 SRC_URI = "${CLO_LA_GIT}/platform/external/libevent;protocol=https;nobranch=1;rev=6b11d747012c72746e485a24b68e65e28b8e015f;destsuffix=libevent"
 SRC_URI += "file://0001-Delete-default-Makefile.patch"
 SRC_URI += "file://0001-Add-GNU-Autotool-Build.patch"
+SRC_URI += "file://0001-Correct-Header-File-Sysctl.patch"
 
 S = "${WORKDIR}/libevent"
 
