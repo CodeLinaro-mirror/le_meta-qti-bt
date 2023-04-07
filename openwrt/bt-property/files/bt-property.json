@@ -1,0 +1,17 @@
+{
+	"bounding": [
+		"CAP_KILL"
+	],
+	"permitted":[
+		"CAP_KILL"
+	],
+	"inheritable": [
+		"CAP_KILL"
+	],
+	"effective": [
+		"CAP_KILL"
+	],
+	"ambient": [
+		"CAP_KILL"
+	]
+}
