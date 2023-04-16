@@ -7,7 +7,9 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "common zlib btvendorhal system-media libchrome bttransport"
+DEPENDS = "common zlib btvendorhal libchrome bttransport"
+DEPENDS += "libcutils libhardware"
+DEPENDS_append_qcs6490 += "media-headers audio-utils"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/system/bt/ \
@@ -34,6 +36,9 @@ EXTRA_OECONF = " \
                 --enable-static=yes \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                "
+LDFLAGS_append_qcs6490 += " -lpthread -llog -lcutils"
+LDFLAGS_append_qcs6490 += " -Wl,--unresolved-symbols=ignore-in-shared-libs"
+CXX_append_qcs6490 += " -Wl,--no-as-needed"
 
 do_install_append() {
 

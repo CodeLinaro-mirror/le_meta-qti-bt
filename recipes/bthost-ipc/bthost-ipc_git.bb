@@ -7,17 +7,18 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 PR = "r0"
 
-DEPENDS = "liblog glib-2.0"
+DEPENDS = "liblog glib-2.0 media-headers libhardware"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth/bthost_ipc/"
 
 S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/bthost_ipc/"
 
-CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
-CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
-LDFLAGS_append = " -llog "
+# CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
+# CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
+# LDFLAGS_append = " -llog "
 
 EXTRA_OECONF = "--with-glib"
+EXTRA_OECONF_append_qcs6490 = " --enable-target=qcs6490"
 SOLIBS = ".so"
 FILES_SOLIBSDEV = ""
