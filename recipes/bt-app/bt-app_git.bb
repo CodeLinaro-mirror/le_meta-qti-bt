@@ -19,6 +19,7 @@ def get_depends():
 
 DEPENDS  += "${@get_depends()}"
 DEPENDS:remove:kalama  = " audiohal"
+#DEPENDS:remove:qrb5165  = " audiohal"
 
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
@@ -35,6 +36,7 @@ EXTRA_OECONF = " \
                "
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES:${PN} += "${sysconfdir}/bluetooth/*"
 FILES:${PN} += "${userfsdatadir}/misc/bluetooth/*"
 

@@ -17,8 +17,11 @@ BTVENDOR:qrbx210-rbx = 'True'
 RDEPENDS:${PN} = "\
     bthost-ipc \
     bt-app \
+    ${@oe.utils.conditional('BTVENDOR', 'True', 'libbt-vendor', '', d)} \
     bt-cert \
     bt-property \
     fluoride \
+    bttransport \
     bt-dlkm-kernel \
+    hidl-client \
 "
