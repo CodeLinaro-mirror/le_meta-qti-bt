@@ -17,6 +17,7 @@ define Package/$(PKG_NAME)
 	SECTION:=${QTIBT_SECTION}
 	CATEGORY:=${CATEGORY_BIN_DESC}
 	TITLE:=${PKG_NAME}
+	USERID:=qbt=2888:qbt=2888
 	DEPENDS:=+glib2
 endef
 
@@ -30,8 +31,12 @@ define Build/Prepare
 endef
 
 define Package/$(PKG_NAME)/install
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_DIR) $(1)/etc/capabilities
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/* $(1)/usr/bin/
+	$(INSTALL_BIN) ./files/bt-property.init $(1)/etc/init.d/
+	$(INSTALL_CONF) ./files/bt-property.json $(1)/etc/capabilities/
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
