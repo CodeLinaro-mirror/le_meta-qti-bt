@@ -14,8 +14,8 @@ MY_PROG=/usr/bin/btproperty
 start_service() {
 	if [ ! -d /data/misc/bluetooth ]; then
 		mkdir -p /data/misc/bluetooth
-		chown qbt:qbt /data/misc/bluetooth
-		chmod 0755 /data/misc/bluetooth
+		chown qbt:root /data/misc/bluetooth
+		chmod 0775 /data/misc/bluetooth
 	fi
 	procd_open_instance
 		procd_set_param command ${MY_PROG}
