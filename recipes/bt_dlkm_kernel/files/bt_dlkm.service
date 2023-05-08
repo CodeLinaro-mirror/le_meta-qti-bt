@@ -39,6 +39,8 @@ Type=oneshot
 RemainAfterExit=Yes
 ExecStart=/etc/initscripts/bt_dlkm start
 ExecStop=/etc/initscripts/bt_dlkm stop
+User=root
+Group=root
 
 [Install]
 WantedBy=multi-user.target
