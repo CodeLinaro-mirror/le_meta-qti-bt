@@ -6,7 +6,7 @@ HOMEPAGE = "https://www.codeaurora.org/"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-FILESPATH =+ "${WORKSPACE}:"
+FILESPATH =+ "${WORKSPACE}/../:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth_ext/certification_tools/"
 
 S = "${WORKDIR}/vendor/qcom/opensource/bluetooth_ext/certification_tools/"

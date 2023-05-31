@@ -6,7 +6,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-FILESPATH =+ "${WORKSPACE}:"
+FILESPATH =+ "${WORKSPACE}/../:"
 SRC_URI   = "file://vendor/qcom/opensource/bluetooth/"
 S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/"
 
@@ -14,3 +14,4 @@ PR = "r1"
 
 #DEPENDS = "system-core"
 DEPENDS += " libcutils libutils libhardware"
+DEPENDS:remove:vt-64 = "libhardware"

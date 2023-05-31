@@ -10,7 +10,7 @@ DEPENDS = "common glib-2.0 liblog bttransport"
 
 RDEPENDS:${PN} = "libcutils"
 
-FILESPATH =+ "${WORKSPACE}:"
+FILESPATH =+ "${WORKSPACE}/../:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth/tools/"
 SRC_DIR = "${WORKSPACE}/vendor/qcom/opensource/bluetooth/tools/"
 S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/tools/"
