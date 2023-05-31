@@ -11,7 +11,7 @@ SRC_URI     =  "file://vendor/qcom/opensource/bt-kernel/"
 SRC_URI    +=  "file://bt_dlkm"
 SRC_URI    +=  "file://bt_dlkm.service"
 S = "${WORKDIR}/vendor/qcom/opensource/bt-kernel"
-DEPENDS += "virtual/kernel wlan-platform"
+DEPENDS += "virtual/kernel wlan-platform btdevicetree"
 DEPENDS:remove:vt-64 = "wlan-platform"
 
 KERNEL_VERSION = "${@get_kernelversion_file("${STAGING_KERNEL_BUILDDIR}")}"
