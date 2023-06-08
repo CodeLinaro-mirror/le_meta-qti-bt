@@ -1,0 +1,25 @@
+From ceb6216a5e1bd9e713be5346bbb36ff7d34a2fc4 Mon Sep 17 00:00:00 2001
+From: Zijun Hu <quic_zijuhu@quicinc.com>
+Date: Sun, 7 May 2023 22:28:50 -0700
+Subject: [PATCH] libchrome: Fix build error for OpenWrt 22.03
+
+Fix build error for OpenWrt 22.03.
+
+Change-Id: I7d9b70ee76857366e9c0db5c5f4532f6c1375c04
+
+diff --git a/base/tracked_objects.cc b/base/tracked_objects.cc
+index 487fd19..ea96c41 100644
+--- a/base/tracked_objects.cc
++++ b/base/tracked_objects.cc
+@@ -421,7 +421,7 @@ void ThreadData::OnThreadTerminationCleanup() {
+   }
+   // We must NOT do any allocations during this callback.
+   // Using the simple linked lists avoids all allocations.
+-  DCHECK_EQ(this->next_retired_worker_, reinterpret_cast<ThreadData*>(NULL));
++  DCHECK_EQ(this->next_retired_worker_, static_cast<ThreadData*>(NULL));
+   this->next_retired_worker_ = first_retired_worker_;
+   first_retired_worker_ = this;
+ }
+-- 
+2.17.1
+
