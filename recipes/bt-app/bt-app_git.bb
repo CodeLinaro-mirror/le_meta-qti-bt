@@ -15,11 +15,12 @@ def get_depends():
     if "$(BASEMACHINE)" == "mdm9607":
         return  "btvendorhal glib-2.0 btobex libchrome fluoride"
     else:
-        return   "btvendorhal glib-2.0 btobex libchrome fluoride audiohal"
+        return   "btvendorhal glib-2.0 btobex libchrome fluoride audiohal systemd"
 
 DEPENDS  += "${@get_depends()}"
 DEPENDS:remove:kalama  = " audiohal"
 #DEPENDS:remove:qrb5165  = " audiohal"
+RDEPENDS:${PN} += "systemd"
 
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
@@ -33,6 +34,7 @@ EXTRA_OECONF = " \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                 --with-gengatt \
+                --with-pulseaudio \
                "
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
