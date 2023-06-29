@@ -12,6 +12,7 @@ DEPENDS_append_kona += " libcutils libhardware"
 DEPENDS_append_qrbx210-rbx += " libcutils libhardware"
 DEPENDS_append_qcs610 += " libcutils libhardware"
 DEPENDS_append_qrb5165 += " libcutils libhardware"
+DEPENDS_append_qcs6490 += " libcutils libhardware"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/system/bt/ \
@@ -36,6 +37,9 @@ INSANE_SKIP_${PN} = "dev-so"
 LDFLAGS_append_qrb5165 += " -lpthread -llog -lcutils"
 LDFLAGS_append_qrb5165 += " -Wl,--unresolved-symbols=ignore-in-shared-libs"
 CXX_append_qrb5165 += " -Wl,--no-as-needed"
+LDFLAGS_append_qcs6490 += " -lpthread -llog -lcutils"
+LDFLAGS_append_qcs6490 += " -Wl,--unresolved-symbols=ignore-in-shared-libs"
+CXX_append_qcs6490 += " -Wl,--no-as-needed"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
