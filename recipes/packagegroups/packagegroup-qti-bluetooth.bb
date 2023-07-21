@@ -13,6 +13,7 @@ PACKAGES = ' \
 
 BTVENDOR ?= 'False'
 BTVENDOR:qrbx210-rbx = 'True'
+BTVENDOR:qcs40x = 'True'
 
 RDEPENDS:${PN} = "\
     bthost-ipc \
