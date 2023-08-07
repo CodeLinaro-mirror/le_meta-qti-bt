@@ -19,7 +19,7 @@ def get_depends():
 
 DEPENDS  += "${@get_depends()}"
 
-CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
+CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT -DUSE_BT_OBEX"
 CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS_append = " -llog "
@@ -27,6 +27,7 @@ LDFLAGS_append = " -llog "
 EXTRA_OECONF = " \
                 --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
                 --with-glib \
+                --with-btobex \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                 --with-gengatt \
