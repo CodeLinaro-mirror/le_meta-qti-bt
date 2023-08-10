@@ -49,4 +49,4 @@ FILES_${PN} += "${sysconfdir}/systemd/system/"
 FILES_${PN} += "${sysconfdir}/initscripts/"
 FILES_${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/"
 
-RPROVIDES_${PN} += "${@'kernel-module-btpower-${KERNEL_VERSION}'.replace('_', '-')}"
+RPROVIDES_${PN} += "kernel-module-btpower-${KERNEL_VERSION}"
