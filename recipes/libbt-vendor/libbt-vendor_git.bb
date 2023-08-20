@@ -11,7 +11,7 @@ DEPENDS = "common hci-qcomm-init glib-2.0"
 
 RDEPENDS:${PN} = "libcutils"
 
-FILESPATH =+ "${WORKSPACE}/../:"
+FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://hardware/qcom/bt/libbt-vendor/"
 
 S = "${WORKDIR}/hardware/qcom/bt/libbt-vendor/"

@@ -6,7 +6,7 @@ HOMEPAGE = "https://www.codeaurora.org/"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-FILESPATH =+ "${WORKSPACE}/..:"
+FILESPATH =+ "${WORKSPACE}/:"
 SRC_URI = "file://qcom-opensource/bt/bt-app/"
 
 S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
@@ -28,7 +28,7 @@ LDFLAGS:append = " -llog "
 SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 
 EXTRA_OECONF = " \
-                --with-common-includes="${WORKSPACE}/../vendor/qcom/opensource/bluetooth/hal/include/" \
+                --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
                 --with-glib \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \

@@ -9,7 +9,7 @@ PR = "r0"
 
 DEPENDS = "liblog glib-2.0 media-headers fluoride"
 
-FILESPATH =+ "${WORKSPACE}/../:"
+FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth/bthost_ipc/"
 
 S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/bthost_ipc/"

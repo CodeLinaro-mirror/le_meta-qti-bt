@@ -9,7 +9,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "common zlib btvendorhal libchrome bttransport libutils libcutils audio-utils"
 
-FILESPATH =+ "${WORKSPACE}/../:"
+FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/system/bt/ \
            file://vendor/qcom/opensource/bluetooth_ext/"
 
@@ -32,7 +32,7 @@ BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
 EXTRA_OECONF = " \
                 --with-zlib \
-                --with-common-includes="${WORKSPACE}/../vendor/qcom/opensource/system/bt" \
+                --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/system/bt" \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --enable-target=${BASEMACHINE} \
                 --enable-rome=${BASEPRODUCT} \
