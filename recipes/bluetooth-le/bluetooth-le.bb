@@ -6,7 +6,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 inherit cmake pkgconfig systemd
 
-DEPENDS = "fluoride libsystemdq libchrome"
+DEPENDS = "fluoride systemd libchrome"
 FILESPATH =+ "${WORKSPACE}/:"
 
 SRC_URI = " \
@@ -16,7 +16,7 @@ SRC_URI = " \
 
 S = "${WORKDIR}/vendor/qcom/opensource/bluetooth-le"
 
-RDEPENDS:${PN} = "libsystemdq"
+RDEPENDS:${PN} = "libsystemd"
 CPPFLAGS:append = " -DUSE_LIBHW_AOSP"
 
 
