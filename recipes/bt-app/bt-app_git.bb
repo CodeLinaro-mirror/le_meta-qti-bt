@@ -18,7 +18,6 @@ def get_depends():
         return   "btvendorhal glib-2.0 btobex libchrome fluoride audiohal"
 
 DEPENDS  += "${@get_depends()}"
-DEPENDS:remove:vt-64 = "audiohal"
 DEPENDS:remove:vt-64 = "btobex"
 
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
