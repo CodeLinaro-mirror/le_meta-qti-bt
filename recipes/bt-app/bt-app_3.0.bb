@@ -1,4 +1,4 @@
-inherit autotools pkgconfig
+inherit cmake autotools pkgconfig
 
 DESCRIPTION = "Bluetooth application layer"
 LICENSE = "Apache-2.0"
@@ -7,11 +7,12 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://qcom-opensource/bt/bt-app/"
+SRC_URI = "file://qcom-opensource/bt/bt-app/ \
+           file://bt-app.conf"
 
 S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
-DEPENDS += "btvendorhal glib-2.0 btobex libchrome fluoride audiohal bt-ext"
+DEPENDS += "btvendorhal glib-2.0 btobex libchrome fluoride audiohal bt-ext libsystemdq"
 DEPENDS_remove_mdm9607  = "audiohal"
 DEPENDS_append_kona = " libhardware"
 DEPENDS_append_neo = " libhardware "
@@ -31,6 +32,11 @@ EXTRA_OECONF = " \
                 --with-gengatt \
                "
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
+
+do_install_append() {
+         install -d ${D}/${sysconfdir}/dbus-1/system.d/
+         install -m 0644 ${WORKDIR}/bt-app.conf ${D}${sysconfdir}/dbus-1/system.d/
+}
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES_${PN} += "${sysconfdir}/bluetooth/*"
