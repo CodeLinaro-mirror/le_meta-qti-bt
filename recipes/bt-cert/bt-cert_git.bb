@@ -7,9 +7,21 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 FILESPATH =+ "${WORKSPACE}/:"
-SRC_URI = "file://vendor/qcom/opensource/bluetooth_ext/certification_tools/"
+SRC_URI = "file://bluetooth/stack/bluetooth_ext/certification_tools/"
 
-S = "${WORKDIR}/vendor/qcom/opensource/bluetooth_ext/certification_tools/"
+S = "${WORKDIR}/bluetooth/stack/bluetooth_ext/certification_tools/"
+
+do_configure() {
+    :
+}
+
+do_compile() {
+    :
+}
+
+do_install() {
+    :
+}
 
 DEPENDS  += "glib-2.0 fluoride"
 
@@ -18,7 +30,7 @@ DEPENDS  += "glib-2.0 fluoride"
 #LDFLAGS_append = " -llog "
 
 EXTRA_OECONF = " \
-                --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
+                --with-common-includes="${WORKSPACE}/bluetooth/bt_audio/hal/include/" \
                 --with-glib \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \

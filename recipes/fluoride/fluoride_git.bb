@@ -7,14 +7,26 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "common zlib btvendorhal libchrome bttransport libutils libcutils audio-utils"
+do_configure() {
+    :
+}
+
+do_compile() {
+    :
+}
+
+do_install() {
+    :
+}
+
+DEPENDS = "zlib "
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://vendor/qcom/opensource/system/bt/ \
-           file://vendor/qcom/opensource/bluetooth_ext/"
+SRC_URI = "file://bluetooth/stack/system/bt/ \
+           file://bluetooth/stack/bluetooth_ext/"
 
-S = "${WORKDIR}/vendor/qcom/opensource/system/bt/"
-S_EXT = "${WORKDIR}/vendor/qcom/opensource/bluetooth_ext/system_bt_ext/"
+S = "${WORKDIR}/bluetooth/stack/system/bt/"
+S_EXT = "${WORKDIR}/bluetooth/stack/bluetooth_ext/system_bt_ext/"
 
 FILES_SOLIBSDEV = ""
 FILES:${PN} += "${libdir}"
@@ -32,7 +44,7 @@ BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
 EXTRA_OECONF = " \
                 --with-zlib \
-                --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/system/bt" \
+                --with-common-includes="${WORKSPACE}/bluetooth/stack/system/bt" \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --enable-target=${BASEMACHINE} \
                 --enable-rome=${BASEPRODUCT} \

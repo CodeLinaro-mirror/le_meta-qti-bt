@@ -7,11 +7,22 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI   = "file://vendor/qcom/opensource/bluetooth/"
-S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/"
+SRC_URI   = "file://bluetooth/bt_audio/"
+S = "${WORKDIR}/bluetooth/bt_audio/"
 
 PR = "r1"
 
+do_configure() {
+    :
+}
+
+do_compile() {
+    :
+}
+do_install() {
+	:
+}
 #DEPENDS = "system-core"
-DEPENDS += " libcutils libutils libhardware"
+DEPENDS += "libhardware"
 DEPENDS:remove:vt-64 = "libhardware"
+DEPENDS:remove:qcm6490 = "libhardware"

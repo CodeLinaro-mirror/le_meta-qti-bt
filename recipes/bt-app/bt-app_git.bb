@@ -1,4 +1,4 @@
-inherit autotools pkgconfig
+inherit autotools pkgconfig logging
 
 DESCRIPTION = "Bluetooth application layer"
 LICENSE = "Apache-2.0"
@@ -7,18 +7,31 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 FILESPATH =+ "${WORKSPACE}/:"
-SRC_URI = "file://qcom-opensource/bt/bt-app/"
+SRC_URI = "file://bluetooth/btapp/bt-app/"
 
-S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
+do_configure() {
+    :
+}
+
+do_compile() {
+    :
+}
+
+do_install() {
+    :
+}
+
+S = "${WORKDIR}/bluetooth/btapp/bt-app/"
 
 def get_depends():
     if "$(BASEMACHINE)" == "mdm9607":
         return  "btvendorhal glib-2.0 btobex libchrome fluoride"
     else:
-        return   "btvendorhal glib-2.0 btobex libchrome fluoride audiohal"
+        return   "btvendorhal glib-2.0 libchrome fluoride"
 
 DEPENDS  += "${@get_depends()}"
 DEPENDS:remove:vt-64 = "btobex"
+
 
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
@@ -27,7 +40,7 @@ LDFLAGS:append = " -llog "
 SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 
 EXTRA_OECONF = " \
-                --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
+                --with-common-includes="${WORKSPACE}/bluetooth/bt_audio/hal/include/" \
                 --with-glib \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
@@ -43,7 +56,7 @@ do_install:append() {
         install -d ${D}${sysconfdir}/bluetooth/
 
         #create /data/misc/bluetooth/ folder
-        install -d ${D}${userfsdatadir}/misc/bluetooth/
+        #install -d ${D}${userfsdatadir}/misc/bluetooth/
 
         if [ -f ${S}conf/bt_app.conf ]; then
            install -m 0660 ${S}conf/bt_app.conf ${D}${sysconfdir}/bluetooth/

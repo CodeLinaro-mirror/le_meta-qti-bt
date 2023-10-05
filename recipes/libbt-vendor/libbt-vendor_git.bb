@@ -12,16 +12,16 @@ DEPENDS = "common hci-qcomm-init glib-2.0"
 RDEPENDS:${PN} = "libcutils"
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://hardware/qcom/bt/libbt-vendor/"
+SRC_URI = "file://bluetooth/libbt-vendor/libbt-vendor/"
 
-S = "${WORKDIR}/hardware/qcom/bt/libbt-vendor/"
+S = "${WORKDIR}/bluetooth/libbt-vendor/libbt-vendor/"
 
 #CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 #LDFLAGS_append = " -llog "
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
-EXTRA_OECONF = "--with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
+EXTRA_OECONF = "--with-common-includes="${WORKSPACE}/bluetooth/bt_audio/hal/include/" \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --enable-target=${BASEMACHINE} \
                 --enable-rome=${BASEPRODUCT} \
