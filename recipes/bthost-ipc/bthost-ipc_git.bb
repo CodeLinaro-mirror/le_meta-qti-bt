@@ -7,18 +7,6 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 PR = "r0"
 
-do_configure() {
-    :
-}
-
-do_compile() {
-    :
-}
-
-do_install() {
-    :
-}
-
 DEPENDS = "glib-2.0 fluoride"
 
 FILESPATH =+ "${WORKSPACE}:"

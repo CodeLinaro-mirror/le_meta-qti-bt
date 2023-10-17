@@ -9,19 +9,9 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 FILESPATH =+ "${WORKSPACE}/:"
 SRC_URI = "file://bluetooth/btapp/bt-app/"
 
-do_configure() {
-    :
-}
-
-do_compile() {
-    :
-}
-
-do_install() {
-    :
-}
-
 S = "${WORKDIR}/bluetooth/btapp/bt-app/"
+
+export WORKSPACE
 
 def get_depends():
     if "$(BASEMACHINE)" == "mdm9607":
@@ -36,7 +26,7 @@ DEPENDS:remove:vt-64 = "btobex"
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 CFLAGS:append = " -DUSE_ANDROID_LOGGING "
-LDFLAGS:append = " -llog "
+#LDFLAGS:append = " -llog "
 SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 
 EXTRA_OECONF = " \
@@ -62,13 +52,13 @@ do_install:append() {
            install -m 0660 ${S}conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
         fi
 
-        if [ -f ${S}conf/AdvertiserConfigFile.txt ]; then
-           install -m 0660 ${S}conf/AdvertiserConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
-        fi
+       # if [ -f ${S}conf/AdvertiserConfigFile.txt ]; then
+      #     install -m 0660 ${S}conf/AdvertiserConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
+      #  fi
 
-        if [ -f ${S}conf/ServerConfigFile.txt ]; then
-           install -m 0660 ${S}conf/ServerConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
-        fi
+       # if [ -f ${S}conf/ServerConfigFile.txt ]; then
+       #    install -m 0660 ${S}conf/ServerConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
+       # fi
 
         if [ -f ${S}conf/ext_to_mimetype.conf ]; then
            install -m 0660 ${S}conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/

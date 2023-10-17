@@ -11,17 +11,6 @@ SRC_URI = "file://bluetooth/stack/bluetooth_ext/certification_tools/"
 
 S = "${WORKDIR}/bluetooth/stack/bluetooth_ext/certification_tools/"
 
-do_configure() {
-    :
-}
-
-do_compile() {
-    :
-}
-
-do_install() {
-    :
-}
 
 DEPENDS  += "glib-2.0 fluoride"
 

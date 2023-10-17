@@ -7,19 +7,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
 ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-do_configure() {
-    :
-}
-
-do_compile() {
-    :
-}
-
-do_install() {
-    :
-}
-
-DEPENDS = "zlib "
+DEPENDS = "zlib libchrome "
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://bluetooth/stack/system/bt/ \
@@ -27,6 +15,8 @@ SRC_URI = "file://bluetooth/stack/system/bt/ \
 
 S = "${WORKDIR}/bluetooth/stack/system/bt/"
 S_EXT = "${WORKDIR}/bluetooth/stack/bluetooth_ext/system_bt_ext/"
+
+export WORKSPACE
 
 FILES_SOLIBSDEV = ""
 FILES:${PN} += "${libdir}"
@@ -37,7 +27,7 @@ CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
 CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 CPPFLAGS:append += " -w -I${STAGING_INCDIR}"
 CPPFLAGS:append:vt-64 += "-mno-outline-atomics"
-LDFLAGS:append = " -llog "
+#LDFLAGS:append = " -llog "
 CFLAGS:append = " -w -DNDEBUG  -I${STAGING_INCDIR}"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"

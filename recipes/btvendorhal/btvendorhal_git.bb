@@ -10,18 +10,10 @@ FILESPATH =+ "${WORKSPACE}:"
 SRC_URI   = "file://bluetooth/bt_audio/"
 S = "${WORKDIR}/bluetooth/bt_audio/"
 
+export WORKSPACE
+
 PR = "r1"
 
-do_configure() {
-    :
-}
-
-do_compile() {
-    :
-}
-do_install() {
-	:
-}
 #DEPENDS = "system-core"
 DEPENDS += "libhardware"
 DEPENDS:remove:vt-64 = "libhardware"

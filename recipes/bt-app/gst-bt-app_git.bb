@@ -6,9 +6,9 @@ HOMEPAGE = "https://www.codeaurora.org/"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/${LICENSE};md5=550794465ba0ec5312d6919e203a55f9"
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://qcom-opensource/bt/bt-app/"
+SRC_URI = "file://bluetooth/btapp/bt-app/"
 
-S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
+S = "${WORKDIR}/bluetooth/btapp/bt-app/"
 
 DEPENDS += "btvendorhal glib-2.0 btobex audiohal libchrome"
 DEPENDS += "gstreamer1.0 gstreamer1.0-plugins-base orc qsthw-api gst-plugins"
