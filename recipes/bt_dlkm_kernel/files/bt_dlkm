@@ -33,28 +33,12 @@
 
 set -e
 
-BLUETOOTH_POWER_KERNEL_MODULE_PATH=/lib/modules/$(uname -r)/kernel/drivers/bluetooth/btpower.ko
-BLUETOOTH_POWER_EXTRA_MODULE_PATH=/lib/modules/$(uname -r)/btpower.ko
-BLUETOOTH_FM_SLIM_KERNEL_MODULE_PATH=/lib/modules/$(uname -r)/kernel/drivers/bluetooth/bt_fm_slim.ko
-BLUETOOTH_FM_SLIM_EXTRA_MODULE_PATH=/lib/modules/$(uname -r)/bt_fm_slim.ko
+BLUETOOTH_FM_SLIM_KERNEL_MODULE_PATH=/lib/modules/$(uname -r)/bt_fm_slim.ko
+
 case "$1" in
   start)
-  if [ -e /sys/bus/platform/drivers/bt_power ]; then
-	echo "btpower has already resided in kernel."
-  elif [ -e ${BLUETOOTH_POWER_EXTRA_MODULE_PATH} ]; then
-	insmod ${BLUETOOTH_POWER_EXTRA_MODULE_PATH}
-	echo "insmod extra btpower.ko Done"
-  elif [ -e ${BLUETOOTH_POWER_KERNEL_MODULE_PATH} ]; then
-	insmod ${BLUETOOTH_POWER_KERNEL_MODULE_PATH}
-	echo "insmod kernel btpower.ko Done"
-  else
-    echo "exit due to no btpower.ko"
-  fi
   if [ -e /sys/bus/platform/drivers/bt_fm_slim ]; then
 	echo "bt_fm_slim has already resided in kernel."
-  elif [ -e ${BLUETOOTH_FM_SLIM_EXTRA_MODULE_PATH} ]; then
-	insmod ${BLUETOOTH_FM_SLIM_EXTRA_MODULE_PATH}
-	echo "insmod extra bt_fm_slim.ko Done"
   elif [ -e ${BLUETOOTH_FM_SLIM_KERNEL_MODULE_PATH} ]; then
 	insmod ${BLUETOOTH_FM_SLIM_KERNEL_MODULE_PATH}
 	echo "insmod kernel bt_fm_slim.ko Done"
