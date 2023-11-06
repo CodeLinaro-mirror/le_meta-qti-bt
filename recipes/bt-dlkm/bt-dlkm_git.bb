@@ -33,7 +33,7 @@ do_patch_btdrv() {
 }
 do_patch[postfuncs] += "do_patch_btdrv"
 
-EXTRA_OEMAKE += "V=1 KBDIR=${STAGING_KERNEL_BUILDDIR}"
+EXTRA_OEMAKE += "V=1 KBDIR=${STAGING_KERNEL_BUILDDIR} INSTALL_MOD_STRIP=1"
 
 # Disable remove task if needed for debug
 # RM_WORK_EXCLUDE += "${PN}"
@@ -46,7 +46,6 @@ do_install_append() {
        ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/bluetooth_power.service
        install -d ${D}${sysconfdir}/initscripts
        install -m 0755 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
-       ${STRIP} -g ${D}/lib/modules/${KERNEL_VERSION}/extra/btpower.ko
     fi
 }
 
