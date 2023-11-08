@@ -15,9 +15,9 @@ export WORKSPACE
 
 def get_depends():
     if "$(BASEMACHINE)" == "mdm9607":
-        return  "btvendorhal glib-2.0 btobex libchrome fluoride"
+        return  "btvendorhal glib-2.0 property-vault btobex libchrome fluoride"
     else:
-        return   "btvendorhal glib-2.0 libchrome fluoride"
+        return   "btvendorhal glib-2.0 property-vault libchrome fluoride"
 
 DEPENDS  += "${@get_depends()}"
 DEPENDS:remove:vt-64 = "btobex"
@@ -52,13 +52,13 @@ do_install:append() {
            install -m 0660 ${S}conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
         fi
 
-       # if [ -f ${S}conf/AdvertiserConfigFile.txt ]; then
-      #     install -m 0660 ${S}conf/AdvertiserConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
-      #  fi
+        if [ -f ${S}conf/AdvertiserConfigFile.txt ]; then
+           install -m 0660 ${S}conf/AdvertiserConfigFile.txt ${D}${sysconfdir}/bluetooth/
+        fi
 
-       # if [ -f ${S}conf/ServerConfigFile.txt ]; then
-       #    install -m 0660 ${S}conf/ServerConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
-       # fi
+        if [ -f ${S}conf/ServerConfigFile.txt ]; then
+           install -m 0660 ${S}conf/ServerConfigFile.txt ${D}${sysconfdir}/bluetooth/
+        fi
 
         if [ -f ${S}conf/ext_to_mimetype.conf ]; then
            install -m 0660 ${S}conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/
