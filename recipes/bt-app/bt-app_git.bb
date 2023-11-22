@@ -21,6 +21,7 @@ def get_depends():
 
 DEPENDS  += "${@get_depends()}"
 DEPENDS:remove:vt-64 = "btobex"
+RDEPENDS:${PN} = "property-vault"
 
 
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
