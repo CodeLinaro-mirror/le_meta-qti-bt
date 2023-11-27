@@ -21,4 +21,5 @@ RDEPENDS:${PN} = "\
     btvendorhal \
     libchrome \
     bt-app \
-    bt-dlkm-kernel " 
+    bt-cert \
+    bt-dlkm-kernel "

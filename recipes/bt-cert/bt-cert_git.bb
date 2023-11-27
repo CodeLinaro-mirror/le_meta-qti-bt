@@ -11,8 +11,8 @@ SRC_URI = "file://bluetooth/stack/bluetooth_ext/certification_tools/"
 
 S = "${WORKDIR}/bluetooth/stack/bluetooth_ext/certification_tools/"
 
-
-DEPENDS  += "glib-2.0 fluoride"
+export WORKSPACE
+DEPENDS  += "glib-2.0 btvendorhal libchrome fluoride"
 
 #CPPFLAGS_append = " -DUSE_ANDROID_LOGGING"
 #CFLAGS_append = " -DUSE_ANDROID_LOGGING "
