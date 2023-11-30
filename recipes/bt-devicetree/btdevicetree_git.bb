@@ -1,0 +1,34 @@
+DESCRIPTION = "QTI BT devicetree"
+LICENSE = "BSD-3-Clause"
+HOMEPAGE = "https://git.codelinaro.org/"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/${LICENSE};md5=550794465ba0ec5312d6919e203a55f9"
+
+inherit module deploy
+
+FILESEXTRAPATHS:prepend := "${WORKSPACE}/:"
+SRC_URI     =  "file://bluetooth/bt-devicetree"
+S = "${WORKDIR}/bluetooth/bt-devicetree"
+DEPENDS += "virtual/kernel"
+
+DTC := "${KBUILD_OUTPUT}/scripts/dtc/dtc"
+KERNEL_INCLUDE := "${STAGING_KERNEL_DIR}/include/"
+EXTRA_OEMAKE += "DTC='${DTC}' KERNEL_INCLUDE='${KERNEL_INCLUDE}'"
+
+do_compile() {
+    oe_runmake ${EXTRA_OEMAKE} qcm6490-bt
+}
+
+do_install() {
+    :
+}
+
+do_deploy() {
+    echo "DTBO Staging path -> " ${DEPLOYDIR}/tech_dtbs
+    install -d ${DEPLOYDIR}/tech_dtbs
+    install -m 0644 ${S}/*.dtbo ${DEPLOYDIR}/tech_dtbs
+}
+
+addtask do_deploy after do_install
+
+RM_WORK_EXCLUDE += "${PN}"
+
