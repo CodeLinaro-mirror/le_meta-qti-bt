@@ -8,7 +8,7 @@ inherit packagegroup
 PROVIDES = "${PACKAGES}"
 
 PACKAGES = ' \
-    packagegroup-qti-bluetooth \
+           packagegroup-qcom-bluetooth \
 '
 
 BTVENDOR ?= 'False'
