@@ -14,8 +14,8 @@ FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://bluetooth/stack/system/bt/ \
            file://bluetooth/stack/bluetooth_ext/"
 
-S = "${WORKDIR}/bluetooth/stack/system/bt/"
-S_EXT = "${WORKDIR}/bluetooth/stack/bluetooth_ext/system_bt_ext/"
+S = "${WORKDIR}/bluetooth/stack/system/bt"
+S_EXT = "${WORKDIR}/bluetooth/stack/bluetooth_ext/system_bt_ext"
 
 export WORKSPACE
 
@@ -51,27 +51,27 @@ do_install:append() {
 	cd  ${D}/${libdir}/ && ln -s libbluetoothdefault.so.0 bluetooth.default.so
 	cd  ${D}/${libdir}/ && ln -s libaudioa2dpdefault.so.0 audio.a2dp.default.so
 
-	if [ -f ${S}conf/auto_pair_devlist.conf ]; then
-	   install -m 0660 ${S}conf/auto_pair_devlist.conf ${D}${sysconfdir}/bluetooth/
+	if [ -f ${S}/conf/auto_pair_devlist.conf ]; then
+	   install -m 0660 ${S}/conf/auto_pair_devlist.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
-	if [ -f ${S}conf/bt_did.conf ]; then
-	   install -m 0660 ${S}conf/bt_did.conf ${D}${sysconfdir}/bluetooth/
+	if [ -f ${S}/conf/bt_did.conf ]; then
+	   install -m 0660 ${S}/conf/bt_did.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
-	if [ -f ${S}conf/bt_stack.conf ]; then
-	   install -m 0660 ${S}conf/bt_stack.conf ${D}${sysconfdir}/bluetooth/
+	if [ -f ${S}/conf/bt_stack.conf ]; then
+	   install -m 0660 ${S}/conf/bt_stack.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
-	if [ -f ${S_EXT}conf/interop_database.conf ]; then
-		install -m 0660 ${S_EXT}conf/interop_database.conf ${D}${sysconfdir}/bluetooth/
+	if [ -f ${S_EXT}/conf/interop_database.conf ]; then
+		install -m 0660 ${S_EXT}/conf/interop_database.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
-	if [ -f ${S_EXT}conf/bt_profile.conf ]; then
-		install -m 0660 ${S_EXT}conf/bt_profile.conf ${D}${sysconfdir}/bluetooth/
+	if [ -f ${S_EXT}/conf/bt_profile.conf ]; then
+		install -m 0660 ${S_EXT}/conf/bt_profile.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
-	if [ -f ${S}conf/iot_devlist.conf ]; then
-	   install -m 0660 ${S}conf/iot_devlist.conf ${D}${sysconfdir}/bluetooth/
+	if [ -f ${S}/conf/iot_devlist.conf ]; then
+	   install -m 0660 ${S}/conf/iot_devlist.conf ${D}${sysconfdir}/bluetooth/
 	fi
 }

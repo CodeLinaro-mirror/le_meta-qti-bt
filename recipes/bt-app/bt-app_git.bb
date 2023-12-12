@@ -9,7 +9,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 FILESPATH =+ "${WORKSPACE}/:"
 SRC_URI = "file://bluetooth/btapp/bt-app/"
 
-S = "${WORKDIR}/bluetooth/btapp/bt-app/"
+S = "${WORKDIR}/bluetooth/btapp/bt-app"
 
 export WORKSPACE
 
@@ -49,19 +49,19 @@ do_install:append() {
         #create /data/misc/bluetooth/ folder
         #install -d ${D}${userfsdatadir}/misc/bluetooth/
 
-        if [ -f ${S}conf/bt_app.conf ]; then
-           install -m 0660 ${S}conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
+        if [ -f ${S}/conf/bt_app.conf ]; then
+           install -m 0660 ${S}/conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
         fi
 
-        if [ -f ${S}conf/AdvertiserConfigFile.txt ]; then
-           install -m 0660 ${S}conf/AdvertiserConfigFile.txt ${D}${sysconfdir}/bluetooth/
+        if [ -f ${S}/conf/AdvertiserConfigFile.txt ]; then
+           install -m 0660 ${S}/conf/AdvertiserConfigFile.txt ${D}${sysconfdir}/bluetooth/
         fi
 
-        if [ -f ${S}conf/ServerConfigFile.txt ]; then
-           install -m 0660 ${S}conf/ServerConfigFile.txt ${D}${sysconfdir}/bluetooth/
+        if [ -f ${S}/conf/ServerConfigFile.txt ]; then
+           install -m 0660 ${S}/conf/ServerConfigFile.txt ${D}${sysconfdir}/bluetooth/
         fi
 
-        if [ -f ${S}conf/ext_to_mimetype.conf ]; then
-           install -m 0660 ${S}conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/
+        if [ -f ${S}/conf/ext_to_mimetype.conf ]; then
+           install -m 0660 ${S}/conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/
         fi
 }

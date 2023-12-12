@@ -15,7 +15,7 @@ RDEPENDS:${PN} = "libcutils"
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://bluetooth/libbt-vendor/libbt-vendor/"
 
-S = "${WORKDIR}/bluetooth/libbt-vendor/libbt-vendor/"
+S = "${WORKDIR}/bluetooth/libbt-vendor/libbt-vendor"
 
 export WORKSPACE
 
@@ -35,5 +35,5 @@ FILES:${PN} += "${userfsdatadir}/misc/bluetooth/*"
 
 do_install:append () {
     install -d ${D}${userfsdatadir}/misc/bluetooth
-    install -m 755 ${S}init.msm.bt.sh ${D}${userfsdatadir}/misc/bluetooth/
+    install -m 755 ${S}/init.msm.bt.sh ${D}${userfsdatadir}/misc/bluetooth/
 }

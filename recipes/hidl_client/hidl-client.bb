@@ -13,7 +13,7 @@ RDEPENDS:${PN} = "libcutils"
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://bluetooth/bt_audio/tools/"
 SRC_DIR = "${WORKSPACE}/bluetooth/bt_audio/tools/"
-S = "${WORKDIR}/bluetooth/bt_audio/tools/"
+S = "${WORKDIR}/bluetooth/bt_audio/tools"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 

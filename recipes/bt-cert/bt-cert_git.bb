@@ -9,7 +9,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 FILESPATH =+ "${WORKSPACE}/:"
 SRC_URI = "file://bluetooth/stack/bluetooth_ext/certification_tools/"
 
-S = "${WORKDIR}/bluetooth/stack/bluetooth_ext/certification_tools/"
+S = "${WORKDIR}/bluetooth/stack/bluetooth_ext/certification_tools"
 
 export WORKSPACE
 DEPENDS  += "glib-2.0 btvendorhal libchrome fluoride"

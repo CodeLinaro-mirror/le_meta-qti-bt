@@ -15,7 +15,7 @@ DEPENDS += "glib-2.0 btvendorhal"
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://qcom-opensource/bt/obex_profiles/"
 
-S = "${WORKDIR}/qcom-opensource/bt/obex_profiles/"
+S = "${WORKDIR}/qcom-opensource/bt/obex_profiles"
 
 EXTRA_OECONF = "--with-glib"
 EXTRA_OECONF += "--with-common-includes=${STAGING_INCDIR}"

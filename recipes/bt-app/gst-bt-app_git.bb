@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/${LICENSE};md5
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://bluetooth/btapp/bt-app/"
 
-S = "${WORKDIR}/bluetooth/btapp/bt-app/"
+S = "${WORKDIR}/bluetooth/btapp/bt-app"
 
 DEPENDS += "btvendorhal glib-2.0 btobex audiohal libchrome"
 DEPENDS += "gstreamer1.0 gstreamer1.0-plugins-base orc qsthw-api gst-plugins"
@@ -34,11 +34,11 @@ FILES:${PN} += "${sysconfdir}/bluetooth/*"
 do_install:append() {
         install -d ${D}${sysconfdir}/bluetooth/
 
-        if [ -f ${S}conf/bt_app.conf ]; then
-           install -m 0660 ${S}conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
+        if [ -f ${S}/conf/bt_app.conf ]; then
+           install -m 0660 ${S}/conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
         fi
 
-        if [ -f ${S}conf/ext_to_mimetype.conf ]; then
-           install -m 0660 ${S}conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/
+        if [ -f ${S}/conf/ext_to_mimetype.conf ]; then
+           install -m 0660 ${S}/conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/
         fi
 }
