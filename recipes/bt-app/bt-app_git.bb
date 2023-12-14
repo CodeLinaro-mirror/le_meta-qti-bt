@@ -25,7 +25,7 @@ RDEPENDS:${PN} = "property-vault"
 
 
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
-CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
+CPPFLAGS:append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 CFLAGS:append = " -DUSE_ANDROID_LOGGING "
 #LDFLAGS:append = " -llog "
 SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
