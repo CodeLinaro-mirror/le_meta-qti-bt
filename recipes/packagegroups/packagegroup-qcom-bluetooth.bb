@@ -22,4 +22,5 @@ RDEPENDS:${PN} = "\
     libchrome \
     bt-app \
     bt-cert \
-    bt-dlkm-kernel "
+    bt-dlkm-kernel \
+    btdevicetree "
