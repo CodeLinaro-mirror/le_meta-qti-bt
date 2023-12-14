@@ -13,9 +13,9 @@ DEPENDS += "glib-2.0 btvendorhal"
 #LDFLAGS_append = " -llog "
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://qcom-opensource/bt/obex_profiles/"
+SRC_URI = "file://bluetooth/btapp/obex_profiles/"
 
-S = "${WORKDIR}/qcom-opensource/bt/obex_profiles"
+S = "${WORKDIR}/bluetooth/btapp/obex_profiles"
 
 EXTRA_OECONF = "--with-glib"
 EXTRA_OECONF += "--with-common-includes=${STAGING_INCDIR}"
