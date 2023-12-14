@@ -27,8 +27,6 @@ INSANE_SKIP:${PN} = "dev-so"
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
 CPPFLAGS:append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 CPPFLAGS:append = " -w -I${STAGING_INCDIR}"
-CPPFLAGS:append:vt-64 = "-mno-outline-atomics"
-#LDFLAGS:append = " -llog "
 CFLAGS:append = " -w -DNDEBUG  -I${STAGING_INCDIR}"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
