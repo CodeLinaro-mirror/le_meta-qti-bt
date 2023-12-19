@@ -7,9 +7,7 @@ inherit packagegroup
 
 PROVIDES = "${PACKAGES}"
 
-PACKAGES = ' \
-           packagegroup-qcom-bluetooth \
-'
+PACKAGES = "${PN}"
 
 BTVENDOR ?= 'False'
 BTVENDOR:qrbx210-rbx = 'True'

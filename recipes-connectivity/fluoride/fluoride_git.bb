@@ -4,20 +4,25 @@ DESCRIPTION = "Bluetooth Fluoride Stack"
 HOMEPAGE = "http://codeaurora.org/"
 LICENSE = "Apache-2.0"
 
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
-${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "zlib libchrome glib-2.0 property-vault"
 RDEPENDS:${PN} = "property-vault"
 
-FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://bluetooth/stack/system/bt/ \
-           file://bluetooth/stack/bluetooth_ext/"
+FILESPATH =+ "${WORKSPACE}/bluetooth/:"
+SRC_URI = "file://stack/system/bt/ \
+		   file://stack/bluetooth_ext/ \
+           file://btapp/ \
+		   file://bt_audio/ \
+		   file://proprietary/ \
+		   file://bt-devicetree/ \
+		   file://bt-kernel/"
 
-S = "${WORKDIR}/bluetooth/stack/system/bt"
-S_EXT = "${WORKDIR}/bluetooth/stack/bluetooth_ext/system_bt_ext"
+BT_SOURCE = "${WORKDIR}"
+S = "${BT_SOURCE}/stack/system/bt"
+S_EXT = "${BT_SOURCE}/stack/bluetooth_ext/system_bt_ext"
 
-export WORKSPACE
+EXTRA_OEMAKE += 'BT_SOURCE=${BT_SOURCE}'
 
 FILES_SOLIBSDEV = ""
 FILES:${PN} += "${libdir}"

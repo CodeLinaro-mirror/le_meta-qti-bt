@@ -9,10 +9,14 @@ PR = "r0"
 
 DEPENDS = "glib-2.0 fluoride"
 
-FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://bluetooth/bt_audio/bthost_ipc/"
+FILESPATH =+ "${WORKSPACE}/bluetooth/:"
+SRC_URI = "file://bt_audio/"
 
-S = "${WORKDIR}/bluetooth/bt_audio/bthost_ipc"
+BT_SOURCE = "${WORKDIR}"
+S = "${BT_SOURCE}/bt_audio/bthost_ipc"
+S_EXT = "${BT_SOURCE}/stack/bluetooth_ext/system_bt_ext"
+
+EXTRA_OEMAKE += 'BT_SOURCE=${BT_SOURCE}'
 
 #CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
 #CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"

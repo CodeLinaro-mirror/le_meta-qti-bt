@@ -3,15 +3,18 @@ inherit autotools pkgconfig logging
 DESCRIPTION = "Bluetooth application layer"
 LICENSE = "Apache-2.0"
 HOMEPAGE = "https://www.codeaurora.org/"
-LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
-${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-FILESPATH =+ "${WORKSPACE}/:"
-SRC_URI = "file://bluetooth/btapp/bt-app/"
+FILESPATH =+ "${WORKSPACE}/bluetooth/:"
+SRC_URI = "file://btapp/ \
+           file://bt_audio/ \
+           file://stack/system/bt/ \
+           file://stack/bluetooth_ext/"
 
-S = "${WORKDIR}/bluetooth/btapp/bt-app"
+BT_SOURCE = "${WORKDIR}"
+S = "${BT_SOURCE}/btapp/bt-app"
 
-export WORKSPACE
+EXTRA_OEMAKE += 'BT_SOURCE=${BT_SOURCE}'
 
 def get_depends():
     if "$(BASEMACHINE)" == "mdm9607":
@@ -22,14 +25,13 @@ def get_depends():
 DEPENDS  += "${@get_depends()}"
 RDEPENDS:${PN} = "property-vault"
 
-
-CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
+CPPFLAGS:append = " -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CPPFLAGS:append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
-CFLAGS:append = " -DUSE_ANDROID_LOGGING "
+# CFLAGS:append = " -DUSE_ANDROID_LOGGING "
 SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 
 EXTRA_OECONF = " \
-                --with-common-includes="${WORKSPACE}/bluetooth/bt_audio/hal/include/" \
+                --with-common-includes="${BT_SOURCE}/bt_audio/hal/include/" \
                 --with-glib \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \

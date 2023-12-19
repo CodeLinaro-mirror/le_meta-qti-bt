@@ -5,9 +5,13 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=550794465ba0ec53
 
 inherit module deploy
 
-FILESEXTRAPATHS:prepend := "${WORKSPACE}/:"
-SRC_URI     =  "file://bluetooth/bt-devicetree"
-S = "${WORKDIR}/bluetooth/bt-devicetree"
+FILESPATH =+ "${WORKSPACE}/bluetooth/:"
+SRC_URI = "file://bt-devicetree/"
+
+BT_SOURCE = "${WORKDIR}"
+S = "${BT_SOURCE}/bt-devicetree"
+S_EXT = "${BT_SOURCE}/stack/bluetooth_ext/system_bt_ext"
+
 DEPENDS += "virtual/kernel"
 
 DTC := "${KBUILD_OUTPUT}/scripts/dtc/dtc"
