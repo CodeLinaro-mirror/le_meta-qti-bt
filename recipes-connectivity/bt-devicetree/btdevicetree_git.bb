@@ -30,5 +30,3 @@ do_deploy() {
 
 addtask do_deploy after do_install
 
-RM_WORK_EXCLUDE += "${PN}"
-
