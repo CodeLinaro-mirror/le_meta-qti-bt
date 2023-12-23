@@ -11,18 +11,17 @@ RDEPENDS:${PN} = "property-vault"
 
 FILESPATH =+ "${WORKSPACE}/bluetooth/:"
 SRC_URI = "file://stack/system/bt/ \
-		   file://stack/bluetooth_ext/ \
+	   file://stack/bluetooth_ext/ \
            file://btapp/ \
-		   file://bt_audio/ \
-		   file://proprietary/ \
-		   file://bt-devicetree/ \
-		   file://bt-kernel/"
+	   file://bt_audio/ \
+           "
 
-BT_SOURCE = "${WORKDIR}"
-S = "${BT_SOURCE}/stack/system/bt"
-S_EXT = "${BT_SOURCE}/stack/bluetooth_ext/system_bt_ext"
+S = "${WORKDIR}"
+S_EXT = "${S}/stack/bluetooth_ext/system_bt_ext"
 
-EXTRA_OEMAKE += 'BT_SOURCE=${BT_SOURCE}'
+AUTOTOOLS_SCRIPT_PATH = "${S}/stack/system/bt"
+
+EXTRA_OEMAKE += 'BT_SOURCE=${S}'
 
 FILES_SOLIBSDEV = ""
 FILES:${PN} += "${libdir}"
@@ -30,18 +29,13 @@ FILES:${PN} += "${sysconfdir}/bluetooth/*"
 INSANE_SKIP:${PN} = "dev-so"
 
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
-CPPFLAGS:append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 CPPFLAGS:append = " -w -I${STAGING_INCDIR}"
 CFLAGS:append = " -w -DNDEBUG  -I${STAGING_INCDIR}"
 
-BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
-
 EXTRA_OECONF = " \
                 --with-zlib \
-                --with-common-includes="${WORKSPACE}/bluetooth/stack/system/bt" \
+                --with-common-includes="${S}/stack/system/bt" \
                 --with-lib-path=${STAGING_LIBDIR} \
-                --enable-target=${BASEMACHINE} \
-                --enable-rome=${BASEPRODUCT} \
                 --enable-static=yes \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                "
@@ -54,16 +48,16 @@ do_install:append() {
 	cd  ${D}/${libdir}/ && ln -s libbluetoothdefault.so.0 bluetooth.default.so
 	cd  ${D}/${libdir}/ && ln -s libaudioa2dpdefault.so.0 audio.a2dp.default.so
 
-	if [ -f ${S}/conf/auto_pair_devlist.conf ]; then
-	   install -m 0660 ${S}/conf/auto_pair_devlist.conf ${D}${sysconfdir}/bluetooth/
+	if [ -f ${S}/stack/system/bt/conf/auto_pair_devlist.conf ]; then
+	   install -m 0660 ${S}/stack/system/bt/conf/auto_pair_devlist.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
-	if [ -f ${S}/conf/bt_did.conf ]; then
-	   install -m 0660 ${S}/conf/bt_did.conf ${D}${sysconfdir}/bluetooth/
+	if [ -f ${S}/stack/system/bt/conf/bt_did.conf ]; then
+	   install -m 0660 ${S}/stack/system/bt/conf/bt_did.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
-	if [ -f ${S}/conf/bt_stack.conf ]; then
-	   install -m 0660 ${S}/conf/bt_stack.conf ${D}${sysconfdir}/bluetooth/
+	if [ -f ${S}/stack/system/bt/conf/bt_stack.conf ]; then
+	   install -m 0660 ${S}/stack/system/bt/conf/bt_stack.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
 	if [ -f ${S_EXT}/conf/interop_database.conf ]; then
@@ -74,7 +68,7 @@ do_install:append() {
 		install -m 0660 ${S_EXT}/conf/bt_profile.conf ${D}${sysconfdir}/bluetooth/
 	fi
 
-	if [ -f ${S}/conf/iot_devlist.conf ]; then
-	   install -m 0660 ${S}/conf/iot_devlist.conf ${D}${sysconfdir}/bluetooth/
+	if [ -f ${S}/stack/system/bt/conf/iot_devlist.conf ]; then
+	   install -m 0660 ${S}/stack/system/bt/conf/iot_devlist.conf ${D}${sysconfdir}/bluetooth/
 	fi
 }

@@ -11,15 +11,16 @@ SRC_URI = "file://stack/bluetooth_ext/ \
            file://stack/system/bt/ \
            file://bt_audio/"
 
-BT_SOURCE = "${WORKDIR}"
-S = "${BT_SOURCE}/stack/bluetooth_ext/certification_tools"
+S = "${WORKDIR}"
+
+AUTOTOOLS_SCRIPT_PATH = "${S}/stack/bluetooth_ext/certification_tools"
 
 DEPENDS  += "glib-2.0 btvendorhal libchrome fluoride"
 
-EXTRA_OEMAKE += 'BT_SOURCE=${BT_SOURCE}'
+EXTRA_OEMAKE += 'BT_SOURCE=${S}'
 
 EXTRA_OECONF = " \
-                --with-common-includes="${BT_SOURCE}/bt_audio/hal/include/" \
+                --with-common-includes="${S}/bt_audio/hal/include/" \
                 --with-glib \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \

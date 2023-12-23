@@ -10,13 +10,10 @@ SRC_URI = "file://bt_audio/ \
            file://btapp/ \
            file://stack/system/bt/"
 
-BT_SOURCE = "${WORKDIR}"
-S = "${BT_SOURCE}/bt_audio"
+S = "${WORKDIR}"
 
-EXTRA_OEMAKE += 'BT_SOURCE=${BT_SOURCE}'
+AUTOTOOLS_SCRIPT_PATH = "${S}/bt_audio"
+
+EXTRA_OEMAKE += 'BT_SOURCE=${S}'
 
 PR = "r1"
-
-DEPENDS += "libhardware"
-DEPENDS:remove:vt-64 = "libhardware"
-DEPENDS:remove:qcm6490 = "libhardware"
