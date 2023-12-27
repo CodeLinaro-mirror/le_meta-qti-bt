@@ -22,7 +22,7 @@ DEPENDS:remove:kalama  = " audiohal"
 #DEPENDS:remove:qrb5165  = " audiohal"
 RDEPENDS:${PN} += "systemd"
 
-CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
+CPPFLAGS:append = " -DUSE_ANDROID_LOGGING  -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 CFLAGS:append = " -DUSE_ANDROID_LOGGING "
 LDFLAGS:append = " -llog "
@@ -31,6 +31,7 @@ SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 EXTRA_OECONF = " \
                 --with-common-includes="${WORKSPACE}/vendor/qcom/opensource/bluetooth/hal/include/" \
                 --with-glib \
+                --with-btobex \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                 --with-gengatt \
