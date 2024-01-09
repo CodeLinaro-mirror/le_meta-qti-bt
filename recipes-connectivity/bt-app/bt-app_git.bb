@@ -17,7 +17,7 @@ EXTRA_OEMAKE += 'BT_SOURCE=${S}'
 
 AUTOTOOLS_SCRIPT_PATH = "${S}/btapp/bt-app"
 
-DEPENDS += "btvendorhal glib-2.0 property-vault libchrome fluoride"
+DEPENDS += "btvendorhal glib-2.0 property-vault libchrome fluoride audioroute"
 RDEPENDS:${PN} = "property-vault"
 
 CPPFLAGS:append = " -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"

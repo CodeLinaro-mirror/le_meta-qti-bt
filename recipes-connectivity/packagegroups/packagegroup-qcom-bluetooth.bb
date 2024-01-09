@@ -18,6 +18,7 @@ RDEPENDS:${PN} = "\
     fluoride \
     btvendorhal \
     libchrome \
+    audioroute \
     bt-app \
     bt-cert \
     bt-dlkm-kernel \
