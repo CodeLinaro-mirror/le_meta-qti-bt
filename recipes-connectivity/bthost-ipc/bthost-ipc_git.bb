@@ -7,10 +7,12 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 PR = "r0"
 
-DEPENDS = "glib-2.0 fluoride"
+DEPENDS = "libchrome glib-2.0 fluoride"
 
 FILESPATH =+ "${WORKSPACE}/bluetooth/:"
-SRC_URI = "file://bt_audio/"
+SRC_URI = "file://bt_audio/ \
+           file://stack/system/bt/ \
+           file://stack/system/bt/audio_a2dp_hw/include"
 
 BT_SOURCE = "${WORKDIR}"
 S = "${BT_SOURCE}/bt_audio/bthost_ipc"

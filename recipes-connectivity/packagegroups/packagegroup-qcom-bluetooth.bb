@@ -19,7 +19,9 @@ RDEPENDS:${PN} = "\
     btvendorhal \
     libchrome \
     audioroute \
+    pa-bt-audio \
     bt-app \
     bt-cert \
     bt-dlkm-kernel \
+    bthost-ipc \
     btdevicetree "
