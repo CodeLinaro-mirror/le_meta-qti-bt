@@ -8,7 +8,11 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://qcom-opensource/bt/bt-app/ \
-           file://bt-app.conf"
+           file://bt-app.conf \
+           file://bt-app.service \
+                   file://bt-app_conf_systemd_tmpfiles.conf \
+                   file://bt-app.sh \
+                   file://bt-app-etc.sh "
 
 S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
@@ -35,8 +39,29 @@ EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
 do_install_append() {
          install -d ${D}/${sysconfdir}/dbus-1/system.d/
+         install -d ${D}${systemd_system_unitdir}
+         install -d ${D}${systemd_system_unitdir}/multi-user.target.wants/
          install -m 0644 ${WORKDIR}/bt-app.conf ${D}${sysconfdir}/dbus-1/system.d/
+         install -m 0644 ${WORKDIR}/bt-app.service ${D}${systemd_system_unitdir}
+
+         # enable the service for multi-user.target
+         ln -sf ${systemd_system_unitdir}/bt-app.service \
+                ${D}${systemd_system_unitdir}/multi-user.target.wants/bt-app.service
+
+                 install -d ${D}${sysconfdir}/tmpfiles.d
+                 install -m 0644 ${WORKDIR}/bt-app_conf_systemd_tmpfiles.conf \
+                                 -D ${D}${sysconfdir}/tmpfiles.d/bt-app_conf_systemd_tmpfiles.conf
+
+                                   install -d ${D}${base_sbindir}/
+         install -D -m 0755 ${WORKDIR}/bt-app.sh ${D}${base_sbindir}/bt-app.sh
+         install -D -m 0755 ${WORKDIR}/bt-app-etc.sh ${D}${base_sbindir}/bt-app-etc.sh
 }
+
+inherit cmake pkgconfig systemd
+
+SYSTEMD_SERVICE_${PN} = " \
+                         bt-app.service \
+                        "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES_${PN} += "${sysconfdir}/bluetooth/*"
