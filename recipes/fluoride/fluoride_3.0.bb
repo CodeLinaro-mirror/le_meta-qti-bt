@@ -33,6 +33,7 @@ INSANE_SKIP:${PN} = "dev-so"
 #LDFLAGS_append_qrbx210-rbx += " -Wl,--unresolved-symbols=ignore-in-shared-libs"
 #CXX_append_qrbx210-rbx += " -Wl,--no-as-needed"
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
+CPPFLAGS:append:neo += "-mno-outline-atomics"
 
 EXTRA_OECONF = " \
                 --with-zlib \
