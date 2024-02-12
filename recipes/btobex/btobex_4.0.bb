@@ -8,9 +8,9 @@ ${LICENSE};md5=550794465ba0ec5312d6919e203a55f9"
 
 DEPENDS += "glib-2.0 btvendorhal"
 
-#CFLAGS_append = " -DUSE_ANDROID_LOGGING "
-#CFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
-#LDFLAGS_append = " -llog "
+CFLAGS:append = " -DUSE_ANDROID_LOGGING "
+CFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
+LDFLAGS:append = " -llog "
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://qcom-opensource/bt/obex_profiles/"
@@ -18,6 +18,6 @@ SRC_URI = "file://qcom-opensource/bt/obex_profiles/"
 S = "${WORKDIR}/qcom-opensource/bt/obex_profiles/"
 
 EXTRA_OECONF = "--with-glib"
-#EXTRA_OECONF += "--with-common-includes=${STAGING_INCDIR}"
+EXTRA_OECONF += "--with-common-includes=${STAGING_INCDIR}"
 
 ALLOW_EMPTY:${PN} = "1"
