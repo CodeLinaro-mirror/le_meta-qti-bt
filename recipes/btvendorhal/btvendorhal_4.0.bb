@@ -12,5 +12,7 @@ S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/"
 
 PR = "r1"
 
-DEPENDS += " libcutils libutils libhardware"
+DEPENDS += " libcutils system-core-headers "
 #DEPENDS:remove:kalama = "libhardware"
+
+EXTRA_OECONF = "--with-common-includes=${WORKSPACE}/system/core/include/ "
