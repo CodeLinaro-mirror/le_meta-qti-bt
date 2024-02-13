@@ -13,7 +13,6 @@ SRC_URI = "file://bt_audio/ \
 
 BT_SOURCE = "${WORKDIR}"
 S = "${BT_SOURCE}/bt_audio/bthost_ipc"
-S_EXT = "${BT_SOURCE}/stack/bluetooth_ext/system_bt_ext"
 
 EXTRA_OEMAKE += 'BT_SOURCE=${BT_SOURCE}'
 
