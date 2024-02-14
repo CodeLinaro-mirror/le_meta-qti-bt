@@ -64,3 +64,5 @@ SYSTEMD_SERVICE_${PN} = " \
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES:${PN} += "${sysconfdir}/bluetooth/*"
+FILES:${PN} += "${systemd_unitdir}"
+FILES:${PN} += "${systemd_system_unitdir}"
