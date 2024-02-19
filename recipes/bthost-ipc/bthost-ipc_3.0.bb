@@ -7,23 +7,23 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 
 DEPENDS += " liblog glib-2.0 media-headers fluoride"
-DEPENDS_append_kona += " libhardware"
-DEPENDS_append_qrbx210-rbx += " libhardware"
-DEPENDS_append_neo += " libhardware"
+DEPENDS:append:kona += " libhardware"
+DEPENDS:append:qrbx210-rbx += " libhardware"
+DEPENDS:append:neo += " libhardware"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth/bthost_ipc/"
 
-S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/bthost_ipc/"
+S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/bthost_ipc"
 
 #CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
 #CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 #LDFLAGS_append = " -llog "
 
 EXTRA_OECONF = "--with-glib"
-EXTRA_OECONF_append_kona = " --enable-target=qrb5165"
-EXTRA_OECONF_append_qrbx210-rbx = " --enable-target=qrbx210-rbx"
-EXTRA_OECONF_append_neo = " --enable-target=neo"
+EXTRA_OECONF:append:kona = " --enable-target=qrb5165"
+EXTRA_OECONF:append:qrbx210-rbx = " --enable-target=qrbx210-rbx"
+EXTRA_OECONF:append:neo = " --enable-target=neo"
 SOLIBS = ".so"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
