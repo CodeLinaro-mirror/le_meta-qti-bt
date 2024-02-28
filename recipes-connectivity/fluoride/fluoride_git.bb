@@ -13,7 +13,7 @@ SRC_URI = "file://stack/system/bt/ \
 	   file://stack/bluetooth_ext/ \
            file://btapp/ \
 	   file://bt_audio/ \
-           file://fluoride_conf_systemd_tmpfiles.conf"
+           "
 
 S = "${WORKDIR}"
 S_EXT = "${S}/stack/bluetooth_ext/system_bt_ext"
@@ -70,8 +70,4 @@ do_install:append() {
 	if [ -f ${S}/stack/system/bt/conf/iot_devlist.conf ]; then
 	   install -m 0660 ${S}/stack/system/bt/conf/iot_devlist.conf ${D}${sysconfdir}/bluetooth/
 	fi
-
-        install -d ${D}${sysconfdir}/tmpfiles.d
-        install -m 0755 ${WORKDIR}/fluoride_conf_systemd_tmpfiles.conf \
-                -D ${D}${sysconfdir}/tmpfiles.d/fluoride_conf_systemd_tmpfiles.conf
 }
