@@ -10,7 +10,7 @@ PROVIDES = "${PACKAGES}"
 PACKAGES = "${PN}"
 
 BTVENDOR ?= 'False'
-BTVENDOR:qcs40x = 'True'
+
 BTVENDOR:qcm6490 = 'True'
 
 RDEPENDS:${PN} = "\

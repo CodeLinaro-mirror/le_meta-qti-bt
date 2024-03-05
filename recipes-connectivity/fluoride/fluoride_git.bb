@@ -8,14 +8,13 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=89aea4e17d99a7ca
 DEPENDS = "zlib libchrome glib-2.0 property-vault audioroute"
 RDEPENDS:${PN} = "property-vault"
 
-FILESPATH =+ "${WORKSPACE}/bluetooth/:"
-SRC_URI = "file://stack/system/bt/ \
-	   file://stack/bluetooth_ext/ \
-           file://btapp/ \
-	   file://bt_audio/ \
-           "
+FILESPATH =+ "${WORKSPACE}:"
+SRC_URI = "file://bluetooth/stack/system/bt/ \
+           file://bluetooth/stack/bluetooth_ext/ \
+           file://bluetooth/btapp/ \
+           file://bluetooth/bt_audio/"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/bluetooth"
 S_EXT = "${S}/stack/bluetooth_ext/system_bt_ext"
 
 AUTOTOOLS_SCRIPT_PATH = "${S}/stack/system/bt"

@@ -5,12 +5,12 @@ LICENSE = "Apache-2.0"
 
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-FILESPATH =+ "${WORKSPACE}/bluetooth/:"
-SRC_URI = "file://stack/bluetooth_ext/ \
-           file://stack/system/bt/ \
-           file://bt_audio/"
+FILESPATH =+ "${WORKSPACE}:"
+SRC_URI = "file://bluetooth/stack/bluetooth_ext/ \
+           file://bluetooth/stack/system/bt/ \
+           file://bluetooth/bt_audio/"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/bluetooth"
 
 AUTOTOOLS_SCRIPT_PATH = "${S}/stack/bluetooth_ext/certification_tools"
 

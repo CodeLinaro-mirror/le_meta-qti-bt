@@ -4,13 +4,13 @@ DESCRIPTION = "Bluetooth application layer"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-FILESPATH =+ "${WORKSPACE}/bluetooth/:"
-SRC_URI = "file://btapp/ \
-           file://bt_audio/ \
-           file://stack/system/bt/ \
-           file://stack/bluetooth_ext/"
+FILESPATH =+ "${WORKSPACE}:"
+SRC_URI = "file://bluetooth/btapp/ \
+           file://bluetooth/bt_audio/ \
+           file://bluetooth/stack/system/bt/ \
+           file://bluetooth/stack/bluetooth_ext/"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/bluetooth"
 
 EXTRA_OEMAKE += 'BT_SOURCE=${S}'
 

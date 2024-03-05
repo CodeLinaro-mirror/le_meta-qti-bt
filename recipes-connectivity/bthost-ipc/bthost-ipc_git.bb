@@ -6,12 +6,12 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=89aea4e17d99a7ca
 
 DEPENDS = "libchrome glib-2.0 fluoride"
 
-FILESPATH =+ "${WORKSPACE}/bluetooth/:"
-SRC_URI = "file://bt_audio/ \
-           file://stack/system/bt/ \
-           file://stack/system/bt/audio_a2dp_hw/include"
+FILESPATH =+ "${WORKSPACE}:"
+SRC_URI = "file://bluetooth/bt_audio/ \
+           file://bluetooth/stack/system/bt/ \
+           file://bluetooth/stack/system/bt/audio_a2dp_hw/include"
 
-BT_SOURCE = "${WORKDIR}"
+BT_SOURCE = "${WORKDIR}/bluetooth"
 S = "${BT_SOURCE}/bt_audio/bthost_ipc"
 
 EXTRA_OEMAKE += 'BT_SOURCE=${BT_SOURCE}'

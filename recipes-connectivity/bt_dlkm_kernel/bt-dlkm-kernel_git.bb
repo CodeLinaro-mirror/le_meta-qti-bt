@@ -4,10 +4,10 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=801f80980d171dd6
 
 inherit module
 
-FILESPATH =+ "${WORKSPACE}/bluetooth:"
-SRC_URI = "file://bt-kernel"
+FILESPATH =+ "${WORKSPACE}:"
+SRC_URI = "file://bluetooth/bt-kernel"
 
-S = "${WORKDIR}/bt-kernel"
+S = "${WORKDIR}/bluetooth/bt-kernel"
 
 RPROVIDES:${PN} += "kernel-module-bt-kernel"
 SRC_URI    +=  "file://bt_dlkm"

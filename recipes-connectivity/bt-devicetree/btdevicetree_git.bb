@@ -4,10 +4,11 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=550794465ba0ec53
 
 inherit module deploy
 
-FILESPATH =+ "${WORKSPACE}/bluetooth/:"
-SRC_URI = "file://bt-devicetree/"
+FILESPATH =+ "${WORKSPACE}:"
+SRC_URI = "file://bluetooth/bt-devicetree/"
+SRC_URI += "file://bluetooth/stack/bluetooth_ext/system_bt_ext"
 
-BT_SOURCE = "${WORKDIR}"
+BT_SOURCE = "${WORKDIR}/bluetooth"
 S = "${BT_SOURCE}/bt-devicetree"
 S_EXT = "${BT_SOURCE}/stack/bluetooth_ext/system_bt_ext"
 

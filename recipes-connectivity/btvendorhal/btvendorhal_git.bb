@@ -4,12 +4,12 @@ DESCRIPTION = "hardware btvendorhal headers"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-FILESPATH =+ "${WORKSPACE}/bluetooth/:"
-SRC_URI = "file://bt_audio/ \
-           file://btapp/ \
-           file://stack/system/bt/"
+FILESPATH =+ "${WORKSPACE}:"
+SRC_URI = "file://bluetooth/bt_audio/ \
+           file://bluetooth/btapp/ \
+           file://bluetooth/stack/system/bt/"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/bluetooth"
 
 AUTOTOOLS_SCRIPT_PATH = "${S}/bt_audio"
 
