@@ -21,6 +21,8 @@ AUTOTOOLS_SCRIPT_PATH = "${S}/stack/system/bt"
 
 EXTRA_OEMAKE += 'BT_SOURCE=${S}'
 
+PSEUDO_IGNORE_PATHS = "/dev/,${WORKDIR}/bluetooth,${WORKDIR}/pkgdata-sysroot,${TMPDIR}/sysroots-components"
+
 FILES_SOLIBSDEV = ""
 FILES:${PN} += "${libdir}"
 FILES:${PN} += "${sysconfdir}/bluetooth/*"
@@ -36,6 +38,7 @@ EXTRA_OECONF = " \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --enable-static=yes \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
+                --disable-dependency-tracking \
                "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
