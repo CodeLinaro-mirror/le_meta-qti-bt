@@ -12,7 +12,7 @@ DEPENDS = "common hci-qcomm-init glib-2.0"
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://bluetooth/libbt-vendor/libbt-vendor/"
 
-S = "${WORKDIR}/bluetooth/libbt-vendor/libbt-vendor"
+S = "${WORKDIR}/bluetooth"
 
 
 #CFLAGS_append = " -DUSE_ANDROID_LOGGING "
@@ -20,7 +20,7 @@ S = "${WORKDIR}/bluetooth/libbt-vendor/libbt-vendor"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
-EXTRA_OECONF = "--with-common-includes="${WORKSPACE}/bluetooth/bt_audio/hal/include/" \
+EXTRA_OECONF = "--with-common-includes="${S}/bt_audio/hal/include/" \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --enable-target=${BASEMACHINE} \
                 --enable-rome=${BASEPRODUCT} \
