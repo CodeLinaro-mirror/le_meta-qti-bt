@@ -28,6 +28,8 @@ INSANE_SKIP:${PN} = "dev-so"
 
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
 CPPFLAGS:append = " -w -I${STAGING_INCDIR}"
+CPPFLAGS:qcm6490 = " -DSUPPORT_ESL_AP"
+
 CFLAGS:append = " -w -DNDEBUG  -I${STAGING_INCDIR}"
 
 EXTRA_OECONF = " \
@@ -37,6 +39,7 @@ EXTRA_OECONF = " \
                 --enable-static=yes \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                "
+EXTRA_OECONF:append:qcm6490 = " --with-esl"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 do_install:append() {

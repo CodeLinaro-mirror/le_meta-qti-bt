@@ -20,6 +20,7 @@ DEPENDS += "btvendorhal glib-2.0 property-vault libchrome fluoride audioroute pa
 RDEPENDS:${PN} = "property-vault"
 
 CPPFLAGS:append = " -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
+CPPFLAGS:qcm6490 = " -DSUPPORT_ESL_AP"
 SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 
 EXTRA_OECONF = " \
