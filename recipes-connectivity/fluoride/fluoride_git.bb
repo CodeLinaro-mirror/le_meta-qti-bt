@@ -72,4 +72,9 @@ do_install:append() {
 	if [ -f ${S}/stack/system/bt/conf/iot_devlist.conf ]; then
 	   install -m 0660 ${S}/stack/system/bt/conf/iot_devlist.conf ${D}${sysconfdir}/bluetooth/
 	fi
+
+    install -d ${D}${includedir}/bluetooth
+    install -m 0660 ${S}/stack/bluetooth_ext/system_bt_ext/include/bt_testapp.h ${D}${includedir}/fluoride/
+    cd ${S}/stack/system/bt && find ./ -name '*.h'|xargs tar czf ${D}${includedir}/bluetooth/bluetooth.tgz
+    tar zxvf ${D}${includedir}/bluetooth/bluetooth.tgz -C ${D}${includedir}/bluetooth && rm -f ${D}${includedir}/bluetooth/bluetooth.tgz
 }
