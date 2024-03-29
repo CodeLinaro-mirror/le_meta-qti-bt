@@ -16,10 +16,6 @@ S = "${BT_SOURCE}/bt_audio/bthost_ipc"
 
 EXTRA_OEMAKE += 'BT_SOURCE=${BT_SOURCE}'
 
-#CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
-#CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
-#LDFLAGS:append = " -llog "
-
 EXTRA_OECONF = "--with-glib"
 SOLIBS = ".so"
 
