@@ -39,7 +39,7 @@ do_install() {
        install -m 0644 ${WORKDIR}/bluetooth_power.service ${D}${systemd_unitdir}/system
        ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/bluetooth_power.service
        install -d ${D}${sysconfdir}/initscripts
-       install -m 0755 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
+       install -m 0555 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
        install -m 0755 ${BT_BUILD_OUT}/pwr/btpower.ko -D ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
     fi
 }
