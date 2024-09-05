@@ -20,6 +20,7 @@ EXTRA_OEMAKE += "DTC='${DTC}' KERNEL_INCLUDE='${KERNEL_INCLUDE}'"
 
 do_compile() {
     oe_runmake ${EXTRA_OEMAKE} qcm6490-bt
+    oe_runmake ${EXTRA_OEMAKE} qcm6490-bt-rb3-hsp
 }
 
 do_install() {
