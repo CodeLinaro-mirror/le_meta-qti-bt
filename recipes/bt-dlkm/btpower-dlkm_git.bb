@@ -3,7 +3,7 @@ LICENSE = "BSD-3-Clause & GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/BSD-3-Clause;md5=550794465ba0ec5312d6919e203a55f9 \
                     file://${COREBASE}/meta/files/common-licenses/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6"
 
-inherit systemd module linux-kernel-base
+inherit systemd module linux-kernel-base qdlkm
 
 DEPENDS = "virtual/kernel"
 DEPENDS += "${@bb.utils.contains_any('MACHINE', 'sa525m sa525m-emmc', 'bt-devicetree', '', d)}"
@@ -40,6 +40,7 @@ do_install() {
        ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/bluetooth_power.service
        install -d ${D}${sysconfdir}/initscripts
        install -m 0555 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
+       sign_strip_module ${BT_BUILD_OUT}/pwr/btpower.ko
        install -m 0755 ${BT_BUILD_OUT}/pwr/btpower.ko -D ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
     fi
 }
