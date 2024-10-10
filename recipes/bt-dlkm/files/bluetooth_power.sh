@@ -30,20 +30,17 @@
 set -e
 
 DR_NAME=btpower.ko
-BT_POWER_KERNEL_MODULE_PATH=/usr/lib/modules/$(uname -r)/kernel/drivers/bluetooth/$DR_NAME
-BT_POWER_EXTRA_MODULE_PATH=/usr/lib/modules/$(uname -r)/extra/$DR_NAME
+BT_POWER_EXTRA_MODULE_PATH=/lib/modules/$(uname -r)/extra/$DR_NAME
 case "$1" in
   start)
+	echo "btpower: start" > /dev/kmsg
   if [ -e /sys/bus/platform/drivers/bt_power ]; then
-	echo "btpower has already resided in kernel."
+	echo "btpower: has already loaded" > /dev/kmsg
   elif [ -e ${BT_POWER_EXTRA_MODULE_PATH} ]; then
 	insmod ${BT_POWER_EXTRA_MODULE_PATH}
-	echo "insmod extra $DR_NAME Done"
-  elif [ -e ${BT_POWER_KERNEL_MODULE_PATH} ]; then
-	insmod ${BT_POWER_KERNEL_MODULE_PATH}
-	echo "insmod kernel $DR_NAME Done"
+	echo "btpower: insmod $DR_NAME done" > /dev/kmsg
   else
-    echo "exit due to no $DR_NAME"
+	echo "btpower: exit due to no $DR_NAME" > /dev/kmsg
   fi
   exit 0
   ;;
