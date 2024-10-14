@@ -16,6 +16,8 @@ else ifeq ($(BOARD),sdx35)
     BASEMACHINE :=sdxbaagha
 else ifeq ($(BOARD),sdx75)
     BASEMACHINE :=sdx75
+else ifeq ($(BOARD),sdx85)
+    BASEMACHINE :=sdxkova
 else
     $(warning Unknow TARGET_MACHINE "$(TARGET_MACHINE)", Use sdx75 by default.)
     BASEMACHINE :=sdx75
