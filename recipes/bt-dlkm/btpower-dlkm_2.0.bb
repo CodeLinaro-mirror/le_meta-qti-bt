@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/BSD-3-Clause;m
 inherit systemd module linux-kernel-base
 
 DEPENDS = "virtual/kernel"
-DEPENDS += "${@bb.utils.contains_any('MACHINE', 'sa525m', 'bt-devicetree', '', d)}"
+DEPENDS += "${@bb.utils.contains_any('MACHINE', 'sa525m sa525m-emmc', 'bt-devicetree', '', d)}"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/bt-kernel/"
@@ -39,7 +39,7 @@ do_install() {
        install -m 0644 ${WORKDIR}/bluetooth_power.service ${D}${systemd_unitdir}/system
        ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/bluetooth_power.service
        install -d ${D}${sysconfdir}/initscripts
-       install -m 0755 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
+       install -m 0555 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
        install -m 0755 ${BT_BUILD_OUT}/pwr/btpower.ko -D ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
     fi
 }
