@@ -58,3 +58,12 @@ do_install_append_qrb5165-ifb() {
 	fi
 
 }
+
+do_install_append_qrbx210-rbx() {
+        install -d ${D}${sysconfdir}/bluetooth/
+
+        if [ -f ${S}conf/RBX_bt_app.conf ]; then
+           install -m 0660 ${S}conf/RBX_bt_app.conf ${D}${sysconfdir}/bluetooth/bt_app.conf
+        fi
+
+}
