@@ -1,4 +1,4 @@
-inherit autotools pkgconfig logging
+inherit autotools pkgconfig
 
 DESCRIPTION = "Bluetooth application layer"
 LICENSE = "Apache-2.0"
