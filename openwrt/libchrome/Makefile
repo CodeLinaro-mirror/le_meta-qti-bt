@@ -10,7 +10,7 @@ PKG_LICENSE:=Apache-2.0
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL=https://git.codelinaro.org/clo/la/platform/external/libchrome.git
 PKG_SOURCE_VERSION:=b4b96cdfd447daac679b067c3b969cc5ed22a798
-PKG_MIRROR_HASH:=31375a90a29521f4066f91c0a7483da285a189f67d9992030f024d0fa7eaf81b
+PKG_MIRROR_HASH:=b01496a3daf2f26ac140f38665d89266bf0d5f2d6efec6de663e2e04d9bec806
 
 include $(INCLUDE_DIR)/package.mk
 
