@@ -20,6 +20,8 @@ DEPENDS:remove:neo  = "audiohal"
 DEPENDS:append:qrbx210-rbx  = " libhardware media-headers"
 DEPENDS:append:kalama  = " libhardware media-headers"
 DEPENDS:remove:kalama  = " audiohal"
+DEPENDS:append:pineapple = " libhardware media-headers"
+DEPENDS:remove:pineapple = " audiohal"
 
 #CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 #CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"

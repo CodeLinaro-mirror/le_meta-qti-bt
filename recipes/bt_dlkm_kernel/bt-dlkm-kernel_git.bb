@@ -15,12 +15,14 @@ DEPENDS += "virtual/kernel wlan-platform btdevicetree"
 
 KERNEL_VERSION = "${@get_kernelversion_file("${STAGING_KERNEL_BUILDDIR}")}"
 EXT_MODULES = "${@os.path.relpath("${S}", "${KERNEL_PLATFORM_PATH}")}"
+INTERMEDIATE_KERNEL_PATH = "${WORKDIR}/out/${KERNEL_DEFCONFIG}"
+MODULE_LIST = "btpower.ko bt_fm_slim.ko"
 
-do_configure() {
-  :
-}
+
+do_configure[noexec] = "1"
 
 do_compile[depends] += "virtual/kernel:do_shared_workdir"
+do_compile[cleandirs] += "${INTERMEDIATE_KERNEL_PATH}"
 
 do_compile() {
 
@@ -33,40 +35,41 @@ do_compile() {
     EXT_MODULES=${EXT_MODULES} \
     ROOTDIR=${WORKDIR}/ \
     KERNEL_KIT=${KERNEL_PREBUILT_PATH} \
-    OUT_DIR=${WORKDIR}/out/${KERNEL_DEFCONFIG} \
+    OUT_DIR=${INTERMEDIATE_KERNEL_PATH} \
     INPLACE_COMPILE=y \
+    MODULE_OUT=${S} \
     ./build/build_module.sh
 }
 
 do_install() {
-    install -d ${D}${sysconfdir}/initscripts
-    install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
-    install -d ${D}/usr/include/
-    install -m 755 ${WORKDIR}/bt_dlkm ${D}${sysconfdir}/initscripts
+    install -d ${S}/unstripped
+    install -m 0755 `find ${S} -name *.ko` -D ${S}/unstripped
+
     install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}
 
-#        # strip debug symbols and sign the module
-#        ${STAGING_DIR_NATIVE}/usr/libexec/aarch64-oe-linux/gcc/aarch64-oe-linux/11.3.0/strip \
-#              --strip-debug ${WORKDIR}/vendor/qcom/opensource/bt-kernel/pwr/btpower.ko
-
-    install -m 0755 ${WORKDIR}/vendor/qcom/opensource/bt-kernel/pwr/btpower.ko -D ${D}/${nonarch_base_libdir}/modules/${KERNEL_VERSION}
-    install -m 0755 ${WORKDIR}/vendor/qcom/opensource/bt-kernel/slimbus/bt_fm_slim.ko -D ${D}/${nonarch_base_libdir}/modules/${KERNEL_VERSION}
-    install -m 0644 ${WORKDIR}/bt_dlkm.service -D ${D}${systemd_unitdir}/system/bt_dlkm.service
+    # strip debug symbols
+    for module in ${MODULE_LIST}; do
+        ${STAGING_DIR_NATIVE}/usr/bin/aarch64-oe-linux/aarch64-oe-linux-strip \
+            --strip-debug ${S}/unstripped/${module} -o ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/${module}
+    done
 }
 
-do_install:append() {
+do_install:append:kalama() {
+    install -d ${D}${sysconfdir}/initscripts
+    install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
+    install -m 755 ${WORKDIR}/bt_dlkm ${D}${sysconfdir}/initscripts
+    install -m 0644 ${WORKDIR}/bt_dlkm.service -D ${D}${systemd_unitdir}/system/bt_dlkm.service
     cd ${D}${systemd_unitdir}/system/multi-user.target.wants/ && ln -s ../bt_dlkm.service bt_dlkm.service
 }
 
 do_deploy() {
-# Deploy unstripped kernel modules into ${DEPLOYDIR}/kernel_modules for debugging purposes
     install -d ${DEPLOYDIR}/kernel_modules
-    cp -rp ${WORKDIR}/vendor/qcom/opensource/bt-kernel/*/*.ko ${DEPLOYDIR}/kernel_modules
+    install -m 0755 ${S}/unstripped/*.ko ${DEPLOYDIR}/kernel_modules
 }
 
-addtask deploy after do_install before do_package
+addtask do_deploy after do_install
 
-FILES:${PN} += "${sysconfdir}/*"
-FILES:${PN} += "${systemd_unitdir}/*"
-FILES:${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/*.ko"
-FILES:${PN} += "${base_libdir}/modules/*.ko"
+FILES:kalama:${PN} += "${sysconfdir}/*"
+FILES:kalama:${PN} += "${systemd_unitdir}/*"
+FILES:${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/*"
+FILES:${PN} += "${base_libdir}/modules/*"

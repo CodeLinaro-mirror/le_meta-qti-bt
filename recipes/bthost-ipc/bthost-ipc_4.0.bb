@@ -26,6 +26,7 @@ EXTRA_OECONF:append:kona = " --enable-target=qrb5165"
 EXTRA_OECONF:append:qrbx210-rbx = " --enable-target=qrbx210-rbx"
 EXTRA_OECONF:append:neo = " --enable-target=neo"
 EXTRA_OECONF:append:kalama = " --enable-target=kalama"
+EXTRA_OECONF:append:pineapple = " --enable-target=pineapple"
 SOLIBS = ".so"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
