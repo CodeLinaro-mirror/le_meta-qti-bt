@@ -75,6 +75,14 @@ do_install:append:kalama() {
     cd ${D}${systemd_unitdir}/system/multi-user.target.wants/ && ln -s ../bt_dlkm.service bt_dlkm.service
 }
 
+do_install:append:qcm2290-mtp() {
+    install -d ${D}${sysconfdir}/initscripts
+    install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
+    install -m 755 ${WORKDIR}/bt_dlkm ${D}${sysconfdir}/initscripts
+    install -m 0644 ${WORKDIR}/bt_dlkm.service -D ${D}${systemd_unitdir}/system/bt_dlkm.service
+    cd ${D}${systemd_unitdir}/system/multi-user.target.wants/ && ln -s ../bt_dlkm.service bt_dlkm.service
+}
+
 do_deploy() {
     install -d ${DEPLOYDIR}/kernel_modules
     install -m 0755 ${S}/unstripped/*.ko ${DEPLOYDIR}/kernel_modules
