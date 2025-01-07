@@ -69,7 +69,7 @@ do_deploy() {
 
 addtask do_deploy after do_install
 
-FILES:kalama:${PN} += "${sysconfdir}/*"
-FILES:kalama:${PN} += "${systemd_unitdir}/*"
+FILES:${PN} += "${sysconfdir}/*"
+FILES:${PN} += "${systemd_unitdir}/*"
 FILES:${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/*"
 FILES:${PN} += "${base_libdir}/modules/*"
