@@ -47,10 +47,23 @@ do_install() {
 
     install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}
 
+    STRIP_TOOL="${STAGING_DIR_NATIVE}/usr/bin/aarch64-oe-linux/aarch64-oe-linux-strip"
+    if [ ! -x "$STRIP_TOOL" ]; then
+      STRIP_TOOL="${STAGING_DIR_NATIVE}/usr/bin/aarch64-oe-linux/aarch64-oe-linux-strip"
+      if [ ! -x "$STRIP_TOOL" ]; then
+        STRIP_TOOL="cp"
+      fi
+    fi
+
+    echo $STRIP_TOOL
+
     # strip debug symbols
     for module in ${MODULE_LIST}; do
-        ${STAGING_DIR_NATIVE}/usr/bin/aarch64-oe-linux/aarch64-oe-linux-strip \
-            --strip-debug ${S}/unstripped/${module} -o ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/${module}
+      if [ "${STRIP_TOOL}" = "cp" ]; then
+        cp ${S}/unstripped/${module} ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/${module}
+      else
+        ${STRIP_TOOL} --strip-debug ${S}/unstripped/${module} -o ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/${module}
+      fi
     done
 }
 
@@ -69,7 +82,7 @@ do_deploy() {
 
 addtask do_deploy after do_install
 
-FILES:kalama:${PN} += "${sysconfdir}/*"
-FILES:kalama:${PN} += "${systemd_unitdir}/*"
+FILES:${PN} += "${sysconfdir}/*"
+FILES:${PN} += "${systemd_unitdir}/*"
 FILES:${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/*"
 FILES:${PN} += "${base_libdir}/modules/*"
