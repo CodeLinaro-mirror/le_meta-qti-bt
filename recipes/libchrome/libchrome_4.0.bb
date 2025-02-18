@@ -17,6 +17,8 @@ CPPFLAGS:append = " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 LDFLAGS:append:kona += " -llog"
 LDFLAGS:append:neo += " -llog"
 LDFLAGS:append:kalama += " -llog"
+LDFLAGS:append:pineapple += " -llog"
+LDFLAGS:append:qcm2290-mtp += " -llog"
 
 do_install:append() {
   install -D ${WORKDIR}/build/libchrome.pc ${D}${libdir}/pkgconfig/libchrome.pc
