@@ -14,6 +14,7 @@ DEPENDS:append:qrbx210-rbx += " libcutils libhardware"
 DEPENDS:append:kalama += " libhardware"
 DEPENDS:append:pineapple += " libhardware media-headers"
 DEPENDS:append:qcm2290-mtp += " libhardware media-headers"
+DEPENDS:append:qcm4325-mtp += " libhardware media-headers"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/system/bt/ \
@@ -40,6 +41,7 @@ SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 CPPFLAGS:append:kalama += "-mno-outline-atomics"
 CPPFLAGS:append:pineapple += "-mno-outline-atomics"
 CPPFLAGS:append:qcm2290-mtp += "-mno-outline-atomics"
+CPPFLAGS:append:qcm4325-mtp += "-mno-outline-atomics"
 
 EXTRA_OECONF = " \
                 --with-zlib \
