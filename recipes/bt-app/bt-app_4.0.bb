@@ -24,6 +24,8 @@ DEPENDS:append:pineapple = " libhardware media-headers"
 DEPENDS:remove:pineapple = " audiohal"
 DEPENDS:append:qcm2290-mtp = " libhardware media-headers"
 DEPENDS:remove:qcm2290-mtp = " audiohal"
+DEPENDS:append:qcm4325-mtp = " libhardware media-headers"
+DEPENDS:remove:qcm4325-mtp = " audiohal"
 
 #CPPFLAGS_append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 #CPPFLAGS_append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
