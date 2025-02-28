@@ -6,9 +6,10 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/BSD-3-Clause;m
 inherit systemd module linux-kernel-base qdlkm
 
 DEPENDS = "virtual/kernel"
-DEPENDS += "${@bb.utils.contains_any('MACHINE', 'sa525m sa525m-emmc', 'bt-devicetree', '', d)}"
+DEPENDS += "${@bb.utils.contains_any('MACHINE', 'sa525m sa525m-emmc sa510m', 'bt-devicetree', '', d)}"
 
-FILESPATH =+ "${WORKSPACE}:"
+FILESEXTRAPATHS:prepend := "${WORKSPACE}/:${THISDIR}/files:"
+
 SRC_URI = "file://vendor/qcom/opensource/bt-kernel/"
 SRC_URI += " \
             file://bluetooth_power.sh \
@@ -22,13 +23,16 @@ do_configure[depends] += "virtual/kernel:do_shared_workdir"
 BT_BUILD_OUT="${WORKDIR}/vendor/qcom/opensource/bt-kernel-out"
 
 do_compile() {
-
-    cd ${WORKSPACE}/kernel-${PREFERRED_VERSION_linux-msm}/kernel_platform  && \
+    cd ${KERNEL_PLATFORM_PATH} && \
+    TARGET_BOARD_PLATFORM=${TARGET_BOARD_PLATFORM} \
+    KBUILD_OPTIONS+="TARGET_SUPPORT=${BASEMACHINE}" \
     BUILD_CONFIG=${KERNEL_BUILD_CONFIG} \
     EXT_MODULES=../../vendor/qcom/opensource/bt-kernel/ \
-    ROOTDIR=${WORKSPACE}/ \
-    MODULE_OUT=${BT_BUILD_OUT}/ \
+    KERNEL_KIT=${KERNEL_PREBUILT_PATH} \
     OUT_DIR=${KERNEL_OUT_PATH}/ \
+    MODULE_OUT=${BT_BUILD_OUT}/ \
+    KERNEL_UAPI_HEADERS_DIR=${STAGING_KERNEL_BUILDDIR} \
+    TARGET_SUPPORT=sa510m \
     ./build/build_module.sh "CONFIG_MSM_BT_POWER=m"
 }
 
@@ -40,9 +44,17 @@ do_install() {
        ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/bluetooth_power.service
        install -d ${D}${sysconfdir}/initscripts
        install -m 0555 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
-       sign_strip_module ${BT_BUILD_OUT}/pwr/btpower.ko
+       # sign_strip_module ${BT_BUILD_OUT}/pwr/btpower.ko
+       # do_module_signing
        install -m 0755 ${BT_BUILD_OUT}/pwr/btpower.ko -D ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
     fi
+}
+
+do_module_signing() {
+  export LD_LIBRARY_PATH="${KERNEL_PREBUILT_DISTDIR}"
+  if [ -f ${STAGING_KERNEL_BUILDDIR}/certs/signing_key.pem ]; then
+       ${STAGING_KERNEL_BUILDDIR}/scripts/sign-file sha1 ${STAGING_KERNEL_BUILDDIR}/certs/signing_key.pem ${STAGING_KERNEL_BUILDDIR}/certs/signing_key.x509 ${BT_BUILD_OUT}/pwr/btpower.ko
+  fi
 }
 
 FILES:${PN} += "${systemd_unitdir}/system/"
