@@ -14,7 +14,7 @@ SRC_URI = "file://qcom-opensource/bt/bt-app/ \
                    file://bt-app.sh \
                    file://bt-app-etc.sh "
 
-S = "${WORKDIR}/qcom-opensource/bt/bt-app"
+S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
 
 DEPENDS += "btvendorhal glib-2.0 btobex libchrome fluoride audiohal bt-ext"
 DEPENDS:remove:mdm9607  = "audiohal"
@@ -40,8 +40,11 @@ do_install:append() {
          install -d ${D}/${sysconfdir}/dbus-1/system.d/
          install -d ${D}${systemd_system_unitdir}
          install -d ${D}${systemd_system_unitdir}/multi-user.target.wants/
+         install -d ${D}${userfsdatadir}/misc/bluetooth/
          install -m 0644 ${WORKDIR}/bt-app.conf ${D}${sysconfdir}/dbus-1/system.d/
          install -m 0644 ${WORKDIR}/bt-app.service ${D}${systemd_system_unitdir}
+         install -m 0660 ${S}conf/AdvertiserConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
+         install -m 0660 ${S}conf/ServerConfigFile.txt ${D}${userfsdatadir}/misc/bluetooth/
 
          # enable the service for multi-user.target
          ln -sf ${systemd_system_unitdir}/bt-app.service \
@@ -66,3 +69,4 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES:${PN} += "${sysconfdir}/bluetooth/*"
 FILES:${PN} += "${systemd_unitdir}"
 FILES:${PN} += "${systemd_system_unitdir}"
+FILES:${PN} += "${userfsdatadir}/misc/bluetooth/*"
