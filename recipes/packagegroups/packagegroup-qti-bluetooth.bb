@@ -22,4 +22,5 @@ RDEPENDS:${PN} = "\
     bt-property \
     fluoride \
     bt-ext \
+    ${@bb.utils.contains('MACHINE','ar-sg1', 'bt-dlkm-kernel', '', d)} \
 "
