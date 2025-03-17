@@ -11,9 +11,9 @@ PACKAGES = ' \
 '
 
 BTVENDOR ?= 'False'
-BTVENDOR_qrbx210-rbx = 'True'
+BTVENDOR:qrbx210-rbx = 'True'
 
-RDEPENDS_${PN} = "\
+RDEPENDS:${PN} = "\
     bthost-ipc \
     bt-app \
     ${@oe.utils.conditional('BTVENDOR', 'True', 'libbt-vendor', '', d)} \

@@ -10,9 +10,9 @@ SRC_URI[sha256sum] = "92bf4ce87d58014794ef6b22dc0a13b0b19acdf9c96870391c935d1e01
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 INHIBIT_PACKAGE_STRIP = "1"
 
-CFLAGS_append = " -D_PLATFORM_MDM_"
+CFLAGS:append = " -D_PLATFORM_MDM_"
 
-do_install_append() {
+do_install:append() {
         install -d ${D}${sysconfdir}/bluetooth/
 
         if [ -f ${S}/profiles/network/network.conf ]; then
@@ -28,22 +28,22 @@ do_install_append() {
 
 PACKAGES =+ "libasound-module-bluez"
 
-FILES_libasound-module-bluez = "\
+FILES:libasound-module-bluez = "\
   ${libdir}/alsa-lib/libasound_module_ctl_bluetooth.so \
   ${libdir}/alsa-lib/libasound_module_pcm_bluetooth.so \
   ${datadir}/alsa\
 "
-FILES_${PN} += "\
+FILES:${PN} += "\
   ${base_libdir}/udev/ \
   ${base_libdir}/systemd/ \
 "
-FILES_${PN}-dev += "\
+FILES:${PN}-dev += "\
   ${libdir}/alsa-lib/libasound_module_ctl_bluetooth.la \
   ${libdir}/alsa-lib/libasound_module_pcm_bluetooth.la \
 "
 
 PACKAGES =+ "${PN}-test"
-RDEPENDS_${PN}-test = "python"
-FILES_${PN}-test += "\
+RDEPENDS:${PN}-test = "python"
+FILES:${PN}-test += "\
   ${libdir}/bluez/ \
 "
