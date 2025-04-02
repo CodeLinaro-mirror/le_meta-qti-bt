@@ -42,9 +42,9 @@ do_install() {
        install -d ${D}${sysconfdir}/initscripts
        install -m 0555 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
 
-       LD_LIBRARY_PATH=${WORKSPACE}/kernel-${PREFERRED_VERSION_linux-msm}/kernel_platform/prebuilts/kernel-build-tools/linux-x86/lib64/ \
-       ${KERNEL_OUT_PATH}/dist/sign-file sha1 ${KERNEL_OUT_PATH}/dist/signing_key.pem \
-       ${KERNEL_OUT_PATH}/dist/signing_key.x509 ${BT_BUILD_OUT}/btpower.ko
+       LD_LIBRARY_PATH=${KERNEL_PREBUILT_DISTDIR}/openssl/lib64/ \
+       ${KERNEL_PREBUILT_DISTDIR}/sign-file sha1 ${KERNEL_PREBUILT_DISTDIR}/signing_key.pem \
+       ${KERNEL_PREBUILT_DISTDIR}/signing_key.x509 ${BT_BUILD_OUT}/btpower.ko
 
        install -m 0755 ${BT_BUILD_OUT}/btpower.ko -D ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
     fi
