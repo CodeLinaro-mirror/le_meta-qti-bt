@@ -18,9 +18,9 @@ RDEPENDS:${PN} = "\
     bthost-ipc \
     bt-app \
     ${@oe.utils.conditional('BTVENDOR', 'True', 'libbt-vendor', '', d)} \
+    ${@bb.utils.contains('MACHINE','ar-sg1', 'bt-dlkm-kernel', '', d)} \
     bt-cert \
     bt-property \
     fluoride \
     bt-ext \
-    ${@bb.utils.contains('MACHINE','ar-sg1', 'bt-dlkm-kernel', '', d)} \
 "
