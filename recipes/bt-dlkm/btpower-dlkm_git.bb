@@ -21,12 +21,15 @@ SRC_URI += " \
 
 BT_BUILD_OUT="${WORKDIR}/vendor/qcom/opensource/bt-kernel-out"
 
+TARGET_VARIANT= "${@bb.utils.contains('KERNEL_VARIANT', 'perf_', 'perf_defconfig', 'debug_defconfig', d)}"
+
 do_compile() {
     cd ${KERNEL_PLATFORM_PATH} && \
     BUILD_CONFIG=${KERNEL_BUILD_CONFIG} \
     EXT_MODULES=../../vendor/qcom/opensource/bt-kernel \
     OUT_DIR=${KERNEL_OUT_PATH}/ \
     ENABLE_DDK_BUILD=true \
+    VARIANT=${TARGET_VARIANT} \
     TARGET_BOARD_PLATFORM=sa510m \
     MODULE_OUT=${BT_BUILD_OUT}/ \
     TARGET_SUPPORT=sa510m \
