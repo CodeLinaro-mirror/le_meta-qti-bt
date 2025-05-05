@@ -9,7 +9,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS += "zlib btvendorhal libchrome bttransport audio-utils libutils bt-ext"
 DEPENDS:append:kona += " libcutils libhardware"
-DEPENDS:append:neo += " libcutils libhardware"
+DEPENDS:append:neo += " libcutils libhardware pal"
 DEPENDS:append:qrbx210-rbx += " libcutils libhardware"
 
 FILESPATH =+ "${WORKSPACE}:"
