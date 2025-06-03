@@ -16,6 +16,7 @@ DEPENDS += "virtual/kernel"
 DEPENDS += "virtual/kernel-toolchain-native"
 DEPENDS:append:aarch64 = " libgcc"
 KERNEL_MODULES = "btpower bt_fm_slim"
+COMPATIBLE_MACHINE = "ar-sg1"
 
 # Disable parallel make
 PARALLEL_MAKE = ""
