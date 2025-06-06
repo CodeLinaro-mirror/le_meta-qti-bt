@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/BSD-3-Clause;m
 inherit systemd module linux-kernel-base qdlkm
 
 DEPENDS = "virtual/kernel"
-DEPENDS += "${@bb.utils.contains_any('MACHINE', 'sa525m sa525m-emmc sa510m', 'bt-devicetree', '', d)}"
+DEPENDS += "${@bb.utils.contains_any('MACHINE', 'sa525m sa525m-emmc sa510m sa510m-1G', 'bt-devicetree', '', d)}"
 
 FILESEXTRAPATHS:prepend := "${WORKSPACE}/:${THISDIR}/files:"
 
