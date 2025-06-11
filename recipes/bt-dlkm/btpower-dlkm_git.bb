@@ -6,30 +6,34 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/BSD-3-Clause;m
 inherit systemd module linux-kernel-base qdlkm
 
 DEPENDS = "virtual/kernel"
-DEPENDS += "${@bb.utils.contains_any('MACHINE', 'sa525m sa525m-emmc', 'bt-devicetree', '', d)}"
+DEPENDS += "${@bb.utils.contains_any('MACHINE', 'sa525m sa525m-emmc sa510m sa510m-1G', 'bt-devicetree', '', d)}"
 
-FILESPATH =+ "${WORKSPACE}:"
+FILESEXTRAPATHS:prepend := "${WORKSPACE}/:${THISDIR}/files:"
+
 SRC_URI = "file://vendor/qcom/opensource/bt-kernel/"
 SRC_URI += " \
             file://bluetooth_power.sh \
             file://bluetooth_power.service \
            "
 
-RM_WORK_EXCLUDE += "${PN}"
-
-do_configure[depends] += "virtual/kernel:do_shared_workdir"
+# RM_WORK_EXCLUDE += "${PN}"
+# do_configure[depends] += "virtual/kernel:do_shared_workdir"
 
 BT_BUILD_OUT="${WORKDIR}/vendor/qcom/opensource/bt-kernel-out"
 
-do_compile() {
+TARGET_VARIANT= "${@bb.utils.contains('KERNEL_VARIANT', 'perf_', 'perf_defconfig', 'debug_defconfig', d)}"
 
-    cd ${WORKSPACE}/kernel-${PREFERRED_VERSION_linux-msm}/kernel_platform  && \
+do_compile() {
+    cd ${KERNEL_PLATFORM_PATH} && \
     BUILD_CONFIG=${KERNEL_BUILD_CONFIG} \
-    EXT_MODULES=../../vendor/qcom/opensource/bt-kernel/ \
-    ROOTDIR=${WORKSPACE}/ \
-    MODULE_OUT=${BT_BUILD_OUT}/ \
+    EXT_MODULES=../../vendor/qcom/opensource/bt-kernel \
     OUT_DIR=${KERNEL_OUT_PATH}/ \
-    ./build/build_module.sh "CONFIG_MSM_BT_POWER=m"
+    ENABLE_DDK_BUILD=true \
+    VARIANT=${TARGET_VARIANT} \
+    TARGET_BOARD_PLATFORM=sa510m \
+    MODULE_OUT=${BT_BUILD_OUT}/ \
+    TARGET_SUPPORT=sa510m \
+    ./build/build_module.sh
 }
 
 do_install() {
@@ -40,8 +44,12 @@ do_install() {
        ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/bluetooth_power.service
        install -d ${D}${sysconfdir}/initscripts
        install -m 0555 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
-       sign_strip_module ${BT_BUILD_OUT}/pwr/btpower.ko
-       install -m 0755 ${BT_BUILD_OUT}/pwr/btpower.ko -D ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
+
+       LD_LIBRARY_PATH=${KERNEL_PREBUILT_DISTDIR}/openssl/lib64/ \
+       ${KERNEL_PREBUILT_DISTDIR}/sign-file sha1 ${KERNEL_PREBUILT_DISTDIR}/signing_key.pem \
+       ${KERNEL_PREBUILT_DISTDIR}/signing_key.x509 ${BT_BUILD_OUT}/btpower.ko
+
+       install -m 0755 ${BT_BUILD_OUT}/btpower.ko -D ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
     fi
 }
 
