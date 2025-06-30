@@ -1,0 +1,58 @@
+* Changes from Qualcomm Innovation Center, Inc. are provided under the following license:
+* Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+* SPDX-License-Identifier: BSD-3-Clause-Clear
+
+From b94fa4246812847051e0848658c3d69e836c683d Mon Sep 17 00:00:00 2001
+From: Yepuri Siddu <quic_ysiddu@quicinc.com>
+Date: Mon, 24 Mar 2025 17:55:34 +0530
+Subject: [PATCH] Fix scarthgap build issue
+
+Signed-off-by: Yepuri Siddu <quic_ysiddu@quicinc.com>
+---
+ arc4random.c                        | 2 +-
+ include/event2/event-config-linux.h | 2 +-
+ util-internal.h                     | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arc4random.c b/arc4random.c
+index 3977339..fd0e27c 100644
+--- a/arc4random.c
++++ b/arc4random.c
+@@ -63,7 +63,7 @@
+ #endif
+ #endif
+ #include <limits.h>
+-#include <stdlib.h>
++//#include <stdlib.h>
+ #include <string.h>
+ #endif
+ 
+diff --git a/include/event2/event-config-linux.h b/include/event2/event-config-linux.h
+index 5a906df..d36673f 100644
+--- a/include/event2/event-config-linux.h
++++ b/include/event2/event-config-linux.h
+@@ -312,7 +312,7 @@
+ #define _EVENT_HAVE_SYS_STAT_H 1
+ 
+ /* Define to 1 if you have the <sys/sysctl.h> header file. */
+-#define _EVENT_HAVE_SYS_SYSCTL_H 1
++#undef _EVENT_HAVE_SYS_SYSCTL_H
+ 
+ /* Define to 1 if you have the <sys/time.h> header file. */
+ #define _EVENT_HAVE_SYS_TIME_H 1
+diff --git a/util-internal.h b/util-internal.h
+index 01ebc17..4b39c60 100644
+--- a/util-internal.h
++++ b/util-internal.h
+@@ -32,7 +32,7 @@
+ /* For EVUTIL_ASSERT */
+ #include "log-internal.h"
+ #include <stdio.h>
+-#include <stdlib.h>
++//#include <stdlib.h>
+ #ifdef _EVENT_HAVE_SYS_SOCKET_H
+ #include <sys/socket.h>
+ #endif
+-- 
+2.34.1
+

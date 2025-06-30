@@ -15,9 +15,9 @@ S = "${WORKDIR}/vendor/qcom/opensource/bluetooth_ext/"
 
 DEPENDS += "libchrome"
 
-do_install_append() {
+do_install:append() {
   install -D ${WORKDIR}/build/bluetoothExt.pc ${D}${libdir}/pkgconfig/bluetoothExt.pc
 }
 
-ALLOW_EMPTY_${PN} = "1"
-FILES_${PN} += "${libdir}/pkgconfig/"
+ALLOW_EMPTY:${PN} = "1"
+FILES:${PN} += "${libdir}/pkgconfig/"
