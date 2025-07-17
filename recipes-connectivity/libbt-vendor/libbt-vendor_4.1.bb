@@ -6,16 +6,18 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=89aea4e17d99a7ca
 
 DEPENDS = "common hci-qcomm-init glib-2.0"
 
+RDEPENDS:${PN} = "libcutils"
+
 FILESPATH =+ "${WORKSPACE}:"
 
-SRC_URI = "file://bluetooth/libbt-vendor/libbt-vendor/ \
-           file://bluetooth/bt_audio/hal/include/"
+SRC_URI = "file://bluetooth/libbt-vendor/libbt-vendor/"
 
-S = "${WORKDIR}/bluetooth"
+S = "${WORKDIR}/bluetooth/libbt-vendor/libbt-vendor/"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
-EXTRA_OECONF = "--with-common-includes="${S}/bt_audio/hal/include/" \
+EXTRA_OECONF = "--enable-target=${BASEMACHINE} \
+                --with-common-includes="${S}/bt_audio/hal/include/" \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-glib \
                "

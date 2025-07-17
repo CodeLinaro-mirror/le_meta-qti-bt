@@ -15,10 +15,12 @@ BTVENDOR:qcm6490 = 'True'
 
 RDEPENDS:${PN} = "\
     btdevicetree \
+    ${@oe.utils.conditional('BTVENDOR', 'True', 'libbt-vendor', '', d)} \
     fluoride \
     btvendorhal \
     libchrome \
     bt-app \
     bt-dlkm-kernel \
     hci-qcomm-init \
+    hidl-client \
 "
