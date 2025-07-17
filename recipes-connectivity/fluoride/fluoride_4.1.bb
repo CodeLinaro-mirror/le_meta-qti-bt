@@ -5,8 +5,9 @@ LICENSE = "Apache-2.0"
 
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "zlib libchrome glib-2.0 property-vault qcom-audioroute libbsd"
-RDEPENDS:${PN} = "property-vault"
+#DEPENDS = "zlib libchrome glib-2.0 property-vault qcom-audioroute libbsd"
+DEPENDS = "zlib libchrome bttransport glib-2.0 libbsd libcutils libutils media-headers"
+#RDEPENDS:${PN} = "property-vault"
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://bluetooth/stack/system/bt/ \
@@ -30,9 +31,10 @@ INSANE_SKIP:${PN} = "dev-so"
 
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
 CPPFLAGS:append = " -w -I${STAGING_INCDIR}"
-CPPFLAGS:qcm6490 = " -DSUPPORT_VENDOR_AP"
-
 CFLAGS:append = " -w -DNDEBUG  -I${STAGING_INCDIR}"
+TARGET_CFLAGS += "-mno-outline-atomics"
+TARGET_CXXFLAGS += "-mno-outline-atomics"
+
 
 EXTRA_OECONF = " \
                 --with-zlib \
@@ -42,7 +44,8 @@ EXTRA_OECONF = " \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                 --disable-dependency-tracking \
                "
-EXTRA_OECONF:append:qcm6490 = " --with-vendorap"
+
+#EXTRA_OECONF:append = " --enable-audio=yes "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 do_install:append() {

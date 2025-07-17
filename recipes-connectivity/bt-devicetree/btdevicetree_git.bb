@@ -1,37 +1,36 @@
-DESCRIPTION = "QCOM BT devicetree"
+DESCRIPTION = "QTI BT devicetree"
 LICENSE = "BSD-3-Clause"
-LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=550794465ba0ec5312d6919e203a55f9"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/\
+${LICENSE};md5=550794465ba0ec5312d6919e203a55f9"
 
-inherit module deploy
-
-FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://bluetooth/bt-devicetree/"
-SRC_URI += "file://bluetooth/stack/bluetooth_ext/system_bt_ext"
-
-BT_SOURCE = "${WORKDIR}/bluetooth"
-S = "${BT_SOURCE}/bt-devicetree"
-S_EXT = "${BT_SOURCE}/stack/bluetooth_ext/system_bt_ext"
-
+inherit linux-kernel-base deploy
+FILESEXTRAPATHS:prepend := "${WORKSPACE}:"
+SRC_URI     =  "file://bluetooth/bt-devicetree/"
+S = "${WORKDIR}/bluetooth/bt-devicetree"
 DEPENDS += "virtual/kernel"
 
-DTC := "${KBUILD_OUTPUT}/scripts/dtc/dtc"
-KERNEL_INCLUDE := "${STAGING_KERNEL_DIR}/include/"
-EXTRA_OEMAKE += "DTC='${DTC}' KERNEL_INCLUDE='${KERNEL_INCLUDE}'"
+KERNEL_VERSION = "${@get_kernelversion_file("${STAGING_KERNEL_BUILDDIR}")}"
+EXT_MODULES = "${@os.path.relpath("${S}", "${KERNEL_PLATFORM_PATH}")}"
 
+do_configure[noexec] = "1"
+
+do_compile[depends] += "virtual/kernel:do_shared_workdir"
+do_compile[cleandirs] += "${WORKDIR}/out/${KERNEL_DEFCONFIG}"
 do_compile() {
-    oe_runmake ${EXTRA_OEMAKE} qcm6490-bt
-    oe_runmake ${EXTRA_OEMAKE} qcm6490-bt-rb3-hsp
-}
-
-do_install() {
-    :
+      cd ${KERNEL_PLATFORM_PATH}
+      BUILD_CONFIG=msm-kernel/${KERNEL_CONFIG} \
+      EXT_MODULES=${EXT_MODULES} \
+      KERNEL_KIT=${KERNEL_PREBUILT_PATH} \
+      MODULE_OUT=${S} \
+      OUT_DIR=${WORKDIR}/out/${KERNEL_DEFCONFIG} \
+      INPLACE_COMPILE=y \
+      ./build/build_module.sh
 }
 
 do_deploy() {
-    echo "DTBO Staging path -> " ${DEPLOYDIR}/tech_dtbs
     install -d ${DEPLOYDIR}/tech_dtbs
-    install -m 0644 ${S}/*.dtbo ${DEPLOYDIR}/tech_dtbs
+    install -m 0644 ${S}/*.dtbo ${DEPLOYDIR}/tech_dtbs/
 }
 
 addtask do_deploy after do_install
-
+ALLOW_EMPTY:${PN} = "1"

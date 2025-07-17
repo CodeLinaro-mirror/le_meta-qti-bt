@@ -14,15 +14,11 @@ BTVENDOR ?= 'False'
 BTVENDOR:qcm6490 = 'True'
 
 RDEPENDS:${PN} = "\
+    btdevicetree \
     fluoride \
     btvendorhal \
     libchrome \
-    qcom-audioroute \
-    qcom-pa-bt-audio \
     bt-app \
-    bt-cert \
     bt-dlkm-kernel \
-    bthost-ipc \
-    btftm \
-    btdevicetree \
-    bluetooth-tools "
+    hci-qcomm-init \
+"

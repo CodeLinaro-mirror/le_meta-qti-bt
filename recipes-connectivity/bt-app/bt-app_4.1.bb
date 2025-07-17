@@ -16,11 +16,11 @@ EXTRA_OEMAKE += 'BT_SOURCE=${S}'
 
 AUTOTOOLS_SCRIPT_PATH = "${S}/btapp/bt-app"
 
-DEPENDS += "btvendorhal glib-2.0 property-vault libchrome fluoride qcom-audioroute qcom-pa-bt-audio libbsd"
-RDEPENDS:${PN} = "property-vault"
+#DEPENDS += "btvendorhal glib-2.0 property-vault libchrome fluoride qcom-audioroute qcom-pa-bt-audio libbsd"
+DEPENDS += "btvendorhal glib-2.0 libchrome libcutils fluoride libbsd"
+#RDEPENDS:${PN} = "property-vault"
 
-CPPFLAGS:append = " -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
-CPPFLAGS:qcm6490 = " -DSUPPORT_VENDOR_AP"
+CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 
 EXTRA_OECONF = " \
@@ -30,6 +30,9 @@ EXTRA_OECONF = " \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                 --with-gengatt \
                "
+
+#EXTRA_OECONF:append = " --enable-audio=yes "
+
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES:${PN} += "${sysconfdir}/bluetooth/*"
 FILES:${PN} += "${userfsdatadir}/misc/bluetooth/*"
