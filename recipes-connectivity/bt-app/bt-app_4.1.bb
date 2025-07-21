@@ -17,10 +17,10 @@ EXTRA_OEMAKE += 'BT_SOURCE=${S}'
 AUTOTOOLS_SCRIPT_PATH = "${S}/btapp/bt-app"
 
 #DEPENDS += "btvendorhal glib-2.0 property-vault libchrome fluoride qcom-audioroute qcom-pa-bt-audio libbsd"
-DEPENDS += "btvendorhal glib-2.0 libchrome libcutils fluoride libbsd"
+DEPENDS += "btvendorhal glib-2.0 btobex libchrome libcutils fluoride libbsd"
 #RDEPENDS:${PN} = "property-vault"
 
-CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
+CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 
 EXTRA_OECONF = " \
@@ -29,6 +29,7 @@ EXTRA_OECONF = " \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                 --with-gengatt \
+                --with-btobex \
                "
 
 #EXTRA_OECONF:append = " --enable-audio=yes "

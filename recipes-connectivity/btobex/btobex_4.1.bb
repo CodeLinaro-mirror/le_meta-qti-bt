@@ -7,10 +7,14 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=550794465ba0ec53
 DEPENDS += "glib-2.0 btvendorhal"
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://bluetooth/btapp/obex_profiles/"
+SRC_URI = "file://bluetooth/btapp/obex_profiles/ \
+           file://bluetooth/bt_audio/hal/include/ \
+           file://bluetooth/stack/system/bt/include/ \
+           file://bluetooth/stack/bluetooth_ext/vhal/include/"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/bluetooth/"
 
+CFLAGS:append = " -DUSE_ANDROID_LOGGING"
 EXTRA_OEMAKE += 'BT_SOURCE=${S}'
 
 AUTOTOOLS_SCRIPT_PATH = "${S}/btapp/obex_profiles"

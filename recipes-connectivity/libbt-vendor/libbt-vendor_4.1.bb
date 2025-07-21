@@ -17,7 +17,6 @@ S = "${WORKDIR}/bluetooth/libbt-vendor/libbt-vendor/"
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 
 EXTRA_OECONF = "--enable-target=${BASEMACHINE} \
-                --with-common-includes="${S}/bt_audio/hal/include/" \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-glib \
                "
