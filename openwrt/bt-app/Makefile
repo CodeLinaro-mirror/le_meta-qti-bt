@@ -22,7 +22,6 @@ define Package/$(PKG_NAME)
 	SECTION:=${QTIBT_SECTION}
 	CATEGORY:=${CATEGORY_BIN_DESC}
 	TITLE:=${PKG_NAME}
-	USERID:=root:radio=1001 qbt=2888:radio=1001
 	DEPENDS:=+btvendorhal +glib2 +libchrome +fluoride +libhardware
 endef
 
