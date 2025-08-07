@@ -17,6 +17,10 @@ S = "${WORKDIR}/bluetooth/"
 CFLAGS:append = " -DUSE_ANDROID_LOGGING"
 EXTRA_OEMAKE += 'BT_SOURCE=${S}'
 
+TARGET_CFLAGS += " -fmacro-prefix-map=${WORKDIR}=. -fdebug-prefix-map=${WORKDIR}=."
+TARGET_CXXFLAGS += " -fmacro-prefix-map=${WORKDIR}=. -fdebug-prefix-map=${WORKDIR}=."
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+
 AUTOTOOLS_SCRIPT_PATH = "${S}/btapp/obex_profiles"
 
 EXTRA_OECONF = "--with-glib"

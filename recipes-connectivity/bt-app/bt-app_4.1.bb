@@ -5,16 +5,14 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 FILESPATH =+ "${WORKSPACE}:"
-SRC_URI = "file://bluetooth/btapp/ \
-           file://bluetooth/bt_audio/ \
-           file://bluetooth/stack/system/bt/ \
-           file://bluetooth/stack/bluetooth_ext/"
+SRC_URI = "file://bluetooth/btapp/"
 
-S = "${WORKDIR}/bluetooth"
+S = "${WORKDIR}/bluetooth/btapp"
 
 EXTRA_OEMAKE += 'BT_SOURCE=${S}'
+EXTRA_OEMAKE += "STAGING_INCDIR=${STAGING_INCDIR}"
 
-AUTOTOOLS_SCRIPT_PATH = "${S}/btapp/bt-app"
+AUTOTOOLS_SCRIPT_PATH = "${S}/bt-app"
 
 #DEPENDS += "btvendorhal glib-2.0 property-vault libchrome fluoride qcom-audioroute qcom-pa-bt-audio libbsd"
 DEPENDS += "btvendorhal glib-2.0 btobex libchrome libcutils fluoride libbsd"
@@ -22,9 +20,11 @@ DEPENDS += "btvendorhal glib-2.0 btobex libchrome libcutils fluoride libbsd"
 
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
+TARGET_CFLAGS += " -fmacro-prefix-map=${WORKDIR}=. -fdebug-prefix-map=${WORKDIR}=."
+TARGET_CXXFLAGS += " -fmacro-prefix-map=${WORKDIR}=. -fdebug-prefix-map=${WORKDIR}=."
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
 EXTRA_OECONF = " \
-                --with-common-includes="${S}/bt_audio/hal/include/" \
                 --with-glib \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
@@ -44,19 +44,19 @@ do_install:append() {
         #create /data/misc/bluetooth/ folder
         #install -d ${D}${userfsdatadir}/misc/bluetooth/
 
-        if [ -f ${S}/btapp/bt-app/conf/bt_app.conf ]; then
-           install -m 0660 ${S}/btapp/bt-app/conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
+        if [ -f ${S}/bt-app/conf/bt_app.conf ]; then
+           install -m 0660 ${S}/bt-app/conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
         fi
 
-        if [ -f ${S}/btapp/bt-app/conf/AdvertiserConfigFile.txt ]; then
-           install -m 0660 ${S}/btapp/bt-app/conf/AdvertiserConfigFile.txt ${D}${sysconfdir}/bluetooth/
+        if [ -f ${S}/bt-app/conf/AdvertiserConfigFile.txt ]; then
+           install -m 0660 ${S}/bt-app/conf/AdvertiserConfigFile.txt ${D}${sysconfdir}/bluetooth/
         fi
 
-        if [ -f ${S}/btapp/bt-app/conf/ServerConfigFile.txt ]; then
-           install -m 0660 ${S}/btapp/bt-app/conf/ServerConfigFile.txt ${D}${sysconfdir}/bluetooth/
+        if [ -f ${S}/bt-app/conf/ServerConfigFile.txt ]; then
+           install -m 0660 ${S}/bt-app/conf/ServerConfigFile.txt ${D}${sysconfdir}/bluetooth/
         fi
 
-        if [ -f ${S}/btapp/bt-app/conf/ext_to_mimetype.conf ]; then
-           install -m 0660 ${S}/btapp/bt-app/conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/
+        if [ -f ${S}/bt-app/conf/ext_to_mimetype.conf ]; then
+           install -m 0660 ${S}/bt-app/conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/
         fi
 }

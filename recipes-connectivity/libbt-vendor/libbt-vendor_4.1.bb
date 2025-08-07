@@ -20,6 +20,7 @@ EXTRA_OECONF = "--enable-target=${BASEMACHINE} \
                 --with-lib-path=${STAGING_LIBDIR} \
                 --with-glib \
                "
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
 FILES:${PN} += "${bindir}/bluetooth/*"
 
