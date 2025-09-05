@@ -23,6 +23,10 @@ BT_BUILD_OUT="${WORKDIR}/vendor/qcom/opensource/bt-kernel-out"
 
 TARGET_VARIANT= "${@bb.utils.contains('KERNEL_VARIANT', 'perf_', 'perf_defconfig', 'debug_defconfig', d)}"
 
+TARGET_BOARD_PLATFORM ?= "sa510m"
+TARGET_BOARD_PLATFORM:sa510m-1g = "sa510m.1g"
+TARGET_BOARD_PLATFORM:sa510m_1g = "sa510m.1g"
+
 do_compile() {
     cd ${KERNEL_PLATFORM_PATH} && \
     BUILD_CONFIG=${KERNEL_BUILD_CONFIG} \
@@ -30,7 +34,7 @@ do_compile() {
     OUT_DIR=${KERNEL_OUT_PATH}/ \
     ENABLE_DDK_BUILD=true \
     VARIANT=${TARGET_VARIANT} \
-    TARGET_BOARD_PLATFORM=sa510m \
+    TARGET_BOARD_PLATFORM=${TARGET_BOARD_PLATFORM} \
     MODULE_OUT=${BT_BUILD_OUT}/ \
     TARGET_SUPPORT=sa510m \
     ./build/build_module.sh
