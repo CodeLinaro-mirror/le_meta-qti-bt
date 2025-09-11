@@ -30,6 +30,7 @@ EXTRA_OECONF = " \
                 --with-chrome-includes="${STAGING_INCDIR}/chrome" \
                 --with-gengatt \
                 --with-btobex \
+                --with-btcte \
                "
 
 #EXTRA_OECONF:append = " --enable-audio=yes "
