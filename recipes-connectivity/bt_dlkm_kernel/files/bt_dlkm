@@ -25,18 +25,29 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# Changes from Qualcomm Innovation Center are provided under the following license:
-#
-# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+# Changes from Qualcomm Technologies, Inc. are provided under the following license:
+# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 # SPDX-License-Identifier: BSD-3-Clause-Clear
 
 
 set -e
 
-BLUETOOTH_FM_SLIM_KERNEL_MODULE_PATH=/lib/modules/$(uname -r)/bt_fm_slim.ko
+ BLUETOOTHPOWER_KERNEL_MODULE_PATH=/lib/modules/$(uname -r)/btpower.ko
+ BLUETOOTH_FM_SLIM_KERNEL_MODULE_PATH=/lib/modules/$(uname -r)/bt_fm_slim.ko
+ BLUETOOTHFMCODEC_KERNEL_MODULE_PATH=/lib/modules/$(uname -r)/btfmcodec.ko
+ BLUETOOTH_FM_SWR_KERNEL_MODULE_PATH=/lib/modules/$(uname -r)/bt_fm_swr.ko
+ BLUETOOTHFM_SLIM_CODEC_KERNEL_MODULE_PATH=/lib/modules/$(uname -r)/btfm_slim_codec.ko
 
 case "$1" in
   start)
+  if [ -e /sys/bus/platform/drivers/btpower ]; then
+	echo "btpower has already resided in kernel."
+  elif [ -e ${BLUETOOTHPOWER_KERNEL_MODULE_PATH} ]; then
+	insmod ${BLUETOOTHPOWER_KERNEL_MODULE_PATH}
+	echo "insmod kernel btpower.ko Done"
+  else
+    echo "exit due to no btpower.ko"
+  fi
   if [ -e /sys/bus/platform/drivers/bt_fm_slim ]; then
 	echo "bt_fm_slim has already resided in kernel."
   elif [ -e ${BLUETOOTH_FM_SLIM_KERNEL_MODULE_PATH} ]; then
@@ -44,6 +55,30 @@ case "$1" in
 	echo "insmod kernel bt_fm_slim.ko Done"
   else
     echo "exit due to no bt_fm_slim.ko"
+  fi
+  if [ -e /sys/bus/platform/drivers/btfmcodec ]; then
+	echo "btfmcodec has already resided in kernel."
+  elif [ -e ${BLUETOOTHFMCODEC_KERNEL_MODULE_PATH} ]; then
+	insmod ${BLUETOOTHFMCODEC_KERNEL_MODULE_PATH}
+	echo "insmod kernel btfmcodec.ko Done"
+  else
+    echo "exit due to no btfmcodec.ko"
+  fi
+  if [ -e /sys/bus/platform/drivers/bt_fm_swr ]; then
+	echo "bt_fm_swr has already resided in kernel."
+  elif [ -e ${BLUETOOTH_FM_SWR_KERNEL_MODULE_PATH} ]; then
+	insmod ${BLUETOOTH_FM_SWR_KERNEL_MODULE_PATH}
+	echo "insmod kernel bt_fm_swr.ko Done"
+  else
+    echo "exit due to no bt_fm_swr.ko"
+  fi
+  if [ -e /sys/bus/platform/drivers/btfm_slim_codec ]; then
+	echo "btfm_slim_codec has already resided in kernel."
+  elif [ -e ${BLUETOOTHFM_SLIM_CODEC_KERNEL_MODULE_PATH} ]; then
+	insmod ${BLUETOOTHFM_SLIM_CODEC_KERNEL_MODULE_PATH}
+	echo "insmod kernel btfm_slim_codec.ko Done"
+  else
+    echo "exit due to no btfm_slim_codec.ko"
   fi
   exit 0
   ;;
