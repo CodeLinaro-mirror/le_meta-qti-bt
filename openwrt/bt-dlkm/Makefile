@@ -23,10 +23,12 @@ endef
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)/
 	$(CP) $(LOCAL_SRC)/* $(PKG_BUILD_DIR)/
+	if [ "${BOARD}" != "sdx85" ]; then rm -f ${PKG_BUILD_DIR}/BUILD.bazel; fi
 endef
 
 PKG_EXTRA_KCONFIG:= \
     CONFIG_MSM_BT_POWER=m \
+    KO_DIRS=pwr/btpower.ko \
 
 define Build/Compile
 	$(MAKE) -C ${LINUX_DIR} M="$(PKG_BUILD_DIR)" \
