@@ -13,8 +13,8 @@ inherit module
 DEPENDS = "virtual/kernel"
 
 kernel_dir := "${WORKSPACE}/kernel/msm-${PREFERRED_VERSION_linux-msm}"
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
-FILESEXTRAPATHS_prepend := "${kernel_dir}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${kernel_dir}:"
 
 SRC_URI = " \
             file://drivers/bluetooth/ \
@@ -33,7 +33,7 @@ do_patch_btdrv() {
 }
 do_patch[postfuncs] += "do_patch_btdrv"
 
-do_install_append() {
+do_install:append() {
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
        install -d ${D}${systemd_unitdir}/system
        install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants/
@@ -44,9 +44,9 @@ do_install_append() {
     fi
 }
 
-FILES_${PN} += "${systemd_unitdir}/system/"
-FILES_${PN} += "${sysconfdir}/systemd/system/"
-FILES_${PN} += "${sysconfdir}/initscripts/"
-FILES_${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/"
+FILES:${PN} += "${systemd_unitdir}/system/"
+FILES:${PN} += "${sysconfdir}/systemd/system/"
+FILES:${PN} += "${sysconfdir}/initscripts/"
+FILES:${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/"
 
-RPROVIDES_${PN} += "${@'kernel-module-btpower-${KERNEL_VERSION}'.replace('_', '-')}"
+RPROVIDES:${PN} += "${@'kernel-module-btpower-${KERNEL_VERSION}'.replace('_', '-')}"

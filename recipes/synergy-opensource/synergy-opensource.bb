@@ -8,7 +8,7 @@ ${LICENSE};md5=550794465ba0ec5312d6919e203a55f9"
 
 DEPENDS = "cmake cmake-native dbus"
 
-FILESEXTRAPATHS_prepend := "${WORKSPACE}/:"
+FILESEXTRAPATHS:prepend := "${WORKSPACE}/:"
 SRC_URI = "file://synergy"
 
 SRCREV = "${AUTOREV}"
@@ -52,5 +52,5 @@ do_install () {
     do_install_opensource
 }
 
-FILES_${PN} += "usr/bin \
+FILES:${PN} += "usr/bin \
                 etc/dbus-1/system.d/"

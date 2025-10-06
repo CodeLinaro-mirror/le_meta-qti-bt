@@ -44,9 +44,9 @@ do_install() {
     fi
 }
 
-FILES_${PN} += "${systemd_unitdir}/system/"
-FILES_${PN} += "${sysconfdir}/systemd/system/"
-FILES_${PN} += "${sysconfdir}/initscripts/"
-FILES_${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/"
+FILES:${PN} += "${systemd_unitdir}/system/"
+FILES:${PN} += "${sysconfdir}/systemd/system/"
+FILES:${PN} += "${sysconfdir}/initscripts/"
+FILES:${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/"
 
-RPROVIDES_${PN} += "${@'kernel-module-btpower-${KERNEL_VERSION}'.replace('_', '-')}"
+RPROVIDES:${PN} += "${@'kernel-module-btpower-${KERNEL_VERSION}'.replace('_', '-')}"
