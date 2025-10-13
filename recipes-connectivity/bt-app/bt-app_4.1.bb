@@ -14,11 +14,10 @@ EXTRA_OEMAKE += "STAGING_INCDIR=${STAGING_INCDIR}"
 
 AUTOTOOLS_SCRIPT_PATH = "${S}/bt-app"
 
-#DEPENDS += "btvendorhal glib-2.0 property-vault libchrome fluoride qcom-audioroute qcom-pa-bt-audio libbsd"
-DEPENDS += "btvendorhal glib-2.0 btobex libchrome libcutils fluoride libbsd"
+DEPENDS += "btvendorhal glib-2.0 btobex libchrome libcutils fluoride audio-route pa-bt-audio libbsd"
 #RDEPENDS:${PN} = "property-vault"
 
-CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
+CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
 SECURITY_CFLAGS = "${SECURITY_NO_PIE_CFLAGS}"
 TARGET_CFLAGS += " -fmacro-prefix-map=${WORKDIR}=. -fdebug-prefix-map=${WORKDIR}=."
 TARGET_CXXFLAGS += " -fmacro-prefix-map=${WORKDIR}=. -fdebug-prefix-map=${WORKDIR}=."
@@ -33,7 +32,7 @@ EXTRA_OECONF = " \
                 --with-btcte \
                "
 
-#EXTRA_OECONF:append = " --enable-audio=yes "
+EXTRA_OECONF:append = " --enable-audio=yes "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES:${PN} += "${sysconfdir}/bluetooth/*"

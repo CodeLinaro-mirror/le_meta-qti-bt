@@ -10,6 +10,7 @@ SRC_URI = "file://bluetooth/bt_audio/"
 S = "${WORKDIR}/bluetooth/bt_audio/bthost_ipc"
 EXTRA_OEMAKE += 'BT_INC_PATH=${STAGING_INCDIR}/bluetooth'
 EXTRA_OECONF = "--with-glib"
+CPPFLAGS:append = " -DUSE_ANDROID_LOGGING"
 
 SOLIBS = ".so"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
