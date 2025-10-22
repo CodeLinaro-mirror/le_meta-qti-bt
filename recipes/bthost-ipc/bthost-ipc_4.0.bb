@@ -28,6 +28,7 @@ EXTRA_OECONF:append:neo = " --enable-target=neo"
 EXTRA_OECONF:append:kalama = " --enable-target=kalama"
 EXTRA_OECONF:append:pineapple = " --enable-target=pineapple"
 EXTRA_OECONF:append:qcm2290-mtp = " --enable-target=qcm2290-mtp"
+EXTRA_OECONF:append:qcm4325-mtp = " --enable-target=qcm4325-mtp"
 SOLIBS = ".so"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
