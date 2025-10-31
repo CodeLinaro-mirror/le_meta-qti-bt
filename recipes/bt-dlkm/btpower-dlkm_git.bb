@@ -81,12 +81,14 @@ do_install_sa535m() {
        ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/bluetooth_power.service
        install -d ${D}${sysconfdir}/initscripts
        install -m 0555 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
-
-       # LD_LIBRARY_PATH=${KERNEL_PREBUILT_DISTDIR}/openssl/lib64/ \
-       # ${KERNEL_PREBUILT_DISTDIR}/sign-file sha1 ${KERNEL_PREBUILT_DISTDIR}/signing_key.pem \
-       # ${KERNEL_PREBUILT_DISTDIR}/signing_key.x509 ${BT_BUILD_OUT}/btpower.ko
-
        install -m 0755 ${B}/pwr/btpower.ko -D ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
+
+       ${STRIP} --strip-debug ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
+
+       if [ -f ${STAGING_KERNEL_BUILDDIR}/certs/signing_key.pem ]; then
+           ${STAGING_KERNEL_BUILDDIR}/scripts/sign-file sha1 ${STAGING_KERNEL_BUILDDIR}/certs/signing_key.pem \
+           ${STAGING_KERNEL_BUILDDIR}/certs/signing_key.x509 ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
+       fi
     fi
 }
 
