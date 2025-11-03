@@ -20,18 +20,21 @@ DEPENDS:remove:sxr2130-mtp  = "audiohal"
 DEPENDS:append:qrbx210-rbx  = " libhardware media-headers"
 DEPENDS:append:qcs610  = " libhardware media-headers"
 DEPENDS:append:qcs6490  = " libhardware media-headers"
+DEPENDS:append:sdmsteppe  = " gstreamer1.0 gstreamer1.0-plugins-base"
 
 #CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_BT_OBEX -DUSE_LIBHW_AOSP -DUSE_GEN_GATT"
 #CPPFLAGS:append += " ${@bb.utils.contains('VARIANT', 'debug', '-g', '', d)}"
 #CFLAGS:append = " -DUSE_ANDROID_LOGGING "
 #LDFLAGS:append = " -llog "
 
+TARGET_CPPFLAGS:append:sdmsteppe = "-I${STAGING_INCDIR}/gstreamer-1.0"
 
 EXTRA_OECONF = " \
                 --with-glib \
                 --with-btobex \
                 --with-gengatt \
                "
+EXTRA_OECONF:append:sdmsteppe = "--with-gst-audio-sink"
 EXTRA_OECONF += "--enable-target=${BASEMACHINE}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
