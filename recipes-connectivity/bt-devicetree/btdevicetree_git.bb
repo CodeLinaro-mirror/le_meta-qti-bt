@@ -7,7 +7,7 @@ inherit linux-kernel-base deploy
 FILESEXTRAPATHS:prepend := "${WORKSPACE}:"
 SRC_URI     =  "file://bluetooth/bt-devicetree/"
 S = "${WORKDIR}/bluetooth/bt-devicetree"
-DEPENDS += "virtual/kernel"
+DEPENDS += "virtual/kernel coreutils-native rsync-native"
 
 KERNEL_VERSION = "${@get_kernelversion_file("${STAGING_KERNEL_BUILDDIR}")}"
 EXT_MODULES = "${@os.path.relpath("${S}", "${KERNEL_PLATFORM_PATH}")}"
@@ -18,13 +18,13 @@ do_compile[depends] += "virtual/kernel:do_shared_workdir"
 do_compile[cleandirs] += "${WORKDIR}/out/${KERNEL_DEFCONFIG}"
 do_compile() {
       cd ${KERNEL_PLATFORM_PATH}
-      BUILD_CONFIG=msm-kernel/${KERNEL_CONFIG} \
+      BUILD_CONFIG=${KERNEL_BUILD_CONFIG} \
       EXT_MODULES=${EXT_MODULES} \
       KERNEL_KIT=${KERNEL_PREBUILT_PATH} \
       MODULE_OUT=${S} \
       OUT_DIR=${WORKDIR}/out/${KERNEL_DEFCONFIG} \
       INPLACE_COMPILE=y \
-      ./build/build_module.sh
+      ./build/build_module.sh dtbs
 }
 
 do_deploy() {
