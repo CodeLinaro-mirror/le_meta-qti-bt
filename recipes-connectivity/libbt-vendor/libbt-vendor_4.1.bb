@@ -12,7 +12,7 @@ FILESPATH =+ "${WORKSPACE}:"
 
 SRC_URI = "file://bluetooth/libbt-vendor/libbt-vendor/"
 
-S = "${WORKDIR}/bluetooth/libbt-vendor/libbt-vendor/"
+S = "${WORKDIR}/bluetooth/libbt-vendor/libbt-vendor"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 

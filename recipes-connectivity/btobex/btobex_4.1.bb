@@ -12,7 +12,7 @@ SRC_URI = "file://bluetooth/btapp/obex_profiles/ \
            file://bluetooth/stack/system/bt/include/ \
            file://bluetooth/stack/bluetooth_ext/vhal/include/"
 
-S = "${WORKDIR}/bluetooth/"
+S = "${WORKDIR}/bluetooth"
 
 CFLAGS:append = " -DUSE_ANDROID_LOGGING"
 EXTRA_OEMAKE += 'BT_SOURCE=${S}'
