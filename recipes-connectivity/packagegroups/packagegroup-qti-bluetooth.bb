@@ -12,6 +12,7 @@ PACKAGES = "${PN}"
 BTVENDOR ?= 'False'
 
 BTVENDOR:qcm6490 = 'True'
+BTVENDOR:kera = 'True'
 
 RDEPENDS:${PN} = "\
     btdevicetree \
@@ -20,4 +21,5 @@ RDEPENDS:${PN} = "\
     bt-app \
     bt-dlkm-kernel \
     hidl-client \
+    bthost-ipc \
 "
