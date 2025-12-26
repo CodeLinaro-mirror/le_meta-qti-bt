@@ -33,6 +33,7 @@ EXT_COMPILE_CONFIG:append:sun = " CONFIG_BTFM_CODEC=m CONFIG_BTFM_SWR=m CONFIG_S
 EXT_COMPILE_CONFIG:append:alor = " CONFIG_BTFM_CODEC=m CONFIG_BTFM_SWR=m CONFIG_SLIM_BTFM_CODEC=m"
 
 do_configure[noexec] = "1"
+do_compile[network] = "1"
 
 do_compile[depends] += "virtual/kernel:do_shared_workdir"
 do_compile[cleandirs] += "${INTERMEDIATE_KERNEL_PATH}"
