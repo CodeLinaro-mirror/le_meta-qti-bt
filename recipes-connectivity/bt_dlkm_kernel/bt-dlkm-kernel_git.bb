@@ -14,6 +14,9 @@ S = "${WORKDIR}/bluetooth/bt-kernel"
 DEPENDS += "virtual/kernel wlan-platform btdevicetree "
 DEPENDS:append:kera = " ar-audiodlkm ar-audiodlkm-headers "
 DEPENDS:append:sun = " ar-audiodlkm ar-audiodlkm-headers "
+DEPENDS:append:alor = " ar-audiodlkm ar-audiodlkm-headers "
+
+OVERRIDES:append = "${@':ddk_build' if d.getVar('DDK_BUILD') == 'true' else ''}"
 
 KERNEL_VERSION = "${@get_kernelversion_file("${STAGING_KERNEL_BUILDDIR}")}"
 EXT_MODULES = "${@os.path.relpath("${S}", "${KERNEL_PLATFORM_PATH}")}"
@@ -23,11 +26,14 @@ MODULE_LIST = "btpower.ko btfmcodec.ko bt_fm_swr.ko btfm_slim_codec.ko"
 SYMVERS = "KBUILD_EXTRA_SYMBOLS=${STAGING_DIR_HOST}/usr/lib/modules/${KERNEL_VERSION}/cnsswlan-kernel/Module.symvers"
 SYMVERS:append:kera = " KBUILD_EXTRA_SYMBOLS+=${STAGING_DIR_HOST}/usr/lib/modules/${KERNEL_VERSION}/extra/Module.symvers"
 SYMVERS:append:sun = " KBUILD_EXTRA_SYMBOLS+=${STAGING_DIR_HOST}/usr/lib/modules/${KERNEL_VERSION}/extra/Module.symvers"
+SYMVERS:append:alor = " KBUILD_EXTRA_SYMBOLS+=${STAGING_DIR_HOST}/usr/lib/modules/${KERNEL_VERSION}/extra/Module.symvers"
 EXT_COMPILE_CONFIG = " CONFIG_MSM_BT_POWER=m"
 EXT_COMPILE_CONFIG:append:kera = " CONFIG_BTFM_CODEC=m CONFIG_BTFM_SWR=m CONFIG_SLIM_BTFM_CODEC=m"
 EXT_COMPILE_CONFIG:append:sun = " CONFIG_BTFM_CODEC=m CONFIG_BTFM_SWR=m CONFIG_SLIM_BTFM_CODEC=m"
+EXT_COMPILE_CONFIG:append:alor = " CONFIG_BTFM_CODEC=m CONFIG_BTFM_SWR=m CONFIG_SLIM_BTFM_CODEC=m"
 
 do_configure[noexec] = "1"
+do_compile[network] = "1"
 
 do_compile[depends] += "virtual/kernel:do_shared_workdir"
 do_compile[cleandirs] += "${INTERMEDIATE_KERNEL_PATH}"
@@ -46,9 +52,27 @@ do_compile() {
     ${EXT_COMPILE_CONFIG}
 }
 
+do_compile:ddk_build() {
+    cd ${KERNEL_PLATFORM_PATH}
+    ENABLE_DDK_BUILD=${DDK_BUILD} \
+    TARGET_BOARD_PLATFORM=${TARGET_BOARD_PLATFORM} \
+    VARIANT=${KERNEL_DEFCONFIG_VARIANT} \
+    BUILD_CONFIG=${KERNEL_BUILD_CONFIG} \
+    EXT_MODULES=${EXT_MODULES} \
+    ROOTDIR=${WORKDIR}/ \
+    KERNEL_KIT=${KERNEL_PREBUILT_PATH} \
+    OUT_DIR=${INTERMEDIATE_KERNEL_PATH} \
+    INPLACE_COMPILE=y \
+    MODULE_OUT=${S} \
+    STAGING_INCDIR=${STAGING_INCDIR} \
+    ./build/build_module.sh \
+    ${SYMVERS} \
+    ${EXT_COMPILE_CONFIG}
+}
+
 do_install() {
     install -d ${S}/unstripped
-    install -m 0755 `find ${S}/*/ -name *.ko` -D ${S}/unstripped
+    find "${S}" -name '*.ko' -exec install -m 0755 -D {} "${S}/unstripped"/ \;
 
     install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}
 
@@ -70,41 +94,7 @@ do_install() {
         ${STRIP_TOOL} --strip-debug ${S}/unstripped/${module} -o ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/${module}
       fi
     done
-}
 
-do_install:append:sun() {
-    install -d ${D}${sysconfdir}/initscripts
-    install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
-    install -m 755 ${WORKDIR}/bt_dlkm ${D}${sysconfdir}/initscripts
-    install -m 0644 ${WORKDIR}/bt_dlkm.service -D ${D}${systemd_unitdir}/system/bt_dlkm.service
-    cd ${D}${systemd_unitdir}/system/multi-user.target.wants/ && ln -s ../bt_dlkm.service bt_dlkm.service
-}
-
-do_install:append:kera() {
-    install -d ${D}${sysconfdir}/initscripts
-    install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
-    install -m 755 ${WORKDIR}/bt_dlkm ${D}${sysconfdir}/initscripts
-    install -m 0644 ${WORKDIR}/bt_dlkm.service -D ${D}${systemd_unitdir}/system/bt_dlkm.service
-    cd ${D}${systemd_unitdir}/system/multi-user.target.wants/ && ln -s ../bt_dlkm.service bt_dlkm.service
-}
-
-do_install:append:kalama() {
-    install -d ${D}${sysconfdir}/initscripts
-    install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
-    install -m 755 ${WORKDIR}/bt_dlkm ${D}${sysconfdir}/initscripts
-    install -m 0644 ${WORKDIR}/bt_dlkm.service -D ${D}${systemd_unitdir}/system/bt_dlkm.service
-    cd ${D}${systemd_unitdir}/system/multi-user.target.wants/ && ln -s ../bt_dlkm.service bt_dlkm.service
-}
-
-do_install:append:qcm2290-mtp() {
-    install -d ${D}${sysconfdir}/initscripts
-    install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
-    install -m 755 ${WORKDIR}/bt_dlkm ${D}${sysconfdir}/initscripts
-    install -m 0644 ${WORKDIR}/bt_dlkm.service -D ${D}${systemd_unitdir}/system/bt_dlkm.service
-    cd ${D}${systemd_unitdir}/system/multi-user.target.wants/ && ln -s ../bt_dlkm.service bt_dlkm.service
-}
-
-do_install:append:qcm4325-mtp() {
     install -d ${D}${sysconfdir}/initscripts
     install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
     install -m 755 ${WORKDIR}/bt_dlkm ${D}${sysconfdir}/initscripts

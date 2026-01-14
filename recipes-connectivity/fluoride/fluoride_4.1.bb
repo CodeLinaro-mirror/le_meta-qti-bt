@@ -5,8 +5,7 @@ LICENSE = "Apache-2.0"
 
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-#DEPENDS = "zlib libchrome glib-2.0 property-vault qcom-audioroute libbsd"
-DEPENDS = "zlib libchrome bttransport glib-2.0 libbsd libcutils libutils media-headers bt-audio-headers"
+DEPENDS = "zlib libchrome bttransport glib-2.0 libbsd libcutils libutils media-headers bt-audio-headers audio-route"
 #RDEPENDS:${PN} = "property-vault"
 
 FILESPATH =+ "${WORKSPACE}:"
@@ -43,7 +42,7 @@ EXTRA_OECONF = " \
                 --disable-dependency-tracking \
                "
 
-#EXTRA_OECONF:append = " --enable-audio=yes "
+EXTRA_OECONF:append = " --enable-audio=yes "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 do_install:append() {
