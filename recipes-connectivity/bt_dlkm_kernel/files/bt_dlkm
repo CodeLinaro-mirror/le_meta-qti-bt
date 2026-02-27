@@ -80,6 +80,13 @@ case "$1" in
   else
     echo "exit due to no btfm_slim_codec.ko"
   fi
+
+  # correct SELinux labels on all /dev/bt* nodes
+  if [ -x /sbin/restorecon ]; then
+      for node in /dev/bt*; do
+          [ -e "$node" ] && /sbin/restorecon "$node"
+      done
+  fi
   exit 0
   ;;
 
