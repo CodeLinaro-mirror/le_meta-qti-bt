@@ -6,6 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=550794465ba0ec53
 
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://bluetooth/btapp/"
+SRC_URI += "file://bt-conf_systemd_tmpfiles.conf"
 
 S = "${WORKDIR}/bluetooth/btapp"
 
@@ -34,15 +35,14 @@ EXTRA_OECONF = " \
 
 EXTRA_OECONF:append = " --enable-audio=yes "
 
-PACKAGE_ARCH = "${MACHINE_ARCH}"
-FILES:${PN} += "${sysconfdir}/bluetooth/*"
-FILES:${PN} += "${userfsdatadir}/misc/bluetooth/*"
-
 do_install:append() {
         install -d ${D}${sysconfdir}/bluetooth/
 
-        #create /data/misc/bluetooth/ folder
-        #install -d ${D}${userfsdatadir}/misc/bluetooth/
+        install -d 0775 ${D}${userfsdatadir}/misc/bluetooth
+        install -d 0775 ${D}${userfsdatadir}/vendor/bluetooth/ssrdump
+        #install common systemd files
+        install -m 0644 ${WORKDIR}/bt-conf_systemd_tmpfiles.conf \
+        -D ${D}${sysconfdir}/tmpfiles.d/bt-conf_systemd_tmpfiles.conf
 
         if [ -f ${S}/bt-app/conf/bt_app.conf ]; then
            install -m 0660 ${S}/bt-app/conf/bt_app.conf ${D}${sysconfdir}/bluetooth/
@@ -60,3 +60,8 @@ do_install:append() {
            install -m 0660 ${S}/bt-app/conf/ext_to_mimetype.conf ${D}${sysconfdir}/bluetooth/
         fi
 }
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+FILES:${PN} += "${sysconfdir}/bluetooth/*"
+FILES:${PN} += "${userfsdatadir}/misc/bluetooth"
+FILES:${PN} += "${userfsdatadir}/vendor/bluetooth/ssrdump"
