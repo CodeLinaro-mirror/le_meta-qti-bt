@@ -22,6 +22,7 @@ KERNEL_VERSION = "${@get_kernelversion_file("${STAGING_KERNEL_BUILDDIR}")}"
 EXT_MODULES = "${@os.path.relpath("${S}", "${KERNEL_PLATFORM_PATH}")}"
 INTERMEDIATE_KERNEL_PATH = "${WORKDIR}/out/${KERNEL_DEFCONFIG}"
 MODULE_LIST = "btpower.ko btfmcodec.ko bt_fm_swr.ko btfm_slim_codec.ko"
+MODULE_LIST:remove:pebble = "btfmcodec.ko bt_fm_swr.ko btfm_slim_codec.ko"
 
 SYMVERS = "KBUILD_EXTRA_SYMBOLS=${STAGING_DIR_HOST}/usr/lib/modules/${KERNEL_VERSION}/cnsswlan-kernel/Module.symvers"
 SYMVERS:append:kera = " KBUILD_EXTRA_SYMBOLS+=${STAGING_DIR_HOST}/usr/lib/modules/${KERNEL_VERSION}/extra/Module.symvers"

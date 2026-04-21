@@ -15,7 +15,7 @@ EXTRA_OEMAKE += "STAGING_INCDIR=${STAGING_INCDIR}"
 
 AUTOTOOLS_SCRIPT_PATH = "${S}/bt-app"
 
-DEPENDS += "btvendorhal glib-2.0 btobex libchrome libcutils fluoride audio-route pa-bt-audio libbsd"
+DEPENDS += "btvendorhal glib-2.0 btobex libchrome libcutils fluoride libbsd"
 #RDEPENDS:${PN} = "property-vault"
 
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING -DUSE_LIBHW_AOSP"
@@ -33,7 +33,9 @@ EXTRA_OECONF = " \
                 --with-btcte \
                "
 
-EXTRA_OECONF:append = " --enable-audio=yes "
+PACKAGECONFIG ??= "audio"
+PACKAGECONFIG:remove:pebble = "audio"
+PACKAGECONFIG[audio] = "--enable-audio=yes,--enable-audio=no,audio-route pa-bt-audio"
 
 do_install:append() {
         install -d ${D}${sysconfdir}/bluetooth/

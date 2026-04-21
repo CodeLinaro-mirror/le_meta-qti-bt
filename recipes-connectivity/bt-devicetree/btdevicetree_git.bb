@@ -7,7 +7,7 @@ inherit linux-kernel-base deploy
 FILESEXTRAPATHS:prepend := "${WORKSPACE}:"
 SRC_URI     =  "file://bluetooth/bt-devicetree/"
 S = "${WORKDIR}/bluetooth/bt-devicetree"
-DEPENDS += "virtual/kernel coreutils-native rsync-native"
+DEPENDS += "virtual/kernel coreutils-native rsync-native bison-native"
 
 KERNEL_VERSION = "${@get_kernelversion_file("${STAGING_KERNEL_BUILDDIR}")}"
 EXT_MODULES = "${@os.path.relpath("${S}", "${KERNEL_PLATFORM_PATH}")}"

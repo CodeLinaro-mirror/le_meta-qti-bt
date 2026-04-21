@@ -11,6 +11,9 @@ SRC_URI = "file://bluetooth/bt_audio/"
 S = "${WORKDIR}/bluetooth/bt_audio/bthost_ipc"
 EXTRA_OEMAKE += 'BT_INC_PATH=${STAGING_INCDIR}/bluetooth'
 EXTRA_OECONF = "--with-glib"
+PACKAGECONFIG ??= "audio"
+PACKAGECONFIG:remove:pebble = "audio"
+PACKAGECONFIG[audio] = "--enable-audio=yes,--enable-audio=no"
 CPPFLAGS:append = " -DUSE_ANDROID_LOGGING"
 
 SOLIBS = ".so"
