@@ -71,35 +71,34 @@ do_compile:ddk_build() {
 }
 
 do_install() {
+    MODULE_DEST="${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}"
+
     install -d ${S}/unstripped
     find "${S}" -name '*.ko' -exec install -m 0755 -D {} "${S}/unstripped"/ \;
-
-    install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}
+    install -d ${MODULE_DEST}
 
     STRIP_TOOL="${STAGING_DIR_NATIVE}/usr/bin/aarch64-oe-linux/aarch64-oe-linux-strip"
     if [ ! -x "$STRIP_TOOL" ]; then
-      STRIP_TOOL="${STAGING_DIR_NATIVE}/usr/bin/aarch64-oe-linux/aarch64-oe-linux-strip"
-      if [ ! -x "$STRIP_TOOL" ]; then
         STRIP_TOOL="cp"
-      fi
     fi
-
-    echo $STRIP_TOOL
 
     # strip debug symbols
     for module in ${MODULE_LIST}; do
-      if [ "${STRIP_TOOL}" = "cp" ]; then
-        cp ${S}/unstripped/${module} ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/${module}
-      else
-        ${STRIP_TOOL} --strip-debug ${S}/unstripped/${module} -o ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/${module}
-      fi
+        if [ "${STRIP_TOOL}" = "cp" ]; then
+            cp ${S}/unstripped/${module} ${MODULE_DEST}/${module}
+        else
+            ${STRIP_TOOL} --strip-debug ${S}/unstripped/${module} -o ${MODULE_DEST}/${module}
+        fi
     done
 
-    install -d ${D}${sysconfdir}/initscripts
+    install -d ${D}${sbindir}/initscripts
     install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
-    install -m 755 ${WORKDIR}/bt_dlkm ${D}${sysconfdir}/initscripts
-    install -m 0644 ${WORKDIR}/bt_dlkm.service -D ${D}${systemd_unitdir}/system/bt_dlkm.service
-    cd ${D}${systemd_unitdir}/system/multi-user.target.wants/ && ln -s ../bt_dlkm.service bt_dlkm.service
+    install -m 755 ${WORKDIR}/bt_dlkm ${D}${sbindir}/initscripts/bt_dlkm
+    install -m 0644 ${WORKDIR}/bt_dlkm.service ${D}${systemd_unitdir}/system/bt_dlkm.service
+    sed -i 's|^SourcePath=/etc|SourcePath=/usr/sbin|' ${D}${systemd_unitdir}/system/bt_dlkm.service
+    sed -i 's|^ExecStart=/etc|ExecStart=/usr/sbin|' ${D}${systemd_unitdir}/system/bt_dlkm.service
+    sed -i 's|^ExecStop=/etc|ExecStop=/usr/sbin|' ${D}${systemd_unitdir}/system/bt_dlkm.service
+    cd ${D}${systemd_unitdir}/system/multi-user.target.wants/ && ln -snf ../bt_dlkm.service bt_dlkm.service
 }
 
 do_deploy() {
