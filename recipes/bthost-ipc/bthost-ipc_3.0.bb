@@ -30,7 +30,10 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES_SOLIBSDEV = ""
 INSANE_SKIP:${PN} = "dev-so"
 FILES:${PN} += "/usr/lib/libbthost_if.so.* /usr/lib/libbthost_if_sink.so.* /usr/lib/libbthost_if*.so"
+
+
 do_install:append() {
-       cd  ${D}/${libdir}/ && ln -sf libbthost_if.so.1.0.0 libbthost_if.so
-	   cd  ${D}/${libdir}/ && ln -sf libbthost_if_sink.so.1.0.0 libbthost_if_sink.so
-	   }
+    cd ${D}${libdir} && ln -sf libbthost_if.so.1.0.0 libbthost_if.so
+    cd ${D}${libdir} && ln -sf libbthost_if_sink.so.1.0.0 libbthost_if_sink.so
+}
+
