@@ -18,10 +18,10 @@ SRC_URI += " \
 
 # RM_WORK_EXCLUDE += "${PN}"
 
-BT_BUILD_OUT="${WORKDIR}/vendor/qcom/opensource/bt-kernel-out"
+BT_BUILD_OUT="${UNPACKDIR}/vendor/qcom/opensource/bt-kernel-out"
 
-B:sa535m      = "${WORKDIR}/vendor/qcom/opensource/bt-kernel"
-B:sa535m-emmc = "${WORKDIR}/vendor/qcom/opensource/bt-kernel"
+B:sa535m      = "${UNPACKDIR}/vendor/qcom/opensource/bt-kernel"
+B:sa535m-emmc = "${UNPACKDIR}/vendor/qcom/opensource/bt-kernel"
 BT_BUILD_OUT:sa535m      ="${B}/pwr/"
 BT_BUILD_OUT:sa535m-emmc ="${B}/pwr/"
 
@@ -60,10 +60,10 @@ do_install() {
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
        install -d ${D}${systemd_unitdir}/system
        install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants/
-       install -m 0644 ${WORKDIR}/bluetooth_power.service ${D}${systemd_unitdir}/system
+       install -m 0644 ${UNPACKDIR}/bluetooth_power.service ${D}${systemd_unitdir}/system
        ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/bluetooth_power.service
        install -d ${D}${sysconfdir}/initscripts
-       install -m 0555 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
+       install -m 0555 ${UNPACKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
 
        LD_LIBRARY_PATH=${KERNEL_PREBUILT_DISTDIR}/openssl/lib64/ \
        ${KERNEL_PREBUILT_DISTDIR}/sign-file sha1 ${KERNEL_PREBUILT_DISTDIR}/signing_key.pem \
@@ -77,10 +77,10 @@ do_install_sa535m() {
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
        install -d ${D}${systemd_unitdir}/system
        install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants/
-       install -m 0644 ${WORKDIR}/bluetooth_power.service ${D}${systemd_unitdir}/system
+       install -m 0644 ${UNPACKDIR}/bluetooth_power.service ${D}${systemd_unitdir}/system
        ln -sf ${systemd_unitdir}/system/bluetooth_power.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/bluetooth_power.service
        install -d ${D}${sysconfdir}/initscripts
-       install -m 0555 ${WORKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
+       install -m 0555 ${UNPACKDIR}/bluetooth_power.sh ${D}${sysconfdir}/initscripts
        install -m 0755 ${B}/pwr/btpower.ko -D ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
 
        ${STRIP} --strip-debug ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/btpower.ko
@@ -106,3 +106,4 @@ FILES:${PN} += "${sysconfdir}/initscripts/"
 FILES:${PN} += "${nonarch_base_libdir}/modules/${KERNEL_VERSION}/extra/"
 
 RPROVIDES:${PN} += "kernel-module-btpower-${KERNEL_VERSION}"
+INSANE_SKIP:${PN} += "buildpaths"

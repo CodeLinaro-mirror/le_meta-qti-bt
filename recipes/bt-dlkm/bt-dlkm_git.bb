@@ -25,11 +25,11 @@ SRC_URI += " \
             file://bluetooth_power.service \
            "
 
-S = "${WORKDIR}"
-B = "${S}/drivers/bluetooth"
+S = "${UNPACKDIR}/drivers/bluetooth"
+B = "${S}"
 
 do_patch_btdrv() {
-    cp -f ${S}/Makefile.cc ${B}/Makefile
+    cp -f ${UNPACKDIR}/Makefile.cc ${B}/Makefile
 }
 do_patch[postfuncs] += "do_patch_btdrv"
 

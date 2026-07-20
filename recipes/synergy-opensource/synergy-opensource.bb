@@ -16,7 +16,7 @@ SRCREV = "${AUTOREV}"
 # Remove -Wl,--hash-style=gnu from it to avoid qa error for the prebuilt lib
 LDFLAGS = "-Wl,-O1"
 
-S = "${WORKDIR}/synergy"
+S = "${UNPACKDIR}/synergy"
 
 # compile synergy-opensource
 do_compile_opensource () {
