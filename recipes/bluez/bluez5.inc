@@ -27,5 +27,3 @@ EXTRA_OECONF = "\
   --disable-systemd \
   --with-glib \
 "
-#  unused param
-#  --with-sanitized-headers=${STAGING_KERNEL_BUILDDIR}/usr/include \
