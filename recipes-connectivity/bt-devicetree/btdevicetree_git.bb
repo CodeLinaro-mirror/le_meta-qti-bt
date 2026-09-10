@@ -7,9 +7,12 @@ inherit linux-kernel-base deploy
 FILESEXTRAPATHS:prepend := "${WORKSPACE}:"
 SRC_URI     =  "file://bluetooth/bt-devicetree/"
 S = "${WORKDIR}/bluetooth/bt-devicetree"
-DEPENDS += "virtual/kernel coreutils-native rsync-native"
+DEPENDS += "virtual/kernel coreutils-native rsync-native bison-native"
+
+KERNEL_KIT = "${@'${KERNEL_PREBUILT_PATH}' if d.getVar('MACHINE_USES_KERNEL_PREBUILTS') == 'True' else '${STAGING_KERNEL_BUILDDIR}'}"
 
 KERNEL_VERSION = "${@get_kernelversion_file("${STAGING_KERNEL_BUILDDIR}")}"
+
 EXT_MODULES = "${@os.path.relpath("${S}", "${KERNEL_PLATFORM_PATH}")}"
 
 do_configure[noexec] = "1"
@@ -22,7 +25,7 @@ do_compile() {
       cd ${KERNEL_PLATFORM_PATH}
       BUILD_CONFIG=${KERNEL_BUILD_CONFIG} \
       EXT_MODULES=${EXT_MODULES} \
-      KERNEL_KIT=${KERNEL_PREBUILT_PATH} \
+      KERNEL_KIT=${KERNEL_KIT} \
       MODULE_OUT=${S} \
       OUT_DIR=${WORKDIR}/out/${KERNEL_DEFCONFIG} \
       INPLACE_COMPILE=y \
