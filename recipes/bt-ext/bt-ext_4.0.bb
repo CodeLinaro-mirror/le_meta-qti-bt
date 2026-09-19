@@ -11,7 +11,7 @@ BSD-3-Clause;md5=550794465ba0ec5312d6919e203a55f9"
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth_ext/"
 
-S = "${WORKDIR}/vendor/qcom/opensource/bluetooth_ext/"
+S = "${UNPACKDIR}/vendor/qcom/opensource/bluetooth_ext/"
 
 DEPENDS += "libchrome"
 

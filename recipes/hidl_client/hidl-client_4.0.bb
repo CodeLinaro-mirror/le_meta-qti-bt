@@ -13,7 +13,7 @@ RDEPENDS:${PN} = "libcutils"
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/bluetooth/tools/"
 SRC_DIR = "${WORKSPACE}/vendor/qcom/opensource/bluetooth/tools/"
-S = "${WORKDIR}/vendor/qcom/opensource/bluetooth/tools/"
+S = "${UNPACKDIR}/vendor/qcom/opensource/bluetooth/tools/"
 
 BASEPRODUCT = "${@d.getVar('PRODUCT', False)}"
 

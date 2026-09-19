@@ -9,7 +9,7 @@ ${LICENSE};md5=89aea4e17d99a7cacdbeed46a0096b10"
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://qcom-opensource/bt/bt-app/"
 
-S = "${WORKDIR}/qcom-opensource/bt/bt-app/"
+S = "${UNPACKDIR}/qcom-opensource/bt/bt-app/"
 
 DEPENDS += "btvendorhal glib-2.0 btobex libchrome fluoride audiohal bt-ext"
 DEPENDS:remove:mdm9607  = "audiohal"

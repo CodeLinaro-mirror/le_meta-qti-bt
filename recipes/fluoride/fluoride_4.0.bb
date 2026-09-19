@@ -20,7 +20,7 @@ FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://vendor/qcom/opensource/system/bt/ \
            file://vendor/qcom/opensource/bluetooth_ext/"
 
-S = "${WORKDIR}/vendor/qcom/opensource/system/bt/"
+S = "${UNPACKDIR}/vendor/qcom/opensource/system/bt/"
 S_EXT = "${WORKDIR}/vendor/qcom/opensource/bluetooth_ext/system_bt_ext/"
 
 FILES_SOLIBSDEV = ""

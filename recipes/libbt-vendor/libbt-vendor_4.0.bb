@@ -14,7 +14,7 @@ RDEPENDS:${PN} = "libcutils"
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://hardware/qcom/bt/libbt-vendor/"
 
-S = "${WORKDIR}/hardware/qcom/bt/libbt-vendor/"
+S = "${UNPACKDIR}/hardware/qcom/bt/libbt-vendor/"
 
 #CFLAGS_append = " -DUSE_ANDROID_LOGGING "
 #LDFLAGS_append = " -llog "

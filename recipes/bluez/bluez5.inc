@@ -15,7 +15,7 @@ ASNEEDED = ""
 FILESPATH =+ "${WORKSPACE}:"
 SRC_URI = "file://external/bluetooth/bluez/"
 
-S = "${WORKDIR}/external/bluetooth/bluez/"
+S = "${UNPACKDIR}/external/bluetooth/bluez/"
 
 inherit autotools-brokensep pkgconfig
 
