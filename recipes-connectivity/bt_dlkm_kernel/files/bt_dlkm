@@ -56,7 +56,7 @@ case "$1" in
   else
     echo "exit due to no bt_fm_slim.ko"
   fi
-  if [ -e /sys/bus/platform/drivers/btfmcodec ]; then
+  if lsmod | grep -q "^btfmcodec "; then
 	echo "btfmcodec has already resided in kernel."
   elif [ -e ${BLUETOOTHFMCODEC_KERNEL_MODULE_PATH} ]; then
 	insmod ${BLUETOOTHFMCODEC_KERNEL_MODULE_PATH}
@@ -64,7 +64,7 @@ case "$1" in
   else
     echo "exit due to no btfmcodec.ko"
   fi
-  if [ -e /sys/bus/platform/drivers/bt_fm_swr ]; then
+  if lsmod | grep -q "^bt_fm_swr "; then
 	echo "bt_fm_swr has already resided in kernel."
   elif [ -e ${BLUETOOTH_FM_SWR_KERNEL_MODULE_PATH} ]; then
 	insmod ${BLUETOOTH_FM_SWR_KERNEL_MODULE_PATH}
@@ -72,7 +72,7 @@ case "$1" in
   else
     echo "exit due to no bt_fm_swr.ko"
   fi
-  if [ -e /sys/bus/platform/drivers/btfm_slim_codec ]; then
+  if lsmod | grep -q "^btfm_slim_codec "; then
 	echo "btfm_slim_codec has already resided in kernel."
   elif [ -e ${BLUETOOTHFM_SLIM_CODEC_KERNEL_MODULE_PATH} ]; then
 	insmod ${BLUETOOTHFM_SLIM_CODEC_KERNEL_MODULE_PATH}
